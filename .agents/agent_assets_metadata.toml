@@ -1,0 +1,14 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "ca75dmn7nTHCRTAhe-h12"
+uri = "file://artifacts/rich-steve-game/assets/images/icon.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "QCtmiKHbeskunACYe1Jl_"
+uri = "file://artifacts/rich-steve-game/assets/images/arena-bg.png"
+type = "image"
+title = "generated_image"

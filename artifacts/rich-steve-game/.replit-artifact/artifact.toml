@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/"
+title = "Rich $teve: The Game"
+version = "1.0.0"
+id = "artifacts/rich-steve-game"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/" ]
+localPort = 18438
+
+[services.development]
+run = "pnpm --filter @workspace/rich-steve-game run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rich-steve-game", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/rich-steve-game", "run", "serve" ]
+
+[services.env]
+PORT = "18438"
+BASE_PATH = "/"
