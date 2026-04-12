@@ -38,7 +38,7 @@ export default function CareerScreen() {
       <View style={styles.pageHeader}>
         <Text style={[styles.pageTitle, { color: colors.primary }]}>CAREER MODE</Text>
         <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-          13 YEARS · 4 ERAS · 11 CHAPTERS
+          13 YEARS · 6 ERAS · 21 CHAPTERS
         </Text>
       </View>
 
@@ -47,6 +47,14 @@ export default function CareerScreen() {
           <MaterialCommunityIcons name="trophy" size={16} color={colors.primaryForeground} />
           <Text style={[styles.titleBeltText, { color: colors.primaryForeground }]}>
             RAMPAGE TAG TEAM CHAMPIONSHIPS — HELD SOLO
+          </Text>
+        </View>
+      )}
+      {gameState.heavyweightTitleWon && (
+        <View style={[styles.titleBelt, { backgroundColor: colors.primary }]}>
+          <MaterialCommunityIcons name="crown" size={16} color={colors.primaryForeground} />
+          <Text style={[styles.titleBeltText, { color: colors.primaryForeground }]}>
+            RAMPAGE HEAVYWEIGHT CHAMPIONSHIP
           </Text>
         </View>
       )}
@@ -113,7 +121,11 @@ export default function CareerScreen() {
                       {completed ? (
                         <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
                       ) : unlocked ? (
-                        <MaterialCommunityIcons name="sword-cross" size={22} color={colors.foreground} />
+                        chapter.matchless ? (
+                          <Ionicons name="book" size={20} color={colors.foreground} />
+                        ) : (
+                          <MaterialCommunityIcons name="sword-cross" size={22} color={colors.foreground} />
+                        )
                       ) : (
                         <Ionicons name="lock-closed" size={18} color={colors.mutedForeground} />
                       )}

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const STORAGE_KEY = "@richsteve_game_state";
+const STORAGE_KEY = "@richsteve_game_state_v2";
 
 export interface GameState {
   completedChapters: string[];
@@ -43,23 +43,38 @@ interface GameContextValue {
 const GameContext = createContext<GameContextValue | null>(null);
 
 const CHAPTER_ORDER = [
-  "ch1-debut",
-  "ch2-grand-championship",
+  // Era 1
+  "ch1-managing-debut",
+  "ch1-korpse-manager",
+  "ch1-six-man-debut",
+  // Era 2
+  "ch2-ortiz",
+  "ch2-spike",
+  "ch2-don-e-allen",
+  // Era 3
   "ch3-hostile-takeover",
-  "ch4-scalping",
-  "ch5-invasion",
-  "ch6-big-mike-saga",
-  "ch7-gm-loophole",
-  "ch8-lethal-lottery",
-  "ch9-no-turning-back",
-  "ch10-lost-ending-part1",
-  "ch11-lost-ending-finale",
+  "ch3-proving-ground",
+  "ch3-riot-city-rules",
+  // Era 4
+  "ch4-impact-society",
+  "ch4-big-mike",
+  "ch4-gm-loophole",
+  "ch4-bruh-turns",
+  // Era 5
+  "ch5-riot-rumble",
+  "ch5-guerrero",
+  "ch5-bookstore",
+  "ch5-korpse",
+  "ch5-lethal-lottery",
+  "ch5-last-shot",
+  // Era 6 — The Lost Ending
+  "ch6-mac-mayhem",
+  "ch6-johnny-xross",
 ];
 
-// Chapters that require a WIN to unlock the next chapter.
-// For most chapters, completing them (win or lose) unlocks the next.
-// The Lost Ending requires winning ch10 to reach ch11.
-const REQUIRES_WIN_TO_ADVANCE = new Set(["ch10-lost-ending-part1"]);
+// Chapters where a WIN is required to unlock the next chapter.
+// The Lost Ending Part 1 requires you to actually beat Mac — no participation trophy.
+const REQUIRES_WIN_TO_ADVANCE = new Set(["ch6-mac-mayhem"]);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [gameState, setGameState] = useState<GameState>(DEFAULT_STATE);
@@ -106,13 +121,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       next.riotRumbleContractUsed = true;
       next.tagTitlesWon = true;
     }
-    if (won && (options?.isTagTitle || options?.isRiotRumble || options?.isHeavyweight)) {
+    if (won && (options?.isTagTitle || options?.isRiotRumble)) {
+      next.isChampion = true;
+    }
+    if (options?.isHeavyweight && won) {
       next.isChampion = true;
     }
 
     const idx = CHAPTER_ORDER.indexOf(chapterId);
     if (idx >= 0) {
-      const era = idx < 2 ? 1 : idx < 4 ? 2 : idx < 8 ? 3 : 4;
+      const era =
+        idx < 3 ? 1 :
+        idx < 6 ? 2 :
+        idx < 9 ? 3 :
+        idx < 13 ? 4 :
+        idx < 19 ? 5 : 6;
       next.currentEra = Math.max(next.currentEra, era);
     }
     await save(next);
@@ -133,11 +156,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (idx === 0) return true;
     if (idx < 0) return false;
     const prev = CHAPTER_ORDER[idx - 1]!;
-    // If the previous chapter requires a win to advance, check wonChapters
     if (REQUIRES_WIN_TO_ADVANCE.has(prev)) {
       return gameState.wonChapters.includes(prev);
     }
-    // Otherwise, just completing (win or lose) unlocks the next
     return gameState.completedChapters.includes(prev);
   };
 

@@ -86,9 +86,9 @@ export default function MatchScreen() {
       const won = w === "player";
       if (!isExhibition && params.chapterId) {
         await completeChapter(params.chapterId, won, {
-          isTagTitle: params.chapterId === "ch8-lethal-lottery",
-          isHeavyweight: params.chapterId === "ch10-lost-ending-part1",
-          isRiotRumble: params.chapterId === "ch8-lethal-lottery",
+          isTagTitle: params.chapterId === "ch5-lethal-lottery",
+          isHeavyweight: params.chapterId === "ch6-mac-mayhem",
+          isRiotRumble: params.chapterId === "ch5-lethal-lottery",
         });
       }
       Haptics.notificationAsync(
