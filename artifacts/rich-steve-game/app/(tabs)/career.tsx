@@ -112,7 +112,7 @@ export default function CareerScreen() {
                     disabled={!unlocked}
                     onPress={() =>
                       router.push({
-                        pathname: "/cutscene",
+                        pathname: chapter.matchless ? "/promo" : "/cutscene",
                         params: { chapterId: chapter.id },
                       })
                     }

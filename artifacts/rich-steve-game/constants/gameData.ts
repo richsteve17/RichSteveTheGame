@@ -32,12 +32,25 @@ export interface CareerChapter {
   historicalNote: string;
   riotRumbleChapter?: boolean;
   matchless?: boolean;
+  promoGame?: PromoChallenge[];
 }
 
 export interface CutsceneSlide {
   speaker: string;
   text: string;
   isPromo?: boolean;
+}
+
+export interface PromoOption {
+  text: string;
+  isCorrect: boolean;
+  crowdReaction: "heat" | "pop" | "silence";
+  feedback: string;
+}
+
+export interface PromoChallenge {
+  situation: string;
+  options: PromoOption[];
 }
 
 export const RICH_STEVE: Wrestler = {
@@ -96,7 +109,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: null,
     role: "Midcard",
     style: "Brawler",
-    bio: "Untrained and unsafe. The reason Coleman never won the ACPW Grand Championship on August 18, 2007. The match was so dangerous that management called a Double DQ to protect Coleman before he could be injured. He was booked to win.",
+    bio: "Untrained and unsafe. The reason Coleman never won the ACPW Grand Championship on August 18, 2007. The match was called a No Contest by management to protect Coleman before he could be injured. He was booked to win.",
     stamina: 60,
     moves: ["Wild Swing", "Bear Hug", "Headlock", "Running Shoulder Block"],
     signatureMove: null,
@@ -522,6 +535,95 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         isPromo: true,
       },
     ],
+    promoGame: [
+      {
+        situation: "The crowd has no idea who you are. You're 16, in black eye makeup, at the Northeast Community Center. You grab the mic at ringside.",
+        options: [
+          {
+            text: "What you're looking at is Living Dead 2k6 — the most dangerous tag team in this building tonight.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Immediate heat. Nobody claps. Perfect.",
+          },
+          {
+            text: "Hi everyone, great to be here at this wrestling show tonight!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "A 16-year-old babyface manager gets a nice-guy pop. That's not what you're here to do.",
+          },
+          {
+            text: "Say nothing. Just point at your team and nod.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Silence is a weapon — but not yet. You're still unknown. You need the mic.",
+          },
+          {
+            text: "We hope to give you a great show tonight, and we appreciate your support!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "That's not Rich $teve. That's a kid who doesn't know what he's doing.",
+          },
+        ],
+      },
+      {
+        situation: "KJ Hellfire and Korpse are having trouble getting crowd heat. The building is dead. You need to wake them up — against your own team.",
+        options: [
+          {
+            text: "Are you people not SEEING what these two are capable of? Open your eyes.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Good. Make the crowd feel stupid for not reacting. Classic manager work.",
+          },
+          {
+            text: "C'mon everyone! Make some noise for Living Dead 2k6!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "They clap politely. You got a babyface reaction for a heel team. Counterproductive.",
+          },
+          {
+            text: "KORPSE IS GOING TO DESTROY SOMEONE TONIGHT — PAY ATTENTION!",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Loud. Aggressive. Now they're booing. That's heat. Job done.",
+          },
+          {
+            text: "Applaud your team from ringside. Encourage them visually.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "A suit-wearing teenager clapping ringside. Nobody cares.",
+          },
+        ],
+      },
+      {
+        situation: "Dragonfly and Sebastian Rose enter to a crowd pop. The crowd is into them. You need to cut it off right now.",
+        options: [
+          {
+            text: "Oh good. Look who showed up. Two people completely unprepared for what's coming.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Cold. Dismissive. The crowd boos you, which means they're now invested. That's the goal.",
+          },
+          {
+            text: "Good luck out there tonight, gentlemen. May the best team win.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "The crowd cheers your sportsmanship. You just got a babyface pop as a heel manager. Terrible.",
+          },
+          {
+            text: "The noise you hear for them tonight? That's the last time they get that. Watch Living Dead 2k6.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You reframed their pop as temporary. The crowd reacts with boos. Excellent heel logic.",
+          },
+          {
+            text: "BOOOO! These guys are GARBAGE! BOOOO!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "A 16-year-old screaming boo at a wrestling show made the crowd laugh with you. That's not heat.",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -553,6 +655,95 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         speaker: "Rich $teve",
         text: "Korpse is my guy. Was. Is. That's 12 years of history. We built something before I even threw my first punch in a ring. That matters.",
         isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "Korpse's opponent enters to a decent crowd reaction. You step between them before the bell.",
+        options: [
+          {
+            text: "Before this goes any further — do you understand what you've agreed to step in the ring with?",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The crowd boos. Korpse looks dangerous. The opponent looks nervous. Exactly right.",
+          },
+          {
+            text: "Hey Korpse! You got this, buddy! Let's go!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "That's a cheerleader, not a manager. The crowd cheers you. Wrong.",
+          },
+          {
+            text: "This match is going to be a great one for everyone here tonight!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You just called a feel-good sports promo. You're a heel manager. Try again.",
+          },
+          {
+            text: "You want to walk away right now? Because nobody would blame you.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Psychological. The opponent hesitates. The crowd turns on you. Perfect.",
+          },
+        ],
+      },
+      {
+        situation: "The opponent plays to the crowd and gets a big pop. You need to kill the moment before it builds.",
+        options: [
+          {
+            text: "Enjoy it. That's the last good thing that happens to you tonight.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Cold. Simple. The pop dies. The crowd turns on you. Job done.",
+          },
+          {
+            text: "Nothing — wait for it to die down on its own.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You let them have the moment. A manager who doesn't interrupt is a bad manager.",
+          },
+          {
+            text: "Please quiet down, everyone! Show some respect!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "They boo louder. But they're booing you, not reacting to Korpse. You created wrong heat.",
+          },
+          {
+            text: "While you're playing to a crowd that doesn't matter — Korpse is in there thinking about how to end this.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You refocused the room on your client. The pop is gone. Good work.",
+          },
+        ],
+      },
+      {
+        situation: "The match is turning. The opponent is mounting a comeback. The crowd is getting loud. You need to do something.",
+        options: [
+          {
+            text: "Step on the apron. Draw the referee's attention — give Korpse time to recover.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Classic heel manager move. The crowd screams. The referee misses the recovery. Right call.",
+          },
+          {
+            text: "Cheer Korpse on from ringside loudly!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "The crowd responds to your energy — positively. You fired up the building for the wrong team.",
+          },
+          {
+            text: "Stay calm. Trust Korpse to turn it around himself.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Passive. A good manager anticipates. Korpse needed you and you did nothing.",
+          },
+          {
+            text: "Bang the apron. Call out the referee for a slow count on your client.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The referee turns to argue with you. Korpse uses the distraction. That's managing.",
+          },
+        ],
       },
     ],
   },
@@ -625,7 +816,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "ruben-ortiz",
     stipulation: "ACPW Grand Championship Match",
     historicalResult: "dq",
-    historicalNote: "Management called a Double DQ to protect Coleman from an unsafe, untrained Ruben Ortiz. Coleman was booked to win. He didn't get another title shot until years later.",
+    historicalNote: "Management called a No Contest to protect Coleman from an unsafe, untrained Ruben Ortiz. Coleman was booked to win. He didn't get another title shot until years later.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -641,7 +832,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Management will protect Coleman. They call a Double DQ before anyone gets hurt. He will not leave with the title.",
+        text: "Management will protect Coleman. They call a No Contest before anyone gets hurt. He will not leave with the title.",
       },
       {
         speaker: "Rich $teve",
@@ -659,7 +850,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       lose: [
         {
           speaker: "NARRATOR",
-          text: "Double DQ. No title. Management made the call to protect you.",
+          text: "No Contest. No title. Management made the call to protect you.",
         },
         {
           speaker: "NARRATOR",
@@ -680,7 +871,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "southern-enforcer",
     stipulation: "ACPW Hardcore Title Three-Way",
     historicalResult: "lose",
-    historicalNote: "Southern Enforcer defeated Rich Steve and Ugly Baby. A spike in the match sent Coleman into a years-long break from the business.",
+    historicalNote: "ACPW Hardcore Title Three-Way: Southern Enforcer (c) w/ Lady D defeated Rich Steve and Ugly Baby. Rich $teve was challenging for the Hardcore Title. A spike in the match sent Coleman into a years-long break from the business.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -688,7 +879,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "A hardcore three-way. Southern Enforcer. Ugly Baby. Rich $teve.",
+        text: "A Hardcore Title Three-Way. Southern Enforcer (c) w/ Lady D defending against Ugly Baby and Rich $teve.",
       },
       {
         speaker: "NARRATOR",
@@ -994,6 +1185,95 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         isPromo: true,
       },
     ],
+    promoGame: [
+      {
+        situation: "You're in a Super Star Wrestling building. Nobody here knows Project Mayhem. Armstrong is ready. You've got the mic first.",
+        options: [
+          {
+            text: "I'm Rich $teve. And by the end of tonight, you're going to know exactly what that means.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Cold intro. No crowd noise. Then confusion. Then boos as the match unfolds. Good start.",
+          },
+          {
+            text: "Thanks for having us, SSW! We're excited to be here!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "The crowd pops for the humble visitors. You just got a babyface reaction in a heel debut. Wrong.",
+          },
+          {
+            text: "Let Armstrong do all the talking. You stand back and observe the room.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You're the Mastermind. You don't let anyone else establish the narrative. Step up.",
+          },
+          {
+            text: "Impact Society: two markets, two sets of champions. Remember those words.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You planted the flag. The crowd doesn't know what Impact Society is yet — but they know it's a threat.",
+          },
+        ],
+      },
+      {
+        situation: "The SSW crowd is solidly behind the champions. They want the locals to keep the belts. The heat is real.",
+        options: [
+          {
+            text: "Those titles you're trying to protect? They look much better on us.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Dismissive. Personal. The crowd erupts in boos. You turned the heat up.",
+          },
+          {
+            text: "We respect this fanbase so much! You're great wrestling fans!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're complimenting the crowd. A heel does not compliment the crowd.",
+          },
+          {
+            text: "You'll come around to Impact Society. Give it time.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Too passive. That's a tryhard babyface line. Rich $teve doesn't ask for acceptance.",
+          },
+          {
+            text: "The titles are leaving with Impact Society. There is nothing you can do about it.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Declarative. Inevitable. The crowd hates it. That's the reaction you need.",
+          },
+        ],
+      },
+      {
+        situation: "Impact Society wins. You're holding the SSW Tag Team Championships. Deafening boos. What do you do?",
+        options: [
+          {
+            text: "Say nothing. Put the belt over your shoulder and walk.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The silence says everything. The crowd's boos chase you out. Classic heel exit.",
+          },
+          {
+            text: "Thank you SSW! We'll be back and we'll keep these belts!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're making promises to the crowd like a babyface champion. Wrong energy.",
+          },
+          {
+            text: "LOOK AT THESE TITLES! WHO'S THE BEST NOW?",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "You got heat but you looked desperate for it. A confident heel doesn't beg the crowd for a reaction.",
+          },
+          {
+            text: "This is what Project Mayhem does. This is Impact Society. Goodnight.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Clean, branding, exit. You left the room with the belts AND the last word. Perfect heel.",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -1087,6 +1367,95 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         isPromo: true,
       },
     ],
+    promoGame: [
+      {
+        situation: "You enter the arena. Big Mike is standing at the GM podium. He's back. The crowd goes crazy. They're looking at you for a reaction.",
+        options: [
+          {
+            text: "Say absolutely nothing. Let your face do the work.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The crowd reads every thought across your face. A silent heel sell in a loud building — this is the moment.",
+          },
+          {
+            text: "THIS ISN'T OVER, MIKE! WE'RE NOT DONE!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You reacted like a babyface chasing revenge. That's not Rich $teve — that's someone who lost.",
+          },
+          {
+            text: "That's impossible! I had him retired! This cannot be happening!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Shock and denial gives Mike the power in the room. He looks like he won. Wrong.",
+          },
+          {
+            text: "ATTORNEYS. I need my attorneys. Right now.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Heel logic. You're not angry — you're looking for the counter-attack. The crowd hates it. Good.",
+          },
+        ],
+      },
+      {
+        situation: "Mike is reading from a contract at the podium. You grab your own copy. You read. You find the loophole — it says ring announcer. Not GM.",
+        options: [
+          {
+            text: "It says ring announcer. It says RING ANNOUNCER. You son of a—",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You're furious — but it's heel-fury. The crowd loves Mike more because of your reaction. Perfect dynamic.",
+          },
+          {
+            text: "Well played, Mike. I didn't see that coming.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're giving Mike credit? A heel does not congratulate the guy who outmaneuvered him.",
+          },
+          {
+            text: "I'll take this to the Board of Directors first thing tomorrow morning.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Too corporate-calm. The room needed an emotional reaction from you. This fell flat.",
+          },
+          {
+            text: "Crumple the contract. Don't say a word. Walk to the back.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The dramatic exit without words. The crowd reads pure fury in the silence. That's the sell.",
+          },
+        ],
+      },
+      {
+        situation: "The crowd is on their feet for Big Mike. He's soaking in the ovation. You're still visible at the entrance. Final image of the segment.",
+        options: [
+          {
+            text: "Walk out slowly. Jaw clenched. Eyes on Mike. Not one word.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The slow walk tells the whole story. The crowd boos you out. Mike gets his moment. Right call.",
+          },
+          {
+            text: "I'm going to get you fired, Mike! This is not OVER!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You interrupted his moment with a cheap threat. That breaks the spell of the silent sell.",
+          },
+          {
+            text: "Fine. You want to be GM? I'll play by your rules.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "That's almost a heel acceptance speech. You can't show that you're okay with this.",
+          },
+          {
+            text: "Turn your back on him. Don't give him the acknowledgment of eye contact.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Dismissing someone by refusing to look at them — that's maximum disrespect, which is maximum heat.",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -1127,6 +1496,95 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         speaker: "Rich $teve",
         text: "They left. They had to go. Every group has people who think they can survive without the man running the show. #BRUH will find out what that costs them.",
         isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "Johnny Xross and Ray Rumble stand in the middle of the ring. They announce they're done with Project Mayhem. The crowd cheers. The locker room watches.",
+        options: [
+          {
+            text: "Anyone who leaves Project Mayhem gets exactly what they deserve on the outside.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Calm. Certain. No yelling. Just a fact. The crowd hates it. That's the correct register.",
+          },
+          {
+            text: "Guys, the door is always open if you change your minds. We're family.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're being gracious on the way out. That makes you look weak. A heel doesn't offer olive branches.",
+          },
+          {
+            text: "Fine. Go. See how far you get without me building this for you.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Taking credit for everything they have while dismissing their departure — perfect heel logic.",
+          },
+          {
+            text: "Xross. Rumble. Let's talk about this privately. Come to the back.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You tried to de-escalate in public. The crowd saw weakness. A heel does not negotiate publicly.",
+          },
+        ],
+      },
+      {
+        situation: "#BRUH is cutting their exit promo, explaining their reasons for leaving. The crowd is reacting. You're still standing in the ring behind them.",
+        options: [
+          {
+            text: "Stand behind them. Arms crossed. Stone-faced. Let them finish.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Your presence looming behind them creates menace without words. The crowd boos you for just existing there.",
+          },
+          {
+            text: "Leave the ring to give them space. Let them have their moment.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You graciously stepped aside and gave them the ring. That's babyface behavior.",
+          },
+          {
+            text: "Interrupt them mid-sentence. Take the mic.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "You got heat, but you also cut off a turn that the crowd was invested in. Short-sighted.",
+          },
+          {
+            text: "Wait until they're completely done. Let the silence hang. Then smile slowly.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The slow smile says: I'm not threatened. This is going to cost them. Maximum heel.",
+          },
+        ],
+      },
+      {
+        situation: "George Burkett walks out and stands with #BRUH. He's betraying Project Mayhem openly. The room is watching your reaction.",
+        options: [
+          {
+            text: "Burkett. Good luck. You're going to need it more than they will.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You called them weak while dismissing Burkett. Cold, classy heel work.",
+          },
+          {
+            text: "Burkett, don't do this. We can work something out.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You showed desperation. The crowd sees you reaching for loyalty you lost. Wrong.",
+          },
+          {
+            text: "Fine. All of you — go. I don't need any of you.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The dismissal covers your anger. The crowd reads it as arrogance. Perfect.",
+          },
+          {
+            text: "You think you're better off without me? Go find out.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "A challenge wrapped in a dismissal. It works. The crowd knows the consequences are coming.",
+          },
+        ],
       },
     ],
   },
@@ -1285,6 +1743,124 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         speaker: "Rich $teve",
         text: "I'm gonna take these. I'll leave you two. But Mike — since you've left Rampage, things have been great. Project Mayhem has only been getting better. And one more thing: soon, I'm gonna be the Rampage Pro Wrestling Heavyweight Champion. So keep selling The Weird One. I'm taking my water back. Have a great day, folks.",
         isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "You walk into a Lancaster, PA bookstore. Big Mike is at a table with copies of 'The Weird One.' Zero customers. He sees you enter.",
+        options: [
+          {
+            text: "We found Big Mike Day! I can't forget my contract — you never know, there might be a Working Man around.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "That's the real line. You walked in already working. Zero warmup needed. The contract appears immediately.",
+          },
+          {
+            text: "Mike, congratulations on the book launch! How's it going so far?",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're being cordial. This is not a cordial visit. You're here to make a point.",
+          },
+          {
+            text: "Interesting choice of venue, Mike. Good exposure here?",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Small talk. You're Rich $teve. You don't do small talk with people you've already beaten.",
+          },
+          {
+            text: "I heard about the book and wanted to come support you.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Genuine support? You crashed this signing to humiliate him. Get back in character.",
+          },
+        ],
+      },
+      {
+        situation: "You pull out the Riot Rumble cash-in contract. Mike goes quiet. The moment you've been waiting for.",
+        options: [
+          {
+            text: "Are people actually paying money to meet this guy? Do you know what I got right here? The Rampage Riot Rumble contract. The one that I put you into. The retirement that Project Mayhem caused.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Real quote. Every sentence a dagger. The contract is the murder weapon and you're holding it up.",
+          },
+          {
+            text: "This contract means I can cash in for any title. Just wanted you to know, Mike.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You're explaining the contract instead of weaponizing it. That's weak. Use it against him personally.",
+          },
+          {
+            text: "Since I'm here, do you want to sign this one too? Maybe you've got a pen.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "A decent jab. But it misses the emotional devastation of the real line. Not enough.",
+          },
+          {
+            text: "Remember this piece of paper, Mike? The thing that ended your career? Let me remind you.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "Close. But generic. The power of the real line is its specific, verbatim detail about the retirement.",
+          },
+        ],
+      },
+      {
+        situation: "Zero customers have come in. Big Mike has nothing. You're about to close the bit. One last line.",
+        options: [
+          {
+            text: "How many people have actually come to see this fat piece of crap today? How many? Zero. That is HILARIOUS, Mike.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Real quote. The laugh at the end is the most devastating part. Pure heel execution.",
+          },
+          {
+            text: "Well Mike, I hope the rest of the signing goes better. Keep grinding.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Positive send-off. That's the exact opposite of what this promo needs.",
+          },
+          {
+            text: "Maybe try a different city next time. Or lower the price.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Marketing advice for a man you just destroyed? This isn't a consulting session.",
+          },
+          {
+            text: "Zero. Count them. That's your fanbase, Mike. Zero people. That's what Project Mayhem left you with.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "Good energy. But the real line's laugh is what elevates it. The joy is part of the punishment.",
+          },
+        ],
+      },
+      {
+        situation: "You've made your point. Time to exit. You spot a bowl of candy on the table and Mike's water bottle.",
+        options: [
+          {
+            text: "I'm gonna take these. And Mike — I'm taking my water back. Have a great day, folks.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Real quote. 'My water' is the perfect absurdist closer. You take the props and leave him with nothing.",
+          },
+          {
+            text: "Mind if I take a piece? Thanks, Mike. See you at Rampage.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "Polite. Measured. You just ended a masterpiece promo with a handshake. No.",
+          },
+          {
+            text: "Leave without taking anything. Let the humiliation speak for itself.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "The candy and the water ARE the humiliation. Taking his things is the physical exclamation point.",
+          },
+          {
+            text: "Knock the candy off the table. Make a mess. Leave.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "You got heat but it's cheap heat. Taking the items is smarter — and funnier — than destroying them.",
+          },
+        ],
       },
     ],
   },

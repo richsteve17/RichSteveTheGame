@@ -25,6 +25,7 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="match" options={{ headerShown: false }} />
       <Stack.Screen name="cutscene" options={{ headerShown: false }} />
+      <Stack.Screen name="promo" options={{ headerShown: false }} />
     </Stack>
   );
 }
