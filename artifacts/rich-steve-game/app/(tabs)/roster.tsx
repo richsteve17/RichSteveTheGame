@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
-import { FACTIONS, WRESTLERS } from "@/constants/gameData";
+import { WRESTLERS } from "@/constants/gameData";
 
 const ROLE_COLORS: Record<string, string> = {
   "Main Event": "#D4AF37",
@@ -20,7 +20,7 @@ const ROLE_COLORS: Record<string, string> = {
   Manager: "#f87171",
 };
 
-const STYLE_ICONS: Record<string, string> = {
+const STYLE_ICONS: Record<string, keyof typeof MaterialCommunityIcons.glyphMap> = {
   Technical: "cog",
   Power: "arm-flex",
   Brawler: "boxing-glove",
@@ -28,11 +28,85 @@ const STYLE_ICONS: Record<string, string> = {
   Cerebral: "brain",
 };
 
+const FACTIONS = [
+  {
+    name: "PROJECT MAYHEM",
+    color: "#D4AF37",
+    members: ["Rich $teve", "Mac Mayhem", "Ryan Vox", "Wrex Savage"],
+    manager: "Kory Cross",
+    higherPower: "Jay Cortez",
+    description:
+      "The Rampage invasion force. Born from the Coalition when Matt Wylde turned on Riot City. Phase 1: $teve, Mac, Kory Cross, and #BRUH. Phase 2: The Livewire Ryan Vox and Wrex Savage. The Emphasis on ME split almost destroyed it.",
+  },
+  {
+    name: "#BRUH",
+    color: "#60a5fa",
+    members: ["Johnny Xross", "Ray Rumble", "Trish Adora"],
+    manager: "George Burkett",
+    higherPower: null,
+    description:
+      "Started inside The Coalition. Turned babyface December 2017. Became Rampage Tag Team Champions. The Lethal Lottery made Ray Rumble the most expensive transaction of $teve's career.",
+  },
+  {
+    name: "RIOT CITY'S MOST WANTED",
+    color: "#ef4444",
+    members: ["Siccend", "Vic Ramone", "Jason Andrews"],
+    manager: null,
+    higherPower: null,
+    description:
+      "The original power of Rampage. Defended their territory against the Coalition invasion until their own Matt Wylde flipped. Everything about Project Mayhem started with beating RCMW.",
+  },
+  {
+    name: "410 MASSIV",
+    color: "#888888",
+    members: ["R.D. Cordova", "Andre Cash"],
+    manager: null,
+    higherPower: null,
+    description: "Tag team. R.D. Cordova was pinned by $teve to end Big Mike's run as ring announcer.",
+  },
+  {
+    name: "THE TALENT AGENCY",
+    color: "#888888",
+    members: ["Beard Villain Johnny Malloy"],
+    manager: null,
+    higherPower: null,
+    description:
+      "Former Rampage Heavyweight Champion Johnny Malloy led this group. The one man $teve publicly respected: 'I still respect him because he did bring people in.'",
+  },
+  {
+    name: "RUFFNECKS",
+    color: "#888888",
+    members: ["Muddy Waters", "Josh Austin"],
+    manager: null,
+    higherPower: null,
+    description: "Rampage tag team.",
+  },
+  {
+    name: "WOMEN'S DIVISION",
+    color: "#c084fc",
+    members: ["Trish Adora"],
+    manager: null,
+    higherPower: null,
+    description: "Rampage women's division. Trish Adora was affiliated with #BRUH.",
+  },
+  {
+    name: "LEGENDS & ATTRACTIONS",
+    color: "#60a5fa",
+    members: ["Shane Douglas", "Justin Credible"],
+    manager: null,
+    higherPower: null,
+    description:
+      "ECW originals brought in as Rampage attractions. Shane Douglas (The Franchise) and Justin Credible represented the old guard.",
+  },
+];
+
+type ViewMode = "factions" | "all";
+
 export default function RosterScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [view, setView] = useState<"factions" | "all">("factions");
+  const [view, setView] = useState<ViewMode>("factions");
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
@@ -71,28 +145,31 @@ export default function RosterScreen() {
       {view === "factions" &&
         FACTIONS.map((faction) => (
           <View key={faction.name} style={[styles.factionBlock, { borderColor: colors.border }]}>
-            <View style={styles.factionHeader}>
-              <Text style={[styles.factionName, { color: colors.primary }]}>{faction.name}</Text>
-              {faction.manager && (
-                <Text style={[styles.factionManager, { color: colors.mutedForeground }]}>
-                  MGR: {faction.manager}
-                </Text>
-              )}
-              {faction.higherPower && (
-                <Text style={[styles.factionManager, { color: colors.mutedForeground }]}>
-                  HIGHER POWER: {faction.higherPower}
-                </Text>
-              )}
-            </View>
-            <Text style={[styles.factionDesc, { color: colors.mutedForeground }]}>
-              {faction.description}
-            </Text>
-            <View style={styles.factionMembers}>
-              {faction.members.map((m) => (
-                <View key={m} style={[styles.memberPill, { backgroundColor: colors.secondary }]}>
-                  <Text style={[styles.memberPillText, { color: colors.foreground }]}>{m}</Text>
-                </View>
-              ))}
+            <View style={[styles.factionAccent, { backgroundColor: faction.color }]} />
+            <View style={styles.factionContent}>
+              <View style={styles.factionHeader}>
+                <Text style={[styles.factionName, { color: faction.color }]}>{faction.name}</Text>
+                {faction.manager && (
+                  <Text style={[styles.factionRole, { color: colors.mutedForeground }]}>
+                    MGR: {faction.manager}
+                  </Text>
+                )}
+                {faction.higherPower && (
+                  <Text style={[styles.factionRole, { color: colors.mutedForeground }]}>
+                    HIGHER POWER: {faction.higherPower}
+                  </Text>
+                )}
+              </View>
+              <Text style={[styles.factionDesc, { color: colors.mutedForeground }]}>
+                {faction.description}
+              </Text>
+              <View style={styles.factionMembers}>
+                {faction.members.map((m) => (
+                  <View key={m} style={[styles.memberPill, { backgroundColor: colors.secondary }]}>
+                    <Text style={[styles.memberPillText, { color: colors.foreground }]}>{m}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
         ))}
@@ -101,7 +178,7 @@ export default function RosterScreen() {
         WRESTLERS.map((w) => {
           const expanded = expandedId === w.id;
           const roleColor = ROLE_COLORS[w.role] ?? colors.mutedForeground;
-          const styleIcon = (STYLE_ICONS[w.style] ?? "help") as any;
+          const styleIcon = STYLE_ICONS[w.style] ?? "help-circle";
 
           return (
             <Pressable
@@ -117,33 +194,23 @@ export default function RosterScreen() {
               onPress={() => setExpandedId(expanded ? null : w.id)}
             >
               <View style={styles.wrestlerRow}>
-                <View style={styles.wrestlerLeft}>
-                  <View
-                    style={[
-                      styles.roleIndicator,
-                      { backgroundColor: roleColor },
-                    ]}
-                  />
-                  <View>
-                    <Text style={[styles.wrestlerName, { color: colors.foreground }]}>
-                      {w.name}
+                <View style={[styles.roleBar, { backgroundColor: roleColor }]} />
+                <View style={styles.wrestlerInfo}>
+                  <Text style={[styles.wrestlerName, { color: colors.foreground }]}>{w.name}</Text>
+                  <Text style={[styles.wrestlerRole, { color: roleColor }]}>
+                    {w.role} · {w.style}
+                  </Text>
+                  {w.faction && (
+                    <Text style={[styles.wrestlerFaction, { color: colors.mutedForeground }]}>
+                      {w.faction}
                     </Text>
-                    <Text style={[styles.wrestlerRole, { color: roleColor }]}>
-                      {w.role} · {w.style}
-                    </Text>
-                    {w.faction && (
-                      <Text style={[styles.wrestlerFaction, { color: colors.mutedForeground }]}>
-                        {w.faction}
-                      </Text>
-                    )}
-                  </View>
+                  )}
                 </View>
                 <View style={styles.wrestlerRight}>
-                  <MaterialCommunityIcons
-                    name={styleIcon}
-                    size={20}
-                    color={colors.mutedForeground}
-                  />
+                  <MaterialCommunityIcons name={styleIcon} size={18} color={colors.mutedForeground} />
+                  <Text style={[styles.wrestlerStamina, { color: colors.mutedForeground }]}>
+                    {w.stamina}
+                  </Text>
                 </View>
               </View>
 
@@ -168,7 +235,7 @@ export default function RosterScreen() {
       <View style={[styles.noteBlock, { borderColor: colors.border }]}>
         <Text style={[styles.noteTitle, { color: colors.primary }]}>SUIT RULE</Text>
         <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
-          Rich $teve only wore wrestling gear during active matches. For promos, segments, or managing out in the crowd — suits only. "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
+          Rich $teve only wore wrestling gear during active matches. For promos, segments, or managing outside the ring — suits only. "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
         </Text>
       </View>
     </ScrollView>
@@ -177,21 +244,9 @@ export default function RosterScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  pageHeader: {
-    paddingHorizontal: 24,
-    paddingBottom: 16,
-  },
-  pageTitle: {
-    fontSize: 28,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 2,
-  },
-  pageSubtitle: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-    letterSpacing: 2,
-    marginTop: 4,
-  },
+  pageHeader: { paddingHorizontal: 24, paddingBottom: 16 },
+  pageTitle: { fontSize: 28, fontFamily: "Inter_700Bold", letterSpacing: 2 },
+  pageSubtitle: { fontSize: 11, fontFamily: "Inter_500Medium", letterSpacing: 2, marginTop: 4 },
   toggle: {
     flexDirection: "row",
     marginHorizontal: 16,
@@ -200,56 +255,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: "hidden",
   },
-  toggleBtn: {
-    flex: 1,
-    paddingVertical: 10,
-    alignItems: "center",
-  },
-  toggleText: {
-    fontSize: 11,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1.5,
-  },
+  toggleBtn: { flex: 1, paddingVertical: 10, alignItems: "center" },
+  toggleText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
   factionBlock: {
     marginHorizontal: 16,
     marginBottom: 12,
     borderWidth: 1,
     borderRadius: 8,
-    padding: 14,
-  },
-  factionHeader: {
-    marginBottom: 8,
-  },
-  factionName: {
-    fontSize: 14,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1.5,
-  },
-  factionManager: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-    marginTop: 2,
-  },
-  factionDesc: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 18,
-    marginBottom: 10,
-  },
-  factionMembers: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 6,
+    overflow: "hidden",
   },
-  memberPill: {
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  memberPillText: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-  },
+  factionAccent: { width: 4 },
+  factionContent: { flex: 1, padding: 14 },
+  factionHeader: { marginBottom: 8 },
+  factionName: { fontSize: 14, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
+  factionRole: { fontSize: 11, fontFamily: "Inter_500Medium", marginTop: 2 },
+  factionDesc: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18, marginBottom: 10 },
+  factionMembers: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  memberPill: { borderRadius: 4, paddingHorizontal: 8, paddingVertical: 4 },
+  memberPillText: { fontSize: 11, fontFamily: "Inter_500Medium" },
   wrestlerCard: {
     marginHorizontal: 16,
     marginBottom: 8,
@@ -257,49 +281,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: "hidden",
   },
-  wrestlerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 14,
-  },
-  wrestlerLeft: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  roleIndicator: {
-    width: 4,
-    height: 40,
-    borderRadius: 2,
-  },
-  wrestlerName: {
-    fontSize: 15,
-    fontFamily: "Inter_600SemiBold",
-  },
-  wrestlerRole: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-    marginTop: 1,
-  },
-  wrestlerFaction: {
-    fontSize: 10,
-    fontFamily: "Inter_400Regular",
-    marginTop: 1,
-  },
-  wrestlerRight: {
-    paddingLeft: 8,
-  },
-  expandedContent: {
-    padding: 14,
-    paddingTop: 12,
-    borderTopWidth: 1,
-  },
-  wrestlerBio: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 20,
-  },
+  wrestlerRow: { flexDirection: "row", alignItems: "center", padding: 14 },
+  roleBar: { width: 4, height: 40, borderRadius: 2, marginRight: 10 },
+  wrestlerInfo: { flex: 1 },
+  wrestlerName: { fontSize: 15, fontFamily: "Inter_600SemiBold" },
+  wrestlerRole: { fontSize: 11, fontFamily: "Inter_500Medium", marginTop: 1 },
+  wrestlerFaction: { fontSize: 10, fontFamily: "Inter_400Regular", marginTop: 1 },
+  wrestlerRight: { alignItems: "center", gap: 2, paddingLeft: 8 },
+  wrestlerStamina: { fontSize: 11, fontFamily: "Inter_700Bold" },
+  expandedContent: { padding: 14, paddingTop: 12, borderTopWidth: 1 },
+  wrestlerBio: { fontSize: 13, fontFamily: "Inter_400Regular", lineHeight: 20 },
   moveBadge: {
     alignSelf: "flex-start",
     marginTop: 10,
@@ -307,27 +298,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
-  moveBadgeText: {
-    fontSize: 10,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1,
-  },
-  noteBlock: {
-    margin: 16,
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 16,
-  },
-  noteTitle: {
-    fontSize: 11,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 3,
-    marginBottom: 8,
-  },
-  noteText: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 18,
-    fontStyle: "italic",
-  },
+  moveBadgeText: { fontSize: 10, fontFamily: "Inter_700Bold", letterSpacing: 1 },
+  noteBlock: { margin: 16, borderWidth: 1, borderRadius: 8, padding: 16 },
+  noteTitle: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 3, marginBottom: 8 },
+  noteText: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18, fontStyle: "italic" },
 });

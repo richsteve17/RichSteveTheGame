@@ -20,6 +20,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: "book", selected: "book.fill" }} />
         <Label>Career</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="play">
+        <Icon sf={{ default: "figure.wrestling", selected: "figure.wrestling" }} />
+        <Label>Match</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="roster">
         <Icon sf={{ default: "person.3", selected: "person.3.fill" }} />
         <Label>Roster</Label>
@@ -87,6 +91,18 @@ function ClassicTabLayout() {
               <SymbolView name="book" tintColor={color} size={24} />
             ) : (
               <MaterialCommunityIcons name="book-open-variant" size={22} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="play"
+        options={{
+          title: "Match",
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="bolt.fill" tintColor={color} size={24} />
+            ) : (
+              <MaterialCommunityIcons name="sword-cross" size={22} color={color} />
             ),
         }}
       />

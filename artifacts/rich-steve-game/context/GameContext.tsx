@@ -5,6 +5,7 @@ const STORAGE_KEY = "@richsteve_game_state";
 
 export interface GameState {
   completedChapters: string[];
+  wonChapters: string[];
   currentEra: number;
   isChampion: boolean;
   tagTitlesWon: boolean;
@@ -16,6 +17,7 @@ export interface GameState {
 
 const DEFAULT_STATE: GameState = {
   completedChapters: [],
+  wonChapters: [],
   currentEra: 1,
   isChampion: false,
   tagTitlesWon: false,
@@ -27,10 +29,15 @@ const DEFAULT_STATE: GameState = {
 
 interface GameContextValue {
   gameState: GameState;
-  completeChapter: (chapterId: string, won: boolean, options?: { isTagTitle?: boolean; isHeavyweight?: boolean; isRiotRumble?: boolean }) => Promise<void>;
+  completeChapter: (
+    chapterId: string,
+    won: boolean,
+    options?: { isTagTitle?: boolean; isHeavyweight?: boolean; isRiotRumble?: boolean }
+  ) => Promise<void>;
   resetGame: () => Promise<void>;
   isChapterUnlocked: (chapterId: string) => boolean;
   isChapterCompleted: (chapterId: string) => boolean;
+  isChapterWon: (chapterId: string) => boolean;
 }
 
 const GameContext = createContext<GameContextValue | null>(null);
@@ -48,6 +55,11 @@ const CHAPTER_ORDER = [
   "ch10-lost-ending-part1",
   "ch11-lost-ending-finale",
 ];
+
+// Chapters that require a WIN to unlock the next chapter.
+// For most chapters, completing them (win or lose) unlocks the next.
+// The Lost Ending requires winning ch10 to reach ch11.
+const REQUIRES_WIN_TO_ADVANCE = new Set(["ch10-lost-ending-part1"]);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [gameState, setGameState] = useState<GameState>(DEFAULT_STATE);
@@ -80,9 +92,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const next = { ...gameState };
     next.totalMatchesPlayed += 1;
     if (won) next.totalMatchesWon += 1;
+
     if (!next.completedChapters.includes(chapterId)) {
       next.completedChapters = [...next.completedChapters, chapterId];
     }
+    if (won && !next.wonChapters.includes(chapterId)) {
+      next.wonChapters = [...next.wonChapters, chapterId];
+    }
+
     if (options?.isTagTitle && won) next.tagTitlesWon = true;
     if (options?.isHeavyweight && won) next.heavyweightTitleWon = true;
     if (options?.isRiotRumble && won) {
@@ -105,23 +122,37 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     await save(DEFAULT_STATE);
   };
 
-  const isChapterCompleted = (chapterId: string) => {
-    return gameState.completedChapters.includes(chapterId);
-  };
+  const isChapterCompleted = (chapterId: string) =>
+    gameState.completedChapters.includes(chapterId);
 
-  const isChapterUnlocked = (chapterId: string) => {
+  const isChapterWon = (chapterId: string) =>
+    gameState.wonChapters.includes(chapterId);
+
+  const isChapterUnlocked = (chapterId: string): boolean => {
     const idx = CHAPTER_ORDER.indexOf(chapterId);
     if (idx === 0) return true;
     if (idx < 0) return false;
-    const prev = CHAPTER_ORDER[idx - 1];
-    return gameState.completedChapters.includes(prev!);
+    const prev = CHAPTER_ORDER[idx - 1]!;
+    // If the previous chapter requires a win to advance, check wonChapters
+    if (REQUIRES_WIN_TO_ADVANCE.has(prev)) {
+      return gameState.wonChapters.includes(prev);
+    }
+    // Otherwise, just completing (win or lose) unlocks the next
+    return gameState.completedChapters.includes(prev);
   };
 
   if (!loaded) return null;
 
   return (
     <GameContext.Provider
-      value={{ gameState, completeChapter, resetGame, isChapterUnlocked, isChapterCompleted }}
+      value={{
+        gameState,
+        completeChapter,
+        resetGame,
+        isChapterUnlocked,
+        isChapterCompleted,
+        isChapterWon,
+      }}
     >
       {children}
     </GameContext.Provider>
