@@ -1,3 +1,13 @@
+export interface WrestlerRatings {
+  power: number;
+  speed: number;
+  technical: number;
+  toughness: number;
+  mic: number;
+  heat: number;
+  overall: number;
+}
+
 export interface Wrestler {
   id: string;
   name: string;
@@ -11,6 +21,7 @@ export interface Wrestler {
   height?: string;
   weight?: string;
   hometown?: string;
+  ratings?: WrestlerRatings;
 }
 
 export interface CareerChapter {
@@ -66,6 +77,7 @@ export const RICH_STEVE: Wrestler = {
   height: "6'1\"",
   weight: "340 lbs",
   hometown: "Philadelphia, PA",
+  ratings: { power: 71, speed: 65, technical: 79, toughness: 78, mic: 97, heat: 96, overall: 91 },
 };
 
 export const WRESTLERS: Wrestler[] = [
@@ -80,6 +92,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 85,
     moves: ["Scoop Slam", "Running Clothesline", "Suplex", "Corner Splash", "Big Boot"],
     signatureMove: null,
+    ratings: { power: 84, speed: 62, technical: 73, toughness: 83, mic: 65, heat: 66, overall: 74 },
   },
   {
     id: "kj-hellfire",
@@ -91,6 +104,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 72,
     moves: ["DDT", "Clothesline", "Choke Slam", "Running Bulldog"],
     signatureMove: null,
+    ratings: { power: 74, speed: 68, technical: 69, toughness: 72, mic: 64, heat: 67, overall: 70 },
   },
   {
     id: "korpse",
@@ -102,6 +116,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 92,
     moves: ["Chokeslam", "Sit-Out Powerbomb", "Big Boot", "Bear Hug", "Running Powerslam"],
     signatureMove: null,
+    ratings: { power: 88, speed: 64, technical: 74, toughness: 86, mic: 70, heat: 71, overall: 79 },
   },
   {
     id: "ruben-ortiz",
@@ -113,6 +128,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 60,
     moves: ["Wild Swing", "Bear Hug", "Headlock", "Running Shoulder Block"],
     signatureMove: null,
+    ratings: { power: 62, speed: 58, technical: 44, toughness: 63, mic: 42, heat: 38, overall: 52 },
   },
   {
     id: "southern-enforcer",
@@ -124,6 +140,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 75,
     moves: ["Spike DDT", "Clothesline", "Brawling Combo", "Slam"],
     signatureMove: "Spike",
+    ratings: { power: 73, speed: 66, technical: 67, toughness: 74, mic: 58, heat: 62, overall: 67 },
   },
   {
     id: "don-e-allen",
@@ -135,6 +152,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 80,
     moves: ["Snap DDT", "Running Elbow", "Clothesline", "Stomp Combo"],
     signatureMove: null,
+    ratings: { power: 74, speed: 65, technical: 75, toughness: 76, mic: 72, heat: 70, overall: 73 },
   },
   // ─── ERA 3: OTCW/COALITION ────────────────────────────────────
   {
@@ -147,6 +165,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 74,
     moves: ["Running Forearm", "Scoop Slam", "Shoulder Block", "Corner Clothesline"],
     signatureMove: null,
+    ratings: { power: 69, speed: 71, technical: 68, toughness: 68, mic: 61, heat: 59, overall: 66 },
   },
   {
     id: "drew-bronson",
@@ -158,6 +177,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 78,
     moves: ["Powerbomb", "Clothesline", "Running Shoulder Block", "Slam"],
     signatureMove: null,
+    ratings: { power: 81, speed: 67, technical: 72, toughness: 79, mic: 67, heat: 68, overall: 74 },
   },
   {
     id: "allistar-conrad",
@@ -169,6 +189,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 76,
     moves: ["European Uppercut", "Neckbreaker", "Armbar", "Knee Strike"],
     signatureMove: null,
+    ratings: { power: 72, speed: 70, technical: 78, toughness: 71, mic: 68, heat: 65, overall: 71 },
   },
   {
     id: "jesse-skelton",
@@ -180,6 +201,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 73,
     moves: ["Lariat", "Brawling Combo", "Spinebuster", "Elbow Drop"],
     signatureMove: null,
+    ratings: { power: 76, speed: 67, technical: 71, toughness: 74, mic: 63, heat: 66, overall: 70 },
   },
   // ─── ERA 3/4: PROJECT MAYHEM CORE ───────────────────────────
   {
@@ -192,6 +214,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 95,
     moves: ["Running Shoulder Block", "Corner Splash", "Blue Collar Bomb", "Gutwrench Slam"],
     signatureMove: "Blue Collar Bomb",
+    ratings: { power: 87, speed: 69, technical: 74, toughness: 85, mic: 82, heat: 80, overall: 84 },
   },
   {
     id: "ryan-vox",
@@ -206,6 +229,7 @@ export const WRESTLERS: Wrestler[] = [
     height: "5'7\"",
     weight: "170 lbs",
     hometown: "Philadelphia, PA",
+    ratings: { power: 67, speed: 89, technical: 77, toughness: 68, mic: 74, heat: 72, overall: 78 },
   },
   {
     id: "wrex-savage",
@@ -217,6 +241,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 80,
     moves: ["Lariat", "Powerbomb", "Spear", "Overhead Belly-to-Belly"],
     signatureMove: null,
+    ratings: { power: 88, speed: 63, technical: 70, toughness: 84, mic: 66, heat: 74, overall: 77 },
   },
   {
     id: "kory-cross",
@@ -228,6 +253,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 60,
     moves: ["Distraction", "Object Throw", "Foreign Object", "Low Blow"],
     signatureMove: null,
+    ratings: { power: 61, speed: 64, technical: 65, toughness: 62, mic: 77, heat: 71, overall: 68 },
   },
   {
     id: "jay-cortez",
@@ -239,6 +265,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 83,
     moves: ["Lariat", "Powerbomb", "Corner Splash", "Knee Strike"],
     signatureMove: null,
+    ratings: { power: 82, speed: 70, technical: 79, toughness: 81, mic: 76, heat: 74, overall: 80 },
   },
   // ─── ERA 4: IMPACT SOCIETY ───────────────────────────────────
   {
@@ -251,6 +278,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 79,
     moves: ["Suplex", "Armbar", "Running Knee", "Neckbreaker"],
     signatureMove: null,
+    ratings: { power: 76, speed: 74, technical: 82, toughness: 75, mic: 70, heat: 67, overall: 75 },
   },
   // ─── ERA 4/5: #BRUH ──────────────────────────────────────────
   {
@@ -263,6 +291,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 90,
     moves: ["Crossbody", "Armbar", "Neckbreaker", "Spinning Elbow", "Running Dropkick"],
     signatureMove: null,
+    ratings: { power: 84, speed: 64, technical: 72, toughness: 83, mic: 68, heat: 77, overall: 76 },
   },
   {
     id: "ray-rumble",
@@ -274,6 +303,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 88,
     moves: ["Haymaker", "Spinebuster", "Clothesline", "Back Suplex", "Running Knee"],
     signatureMove: null,
+    ratings: { power: 81, speed: 66, technical: 72, toughness: 80, mic: 68, heat: 74, overall: 74 },
   },
   {
     id: "george-burkett",
@@ -285,6 +315,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 55,
     moves: ["Distraction", "Ringside Interference", "Object Throw"],
     signatureMove: null,
+    ratings: { power: 52, speed: 54, technical: 53, toughness: 55, mic: 78, heat: 72, overall: 63 },
   },
   {
     id: "trish-adora",
@@ -296,6 +327,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 75,
     moves: ["Arm Drag", "Running Crossbody", "Submission Hold", "DDT"],
     signatureMove: null,
+    ratings: { power: 68, speed: 78, technical: 80, toughness: 69, mic: 72, heat: 68, overall: 73 },
   },
   // ─── ERA 3/4: RIOT CITY'S MOST WANTED ───────────────────────
   {
@@ -308,6 +340,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 87,
     moves: ["Spear", "Uranage", "Corner Clothesline", "Belly-to-Back Suplex", "Running Lariat"],
     signatureMove: "Spear",
+    ratings: { power: 84, speed: 71, technical: 74, toughness: 82, mic: 76, heat: 75, overall: 79 },
   },
   {
     id: "vic-ramone",
@@ -319,6 +352,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 80,
     moves: ["Dropkick", "Snap Suplex", "Rolling Elbow", "Kneebar"],
     signatureMove: null,
+    ratings: { power: 74, speed: 76, technical: 79, toughness: 73, mic: 68, heat: 66, overall: 73 },
   },
   {
     id: "jason-drake",
@@ -330,6 +364,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 77,
     moves: ["Clothesline", "Headbutt", "Scoop Slam", "Running Forearm"],
     signatureMove: null,
+    ratings: { power: 73, speed: 68, technical: 70, toughness: 72, mic: 62, heat: 64, overall: 68 },
   },
   // ─── ERA 4/5: YAMS / WORKING CLASS ──────────────────────────
   {
@@ -342,6 +377,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 88,
     moves: ["Lariat", "German Suplex", "Running Powerslam", "Headbutt", "Corner Splash"],
     signatureMove: null,
+    ratings: { power: 84, speed: 70, technical: 74, toughness: 83, mic: 75, heat: 73, overall: 79 },
   },
   // ─── ERA 5: THE GUERRERO TARGET ──────────────────────────────
   {
@@ -354,6 +390,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 71,
     moves: ["Clothesline", "Suplex", "Running Shoulder Block", "Ground & Pound"],
     signatureMove: null,
+    ratings: { power: 70, speed: 66, technical: 67, toughness: 68, mic: 62, heat: 58, overall: 66 },
   },
   // ─── ERA 4/5: BIG MIKE TARGETS ───────────────────────────────
   {
@@ -366,6 +403,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 82,
     moves: ["Running Shoulderblock", "Sidewalk Slam", "Ground & Pound", "Scoop Slam"],
     signatureMove: null,
+    ratings: { power: 80, speed: 66, technical: 70, toughness: 78, mic: 62, heat: 64, overall: 70 },
   },
   {
     id: "andre-cash",
@@ -377,6 +415,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 80,
     moves: ["Powerslam", "Elbow Drop", "Clothesline", "Bear Hug"],
     signatureMove: null,
+    ratings: { power: 79, speed: 65, technical: 69, toughness: 77, mic: 60, heat: 62, overall: 69 },
   },
   // ─── MIDCARD / SPECIALISTS ────────────────────────────────────
   {
@@ -392,6 +431,7 @@ export const WRESTLERS: Wrestler[] = [
     height: "6'0\"",
     weight: "200 lbs",
     hometown: "Funkytown U.S.A.",
+    ratings: { power: 72, speed: 78, technical: 80, toughness: 72, mic: 74, heat: 68, overall: 75 },
   },
   {
     id: "randy-lawson",
@@ -406,6 +446,7 @@ export const WRESTLERS: Wrestler[] = [
     height: "5'9\"",
     weight: "175 lbs",
     hometown: "Richmond, VA",
+    ratings: { power: 68, speed: 74, technical: 73, toughness: 67, mic: 65, heat: 63, overall: 68 },
   },
   {
     id: "muddy-waters",
@@ -417,6 +458,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 79,
     moves: ["Brawling Combo", "Scoop Slam", "Elbow Drop", "Headbutt"],
     signatureMove: null,
+    ratings: { power: 74, speed: 66, technical: 69, toughness: 73, mic: 60, heat: 62, overall: 68 },
   },
   {
     id: "greywolf",
@@ -428,6 +470,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 78,
     moves: ["War Dance Clothesline", "Scoop Slam", "Running Shoulder Block", "Headbutt"],
     signatureMove: null,
+    ratings: { power: 75, speed: 67, technical: 70, toughness: 74, mic: 62, heat: 64, overall: 69 },
   },
   // ─── THE TALENT AGENCY ───────────────────────────────────────
   {
@@ -443,6 +486,7 @@ export const WRESTLERS: Wrestler[] = [
     height: "6'0\"",
     weight: "280 lbs",
     hometown: "Centereach, NY",
+    ratings: { power: 82, speed: 68, technical: 80, toughness: 81, mic: 78, heat: 72, overall: 79 },
   },
   {
     id: "little-monster-binky",
@@ -457,6 +501,7 @@ export const WRESTLERS: Wrestler[] = [
     height: "4'11\"",
     weight: "120 lbs",
     hometown: "Queens, NY",
+    ratings: { power: 60, speed: 82, technical: 78, toughness: 63, mic: 70, heat: 67, overall: 70 },
   },
   // ─── LEGENDS & ATTRACTIONS ───────────────────────────────────
   {
@@ -469,6 +514,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 85,
     moves: ["Pittsburgh Plunge", "Belly-to-Belly Suplex", "Figure Four", "Lariat"],
     signatureMove: "Pittsburgh Plunge",
+    ratings: { power: 80, speed: 70, technical: 86, toughness: 81, mic: 88, heat: 85, overall: 84 },
   },
   {
     id: "justin-credible",
@@ -480,6 +526,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 82,
     moves: ["That's Incredible", "Superkick", "DDT", "Cane Shot"],
     signatureMove: "That's Incredible",
+    ratings: { power: 76, speed: 73, technical: 78, toughness: 77, mic: 80, heat: 78, overall: 77 },
   },
   {
     id: "bull-james",
@@ -491,6 +538,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 88,
     moves: ["Running Crossbody", "Corner Splash", "Headbutt", "Bull Drop"],
     signatureMove: "Bull Drop",
+    ratings: { power: 88, speed: 62, technical: 71, toughness: 86, mic: 72, heat: 70, overall: 76 },
   },
   // ─── ERA 3 ADDITIONS ─────────────────────────────────────────
   {
@@ -503,6 +551,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 82,
     moves: ["Scoop Slam", "Running Clothesline", "Spinebuster", "Big Boot", "Powerbomb"],
     signatureMove: null,
+    ratings: { power: 86, speed: 62, technical: 72, toughness: 84, mic: 66, heat: 67, overall: 73 },
   },
   {
     id: "siccend",
@@ -514,6 +563,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 75,
     moves: ["Headbutt", "DDT", "Running Knee", "Lariat", "Choke Slam"],
     signatureMove: null,
+    ratings: { power: 82, speed: 69, technical: 73, toughness: 80, mic: 74, heat: 73, overall: 77 },
   },
   {
     id: "vic-ramon",
@@ -525,6 +575,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 74,
     moves: ["Suplex", "Armbar", "Running Elbow", "Vertical Suplex", "Neckbreaker"],
     signatureMove: null,
+    ratings: { power: 73, speed: 75, technical: 78, toughness: 72, mic: 67, heat: 65, overall: 72 },
   },
   // ─── ERA 4 ADDITIONS ─────────────────────────────────────────
   {
@@ -537,6 +588,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 72,
     moves: ["Running Clothesline", "Headlock", "Body Slam", "Big Boot"],
     signatureMove: null,
+    ratings: { power: 73, speed: 67, technical: 68, toughness: 72, mic: 61, heat: 63, overall: 67 },
   },
   {
     id: "jt-funk",
@@ -548,6 +600,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 70,
     moves: ["Lariat", "Suplex", "DDT", "Corner Punch"],
     signatureMove: null,
+    ratings: { power: 71, speed: 74, technical: 76, toughness: 70, mic: 72, heat: 66, overall: 72 },
   },
   // ─── ERA 5 ADDITIONS ─────────────────────────────────────────
   {
@@ -560,6 +613,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 74,
     moves: ["Gorilla Press", "Headlock", "Body Slam", "Lariat", "Bearhug"],
     signatureMove: null,
+    ratings: { power: 83, speed: 63, technical: 68, toughness: 80, mic: 60, heat: 62, overall: 70 },
   },
   {
     id: "mal-havock",
@@ -571,6 +625,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 72,
     moves: ["Dropkick", "Suplex", "Neckbreaker", "Running Shoulder Block"],
     signatureMove: null,
+    ratings: { power: 71, speed: 71, technical: 70, toughness: 70, mic: 62, heat: 61, overall: 68 },
   },
   {
     id: "big-new-yorker",
@@ -582,6 +637,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 78,
     moves: ["Double Clothesline", "Slam Combo", "Backbreaker", "Running Elbow"],
     signatureMove: null,
+    ratings: { power: 83, speed: 61, technical: 67, toughness: 81, mic: 64, heat: 63, overall: 71 },
   },
   {
     id: "detroits-finest",
@@ -593,6 +649,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 72,
     moves: ["Double Shoulder Block", "Slam", "Elbow Drop", "Running Lariat"],
     signatureMove: null,
+    ratings: { power: 78, speed: 63, technical: 66, toughness: 76, mic: 58, heat: 59, overall: 68 },
   },
   {
     id: "high-voltage",
@@ -604,6 +661,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 74,
     moves: ["High Crossbody", "Running Clothesline", "Suplex", "Tag Team Slam"],
     signatureMove: null,
+    ratings: { power: 74, speed: 70, technical: 68, toughness: 72, mic: 60, heat: 60, overall: 67 },
   },
   {
     id: "the-rapprochement",
@@ -615,6 +673,7 @@ export const WRESTLERS: Wrestler[] = [
     stamina: 73,
     moves: ["Combo Slam", "Tag Spike", "Neckbreaker", "Double Team Elbow"],
     signatureMove: null,
+    ratings: { power: 70, speed: 72, technical: 74, toughness: 70, mic: 64, heat: 63, overall: 69 },
   },
 ];
 

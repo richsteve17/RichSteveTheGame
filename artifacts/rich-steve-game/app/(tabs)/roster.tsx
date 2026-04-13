@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
-import { WRESTLERS } from "@/constants/gameData";
+import { WRESTLERS, RICH_STEVE, type WrestlerRatings } from "@/constants/gameData";
 import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
 
 const ROLE_COLORS: Record<string, string> = {
@@ -29,6 +29,15 @@ const STYLE_ICONS: Record<string, keyof typeof MaterialCommunityIcons.glyphMap> 
   "High-Flyer": "airplane",
   Cerebral: "brain",
 };
+
+const RATING_ATTRS: { key: keyof Omit<WrestlerRatings, "overall">; label: string; color: string }[] = [
+  { key: "power",     label: "PWR",   color: "#ef4444" },
+  { key: "speed",     label: "SPD",   color: "#22c55e" },
+  { key: "technical", label: "TEC",   color: "#3b82f6" },
+  { key: "toughness", label: "TOUGH", color: "#f97316" },
+  { key: "mic",       label: "MIC",   color: "#D4AF37" },
+  { key: "heat",      label: "HEAT",  color: "#a855f7" },
+];
 
 const FACTIONS = [
   {
@@ -108,7 +117,7 @@ const FACTIONS = [
   },
 ];
 
-type ViewMode = "factions" | "all";
+type ViewMode = "factions" | "all" | "ratings";
 
 function FactionMemberPhotos({ memberIds }: { memberIds: string[] }) {
   const colors = useColors();
@@ -125,6 +134,34 @@ function FactionMemberPhotos({ memberIds }: { memberIds: string[] }) {
   );
 }
 
+function RatingBar({ label, value, color }: { label: string; value: number; color: string }) {
+  const colors = useColors();
+  const grade = value >= 90 ? "S" : value >= 80 ? "A" : value >= 70 ? "B" : value >= 60 ? "C" : "D";
+  return (
+    <View style={styles.ratingBarRow}>
+      <Text style={[styles.ratingBarLabel, { color: colors.mutedForeground }]}>{label}</Text>
+      <View style={[styles.ratingBarTrack, { backgroundColor: colors.secondary }]}>
+        <View style={[styles.ratingBarFill, { width: `${value}%`, backgroundColor: color }]} />
+      </View>
+      <Text style={[styles.ratingBarValue, { color }]}>{value}</Text>
+      <Text style={[styles.ratingBarGrade, { color: colors.mutedForeground }]}>{grade}</Text>
+    </View>
+  );
+}
+
+function OvrBadge({ overall, size = "md" }: { overall: number; size?: "sm" | "md" | "lg" }) {
+  const sz = size === "lg" ? 68 : size === "sm" ? 36 : 50;
+  const fs = size === "lg" ? 26 : size === "sm" ? 14 : 20;
+  const lfs = size === "lg" ? 9 : size === "sm" ? 7 : 8;
+  const color = overall >= 90 ? "#D4AF37" : overall >= 80 ? "#22c55e" : overall >= 70 ? "#3b82f6" : "#888888";
+  return (
+    <View style={[styles.ovrBadge, { width: sz, height: sz, borderRadius: sz / 2, borderColor: color }]}>
+      <Text style={[styles.ovrNumber, { fontSize: fs, color }]}>{overall}</Text>
+      <Text style={[styles.ovrLabel, { fontSize: lfs, color }]}>OVR</Text>
+    </View>
+  );
+}
+
 export default function RosterScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
@@ -132,6 +169,11 @@ export default function RosterScreen() {
   const [view, setView] = useState<ViewMode>("factions");
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
+
+  const allWrestlers = [RICH_STEVE, ...WRESTLERS];
+  const ranked = [...allWrestlers]
+    .filter((w) => w.ratings)
+    .sort((a, b) => (b.ratings!.overall) - (a.ratings!.overall));
 
   return (
     <ScrollView
@@ -160,7 +202,15 @@ export default function RosterScreen() {
           onPress={() => setView("all")}
         >
           <Text style={[styles.toggleText, { color: view === "all" ? colors.primaryForeground : colors.mutedForeground }]}>
-            ALL WRESTLERS
+            ALL
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[styles.toggleBtn, view === "ratings" && { backgroundColor: colors.primary }]}
+          onPress={() => setView("ratings")}
+        >
+          <Text style={[styles.toggleText, { color: view === "ratings" ? colors.primaryForeground : colors.mutedForeground }]}>
+            RATINGS
           </Text>
         </Pressable>
       </View>
@@ -199,7 +249,7 @@ export default function RosterScreen() {
         ))}
 
       {view === "all" &&
-        WRESTLERS.map((w) => {
+        WRESTLERS.map((w, idx) => {
           const expanded = expandedId === w.id;
           const roleColor = ROLE_COLORS[w.role] ?? colors.mutedForeground;
           const styleIcon = STYLE_ICONS[w.style] ?? "help-circle";
@@ -207,7 +257,7 @@ export default function RosterScreen() {
 
           return (
             <Pressable
-              key={w.id}
+              key={`wrestler-${idx}-${w.id}`}
               style={({ pressed }) => [
                 styles.wrestlerCard,
                 {
@@ -240,10 +290,16 @@ export default function RosterScreen() {
                   )}
                 </View>
                 <View style={styles.wrestlerRight}>
-                  <MaterialCommunityIcons name={styleIcon} size={18} color={colors.mutedForeground} />
-                  <Text style={[styles.wrestlerStamina, { color: colors.mutedForeground }]}>
-                    {w.stamina}
-                  </Text>
+                  {w.ratings ? (
+                    <OvrBadge overall={w.ratings.overall} size="sm" />
+                  ) : (
+                    <>
+                      <MaterialCommunityIcons name={styleIcon} size={18} color={colors.mutedForeground} />
+                      <Text style={[styles.wrestlerStamina, { color: colors.mutedForeground }]}>
+                        {w.stamina}
+                      </Text>
+                    </>
+                  )}
                 </View>
               </View>
 
@@ -264,18 +320,98 @@ export default function RosterScreen() {
                       </Text>
                     </View>
                   )}
+                  {w.ratings && (
+                    <View style={[styles.ratingsCard, { backgroundColor: colors.background, borderColor: colors.primary + "44" }]}>
+                      <View style={styles.ratingsHeader}>
+                        <Text style={[styles.ratingsTitle, { color: colors.primary }]}>RATINGS</Text>
+                        <View style={[styles.leakedBadge, { backgroundColor: "#ef444422", borderColor: "#ef4444" }]}>
+                          <Text style={styles.leakedText}>LEAKED</Text>
+                        </View>
+                      </View>
+                      <View style={styles.ratingsBody}>
+                        <OvrBadge overall={w.ratings.overall} size="lg" />
+                        <View style={styles.ratingBars}>
+                          {RATING_ATTRS.map((attr) => (
+                            <RatingBar
+                              key={attr.key}
+                              label={attr.label}
+                              value={w.ratings![attr.key]}
+                              color={attr.color}
+                            />
+                          ))}
+                        </View>
+                      </View>
+                    </View>
+                  )}
                 </View>
               )}
             </Pressable>
           );
         })}
 
-      <View style={[styles.noteBlock, { borderColor: colors.border }]}>
-        <Text style={[styles.noteTitle, { color: colors.primary }]}>SUIT RULE</Text>
-        <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
-          Rich $teve only wore wrestling gear during active matches. For promos, segments, or managing outside the ring — suits only. "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
-        </Text>
-      </View>
+      {view === "ratings" && (
+        <View>
+          <View style={[styles.leaderboardHeader, { borderColor: colors.border, backgroundColor: colors.card }]}>
+            <View style={[styles.leakedStamp, { borderColor: "#ef4444" }]}>
+              <Text style={[styles.leakedStampText, { color: "#ef4444" }]}>⚠ CONFIDENTIAL — DO NOT DISTRIBUTE</Text>
+            </View>
+            <Text style={[styles.leaderboardTitle, { color: colors.primary }]}>OFFICIAL RATINGS</Text>
+            <Text style={[styles.leaderboardSubtitle, { color: colors.mutedForeground }]}>
+              Rampage Pro Wrestling · 2006–2019 · All promotions
+            </Text>
+          </View>
+
+          {ranked.map((w, i) => {
+            const photo = getWrestlerPhoto(w.id);
+            const roleColor = ROLE_COLORS[w.role] ?? colors.mutedForeground;
+            const r = w.ratings!;
+            const rankColor = i === 0 ? "#D4AF37" : i === 1 ? "#aaaaaa" : i === 2 ? "#cd7f32" : colors.mutedForeground;
+
+            return (
+              <View key={`rank-${i}-${w.id}`} style={[styles.rankCard, { backgroundColor: colors.card, borderColor: i === 0 ? colors.primary : colors.border }]}>
+                <Text style={[styles.rankNum, { color: rankColor }]}>#{i + 1}</Text>
+                {photo ? (
+                  <View style={[styles.rankPhoto, { borderColor: roleColor }]}>
+                    <Image source={photo} style={styles.rankPhotoImg} resizeMode="cover" />
+                  </View>
+                ) : (
+                  <View style={[styles.rankPhoto, styles.rankPhotoPlaceholder, { borderColor: roleColor }]}>
+                    <MaterialCommunityIcons name="account" size={22} color={roleColor + "66"} />
+                  </View>
+                )}
+                <View style={styles.rankInfo}>
+                  <Text style={[styles.rankName, { color: colors.foreground }]} numberOfLines={1}>{w.name}</Text>
+                  <View style={styles.rankMiniStats}>
+                    {RATING_ATTRS.map((attr) => (
+                      <View key={attr.key} style={styles.rankMiniStat}>
+                        <Text style={[styles.rankMiniLabel, { color: colors.mutedForeground }]}>{attr.label}</Text>
+                        <Text style={[styles.rankMiniValue, { color: attr.color }]}>{r[attr.key]}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+                <OvrBadge overall={r.overall} size="md" />
+              </View>
+            );
+          })}
+
+          <View style={[styles.noteBlock, { borderColor: colors.border, marginTop: 8 }]}>
+            <Text style={[styles.noteTitle, { color: "#ef4444" }]}>METHODOLOGY NOTE</Text>
+            <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
+              Ratings reflect peak performance window during active storyline periods. MIC and HEAT scores weight promo ability and crowd response independently of in-ring work. OVR is composite — a 97 MIC can carry an otherwise average performer to the top of this list. Ask Rich $teve about it.
+            </Text>
+          </View>
+        </View>
+      )}
+
+      {view !== "ratings" && (
+        <View style={[styles.noteBlock, { borderColor: colors.border }]}>
+          <Text style={[styles.noteTitle, { color: colors.primary }]}>SUIT RULE</Text>
+          <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
+            Rich $teve only wore wrestling gear during active matches. For promos, segments, or managing outside the ring — suits only. "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 }
@@ -353,6 +489,85 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   moveBadgeText: { fontSize: 10, fontFamily: "Inter_700Bold", letterSpacing: 1 },
+
+  ratingsCard: {
+    marginTop: 14,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 12,
+  },
+  ratingsHeader: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 12 },
+  ratingsTitle: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 3 },
+  leakedBadge: {
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+  },
+  leakedText: { fontSize: 8, fontFamily: "Inter_700Bold", letterSpacing: 1.5, color: "#ef4444" },
+  ratingsBody: { flexDirection: "row", alignItems: "center", gap: 14 },
+  ratingBars: { flex: 1, gap: 5 },
+
+  ratingBarRow: { flexDirection: "row", alignItems: "center", gap: 6 },
+  ratingBarLabel: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 0.5, width: 34, textAlign: "right" },
+  ratingBarTrack: { flex: 1, height: 6, borderRadius: 3, overflow: "hidden" },
+  ratingBarFill: { height: "100%", borderRadius: 3 },
+  ratingBarValue: { fontSize: 10, fontFamily: "Inter_700Bold", width: 24, textAlign: "right" },
+  ratingBarGrade: { fontSize: 9, fontFamily: "Inter_700Bold", width: 12, textAlign: "center" },
+
+  ovrBadge: {
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  ovrNumber: { fontFamily: "Inter_700Bold" },
+  ovrLabel: { fontFamily: "Inter_700Bold", letterSpacing: 1, marginTop: -2 },
+
+  leaderboardHeader: {
+    marginHorizontal: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 16,
+    alignItems: "center",
+  },
+  leakedStamp: {
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    marginBottom: 10,
+  },
+  leakedStampText: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
+  leaderboardTitle: { fontSize: 22, fontFamily: "Inter_700Bold", letterSpacing: 3 },
+  leaderboardSubtitle: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 4 },
+
+  rankCard: {
+    marginHorizontal: 16,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  rankNum: { fontSize: 14, fontFamily: "Inter_700Bold", width: 28, textAlign: "center" },
+  rankPhoto: {
+    width: 46,
+    height: 46,
+    borderRadius: 5,
+    overflow: "hidden",
+    borderWidth: 1.5,
+  },
+  rankPhotoImg: { width: "100%", height: "100%" },
+  rankPhotoPlaceholder: { alignItems: "center", justifyContent: "center" },
+  rankInfo: { flex: 1 },
+  rankName: { fontSize: 13, fontFamily: "Inter_600SemiBold", marginBottom: 4 },
+  rankMiniStats: { flexDirection: "row", gap: 6 },
+  rankMiniStat: { alignItems: "center" },
+  rankMiniLabel: { fontSize: 7, fontFamily: "Inter_700Bold", letterSpacing: 0.5 },
+  rankMiniValue: { fontSize: 11, fontFamily: "Inter_700Bold" },
 
   noteBlock: { margin: 16, borderWidth: 1, borderRadius: 8, padding: 16 },
   noteTitle: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 3, marginBottom: 8 },
