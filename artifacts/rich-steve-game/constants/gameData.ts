@@ -287,7 +287,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "#BRUH",
     role: "Main Event",
     style: "Technical",
-    bio: "One half of #BRUH with Ray Rumble. Original Coalition member and the tag backbone of Project Mayhem throughout all of 2017. Under manager George Burkett, won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club — the same night Yams won the Heavyweight Title. December 9, 2017 — Big Mike's Curtain Call — #BRUH turned face and quit Project Mayhem. In the aftermath, Rich $teve cornered Xross through the cage and told him directly: 'I want you to remember one thing, #Bruh — I created you. I made you both who you are. Without me you would be nothing. You betrayed what was supposed to be a real friendship, and for what? For some idiot in a stupid hat? You made the biggest mistake you could when you crossed us.' Johnny was not at the Lethal Lottery show. That was the final piece of the plan. The man $teve's Lost Ending was always designed to put over.",
+    bio: "One half of #BRUH with Ray Rumble. Both from Washington, DC. Original Coalition member — Steve brought them in from OTCW and kept them through every phase of Project Mayhem's formation, through the purge of Conrad and Bronson, through all of 2017. Creator of the Pan-Afrikan World Diaspora Wrestling World Championship — a real title, a legacy piece, which Johnny would later hold for 1,300+ days beginning in 2020. Trish Adora was part of the Rampage circle with #BRUH before that history was written. Under manager George Burkett, won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club — the same night Yams won the Heavyweight Title. #BRUH's turn at Big Mike's Curtain Call (December 9, 2017) was a direct response to a specific act of hubris from Steve: at Retribution (November 4, 2017), Steve built his 5-on-5 team from Mac, Vox, Wrex, and Grizzly Redwood — and left #BRUH completely off the card. Steve's day ones. The tag team he brought from OTCW. The men he kept in Mayhem through every rebuild. Sidelined for a personal vendetta involving a CZW guy who had history against the Coalition originals. Steve was more focused on himself and that grievance than on loyalty. Five weeks later at the Curtain Call, they were done. Steve cornered Johnny through the cage afterward and said it directly: 'I created you. I made you both who you are. Without me you would be nothing.' The cage speech was delivered to Xross's face — but it was always about both of them. It was never about Johnny alone. Steve's vow was against #BRUH as a collective. Johnny was not at the Lethal Lottery show a year later. That was the final piece of the plan.",
     stamina: 90,
     moves: ["Crossbody", "Armbar", "Neckbreaker", "Spinning Elbow", "Running Dropkick"],
     signatureMove: null,
@@ -299,7 +299,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "#BRUH",
     role: "Main Event",
     style: "Brawler",
-    bio: "One half of #BRUH. Tag backbone of Project Mayhem through all of 2017 alongside Johnny Xross, managed by George Burkett. Won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club. Left Mayhem December 9, 2017 with Xross. When the Lethal Lottery randomly paired him with Rich $teve — his former boss, sworn enemy — Steve ran a calculated three-stage social media campaign: furious outrage on Oct 2, then a short disbelieving 'Ray Rumble. Ray freaking Rumble?! #Bruh' the same day, then on Oct 4 he posted an old photo of happier times with Ray and Jonny Xross and said they'd put their differences aside for one night for PTV. On a memorial show named after a fallen wrestler, that sentiment was completely believable. Ray started warming to it. The band was back together — for one night, for PTV. George Burkett begged him not to trust $teve. Ray didn't listen. At the show, before the Money Drop, $teve turned, found Burkett's eyes, and smiled — the same smile he gave Cohen before the Guerrero Special. Face dropped. Ray went up. The plan was never Yams. The plan was always #BRUH.",
+    bio: "One half of #BRUH. Both from Washington, DC — that's the DC connection with Trish Adora and the Rampage circle, before she went on to her 1,300+ day PAWDW reign. Ray doesn't always get the credit he deserves because Johnny is the more visible figure — the one who created the Pan-Afrikan World Diaspora Wrestling World Championship, the one Steve cornered through the cage at the Curtain Call. But the cage speech was to Xross's face because Xross was there. The betrayal was by #BRUH. The vow was against #BRUH. Steve's plan was always #BRUH — both of them equally. Ray was the one in the ring at the Lethal Lottery. Xross was home. That's the structure of it, not the target. Original Coalition member — Steve brought both of them from OTCW through every phase of Project Mayhem. Tag backbone of Mayhem through all of 2017, managed by George Burkett. Won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club. Left Mayhem December 9, 2017 with Xross — directly because Steve left them off the Retribution card five weeks earlier. Steve chose Mac, Vox, Wrex, and Grizzly Redwood for the 5-on-5. His day ones sat at home. The Curtain Call turn was the consequence. When the Lethal Lottery randomly paired Ray with Rich $teve — his former boss, sworn enemy — Steve ran a calculated three-stage social media campaign. George Burkett begged Ray not to trust him. Ray didn't listen. Before the Money Drop, $teve found Burkett's eyes and smiled. Face dropped. Ray went up. The plan was never Yams. The plan was always #BRUH.",
     stamina: 88,
     moves: ["Haymaker", "Spinebuster", "Clothesline", "Back Suplex", "Running Knee"],
     signatureMove: null,
@@ -323,7 +323,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "#BRUH",
     role: "Women's Division",
     style: "Technical",
-    bio: "#BRUH affiliate. Rampage Women's Division standout.",
+    bio: "Part of the Rampage Pro Wrestling circle alongside #BRUH (Johnny Xross and Ray Rumble). All three connected through the DC wrestling scene — Xross and Rumble are from DC, and Trish was part of that Rampage world before any of what came after. She was present in the Rampage era when #BRUH were Project Mayhem's tag team backbone — before Stairway to Gold II, before the Curtain Call, before the Lethal Lottery. After Rampage Pro Wrestling closed (April 2019), what came next: Trish Adora would go on to win the Pan-Afrikan World Diaspora Wrestling World Championship — the title Johnny Xross created — and hold it for over 1,300 days beginning in 2020. The championship Xross built became the championship Trish made historic. That's the through-line.",
     stamina: 75,
     moves: ["Arm Drag", "Running Crossbody", "Submission Hold", "DDT"],
     signatureMove: null,
@@ -2083,7 +2083,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "rd-cordova",
     stipulation: "5-on-5 Elimination — Team Mayhem ($teve, Mac, Vox, Wrex, Grizzly Redwood) vs Team Rampage (Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash)",
     historicalResult: "win",
-    historicalNote: "November 4, 2017. Rampage Pro Wrestling 'Retribution.' Team Mayhem: Rich $teve, Mac Mayhem, Ryan Vox, Wrex Savage, Grizzly Redwood. Team Rampage: Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash. If Team Rampage loses, Big Mike retires as ring announcer — permanently. Rich $teve pinned R.D. Cordova to seal the win. Mayhem's largest team triumph. Five weeks later, everything changed.",
+    historicalNote: "November 4, 2017. Rampage Pro Wrestling 'Retribution.' Team Mayhem: Rich $teve, Mac Mayhem, Ryan Vox, Wrex Savage, Grizzly Redwood. Team Rampage: Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash. If Team Rampage loses, Big Mike retires as ring announcer — permanently. Rich $teve pinned R.D. Cordova to seal the win. Mayhem's largest team triumph. But the card Steve built contained the seed of the next crisis — and he planted it himself. #BRUH — Johnny Xross and Ray Rumble — were not on this team. Steve's OTCW day ones. The men he brought through the Coalition, kept through the Project Mayhem formation, fought beside through every rebuild after Conrad and Bronson were cut. Left off the card entirely. Steve was more focused on himself and on a personal grievance involving a CZW guy who had history against the Coalition originals — that vendetta took priority over loyalty to the men who had been with him longest. Five weeks later at Big Mike's Curtain Call (December 9, 2017), #BRUH turned face and quit Project Mayhem. The Retribution snub was the cause. Steve's first major act of hubris costing him allies. The second would come ten months later at Cosplayers Unite — when the picture desecration and beard shave cost him Kory Cross and Ryan Vox. The pattern: Steve's ego burns the people who served him.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -2298,7 +2298,11 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Five weeks after Retribution. Big Mike's final night as ring announcer. The 25-man Randolph Scott Memorial Rumble. $teve enters. Last man standing wins.",
+        text: "Five weeks after Retribution — where Steve built his 5-on-5 team from Mac, Vox, Wrex, and Grizzly Redwood and left #BRUH completely off the card. His OTCW day ones. The men he brought through the Coalition and kept through every Mayhem rebuild. Sidelined. Tonight is the consequence.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Big Mike's final night as ring announcer. The 25-man Randolph Scott Memorial Rumble. $teve enters. Last man standing wins.",
       },
       {
         speaker: "NARRATOR",
@@ -2399,7 +2403,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         ],
       },
       {
-        situation: "The crowd is celebrating. #BRUH is gone. The show is over. You find Xross near the cage — alone. You get in his face. This is not in front of the crowd. This is real.",
+        situation: "The crowd is celebrating. #BRUH is gone. Ray has already left the building. The show is over. You find Xross near the cage — alone. You get in his face. This is not in front of the crowd. This is real. The speech is to Johnny because he's the one still standing there — but every word is about both of them. It was always about both of them.",
         options: [
           {
             text: "I want you to remember one thing, #Bruh. I created you. I made you both who you are. Without me you would be nothing. You made the biggest mistake you could when you crossed us.",
