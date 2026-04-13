@@ -161,7 +161,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "OTCW",
     role: "Midcard",
     style: "Brawler",
-    bio: "OTCW roster member. In the ring at Proving Ground on August 27, 2016 when Rich $teve unbuttoned his shirt and revealed the orange singlet underneath — the in-ring return after years away from competition.",
+    bio: "OTCW roster member. Faced Rich $teve at OTCW Proving Ground on August 27, 2016 — still in manager mode, building toward the Coalition. Later tagged with $teve at September to Remember when The Coalition officially formed.",
     stamina: 74,
     moves: ["Running Forearm", "Scoop Slam", "Shoulder Block", "Corner Clothesline"],
     signatureMove: null,
@@ -633,7 +633,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: null,
     role: "Midcard",
     style: "Power",
-    bio: "SSW Tag Team Champions who retained their titles at SSW November Reign, November 11, 2017 — defeating Impact Society's Stocking Stuffer Contract cash-in attempt. The Big New Yorkers' WIN was their first title victory defended.",
+    bio: "SSW Tag Team title holders who lost to Impact Society at SSW November Reign, November 11, 2017 — when Rich $teve and Adam Armstrong cashed in the Stocking Stuffer Contract. The defeat ended their run with the SSW Tag Team Championships.",
     stamina: 78,
     moves: ["Double Clothesline", "Slam Combo", "Backbreaker", "Running Elbow"],
     signatureMove: null,
@@ -817,7 +817,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     date: "2006–2007",
     venue: "ACPW Circuit",
     city: "Philadelphia, PA",
-    stipulation: "Managing Korpse — Solo Stint",
+    stipulation: "Managing Korpse — The Road Dog Partnership Begins",
     historicalResult: "story",
     historicalNote: "After Living Dead 2k6 dissolved, Rich $teve managed Korpse exclusively until March 2007. They became best friends — Road Dogs — in the process.",
     matchless: true,
@@ -1267,9 +1267,9 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "OTCW Uncivil War — Triple B Arena",
     city: "Berkeley Springs, WV",
     opponentId: "siccend",
-    stipulation: "No Disqualification — GM Declaration Match",
+    stipulation: "No Disqualification — Singles Match",
     historicalResult: "win",
-    historicalNote: "Crazii Shea brought $teve in as a secret weapon. Nobody in Berkeley Springs knew who he was. That was the point. After the match, $teve declared himself GM of OTCW, citing Daddy's Money and attorney Donnie Diablo.",
+    historicalNote: "Crazii Shea — who $teve knew from ACPW — brought him in as a secret weapon. Nobody in Berkeley Springs had heard of Rich $teve. That was the point. After the match, ring announcer Big Mike interviewed him — and $teve grabbed the mic, cited Daddy's Money and attorney Donnie Diablo, and declared himself the GM of OTCW on the spot.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -1277,11 +1277,15 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "It has been four years since his last match. Crazii Shea begs Coleman to return — a veteran nobody in this market has heard of. That's the weapon.",
+        text: "Crazii Shea makes the call. He and $teve go back — ACPW, the early days. Shea needs a secret weapon nobody in this market has ever seen. That's the weapon.",
       },
       {
         speaker: "NARRATOR",
-        text: "Coleman shows up in a suit. Nobody knows what's coming.",
+        text: "Coleman walks in wearing a suit. Nobody in the building knows who he is. Big Mike — the ring announcer — is waiting to interview whoever comes out of this match.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "The match ends. Big Mike steps forward with the mic. $teve takes it.",
       },
       {
         speaker: "Rich $teve",
@@ -1313,40 +1317,96 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         },
       ],
     },
+    promoGame: [
+      {
+        situation: "Big Mike — the OTCW ring announcer — steps forward with the mic after your match. Nobody in Berkeley Springs knows who you are. The crowd is watching. Big Mike hands you the microphone.",
+        options: [
+          {
+            text: "My name is Rich $teve. And with Daddy's Money and attorney Donnie Diablo — I am declaring myself the General Manager of OTCW.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "That's the line. Confident, legal, and completely absurd in the best way possible. The crowd doesn't know what just happened. That's the point.",
+          },
+          {
+            text: "Thanks for having me tonight. It's good to be back in a ring.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You thanked the crowd. You're a heel who just took over a company. There is no thanking anyone.",
+          },
+          {
+            text: "I've got nothing to say. The match said everything.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "The match said nothing to these people — they've never seen you before. You needed the introduction. You needed the claim.",
+          },
+          {
+            text: "I came here because Crazii Shea believed in me. Let's give it up for Shea.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You deflected credit to Shea. A heel takes the moment for himself — he doesn't share the spotlight.",
+          },
+        ],
+      },
+      {
+        situation: "The crowd is confused. Some are laughing. OTCW management starts arguing. Big Mike is looking at you like you're insane. How do you follow up the declaration?",
+        options: [
+          {
+            text: "My attorneys have already filed the paperwork. This is not a negotiation.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Legal certainty. You're not asking — you're informing. The crowd hates it. That's correct.",
+          },
+          {
+            text: "Look, we can work something out. I'm a reasonable man.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You offered a compromise. That's babyface behavior. Reasonable men don't declare themselves GM uninvited.",
+          },
+          {
+            text: "Daddy's Money. You can't fight it. Accept it.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Simple. Arrogant. Completely unapologetic. The crowd boos because there's nothing they can do. Perfect.",
+          },
+          {
+            text: "Fine — take the mic back. I'll make this official through official channels.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You handed the mic back and said you'd do it properly. The moment died with it.",
+          },
+        ],
+      },
+    ],
   },
 
   {
     id: "ch3-proving-ground",
     era: 3,
     eraName: "Era 3: OTCW & The Coalition",
-    title: "The Return",
+    title: "Proving Ground",
     date: "August 27, 2016",
     venue: "OTCW Proving Ground — Triple B Arena",
     city: "Berkeley Springs, WV",
     opponentId: "justin-tyme",
-    stipulation: "Singles Match — The In-Ring Return",
-    historicalResult: "win",
-    historicalNote: "Rich $teve unbuttoned his suit shirt at ringside to reveal the orange singlet underneath — returning to active in-ring competition for the first time in years.",
+    stipulation: "Singles Match — GM Managing At Ringside",
+    historicalResult: "story",
+    historicalNote: "Rich $teve is still the GM at Proving Ground — wearing the suit, managing at ringside. The in-ring return hasn't happened yet. September is coming. He competes in a match this night but the suit stays on — still building.",
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "August 27, 2016. OTCW Proving Ground. Triple B Arena.",
+        text: "August 27, 2016. OTCW Proving Ground. Triple B Arena. Berkeley Springs, WV.",
       },
       {
         speaker: "NARRATOR",
-        text: "Rich $teve has been the GM. The talking piece. The suit. Now — he removes the suit.",
+        text: "Rich $teve is still the GM. Still wearing the suit. Still the architect behind the scenes.",
       },
       {
         speaker: "NARRATOR",
-        text: "At ringside, he unbuttons the purple shirt. Underneath: the orange singlet. The crowd doesn't know what to make of it.",
-      },
-      {
-        speaker: "NARRATOR",
-        text: "Rich $teve is wrestling again.",
+        text: "But the OTCW roster is starting to respect the name. The Coalition is forming around him. It won't be long.",
       },
       {
         speaker: "Rich $teve",
-        text: "The GM role was always temporary. The wrestler? That's permanent. I'm 340 pounds of everything this business has been waiting for.",
+        text: "This is what patience looks like. The suit stays on until I decide otherwise. And when I decide — everyone will know.",
         isPromo: true,
       },
     ],
@@ -1354,17 +1414,13 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       win: [
         {
           speaker: "NARRATOR",
-          text: "The return is complete. Rich $teve is back in the ring. The Coalition has its leader.",
+          text: "The GM proves he can hold his own. But the real statement is still coming.",
         },
       ],
       lose: [
         {
           speaker: "NARRATOR",
-          text: "Ring rust. It happens. He'll shake it off.",
-        },
-        {
-          speaker: "NARRATOR",
-          text: "The return is still the story. A loss on the comeback trail doesn't erase what's coming.",
+          text: "A stumble. The suit stays on. September is still ahead.",
         },
       ],
     },
@@ -1381,23 +1437,27 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "buddah",
     stipulation: "Tag Team Match — Rich $teve & Justin Tyme vs Buddah",
     historicalResult: "lose",
-    historicalNote: "September 24, 2016. The night The Coalition officially forms: Sly Scarpone, Jesse Skelton, Little Monster Binky, Ray Rumble, Johnny Xross, Alistar Conrad, Drew Bronson, Tony Link, Justin Tyme, and Rich $teve. Rich $teve and Justin Tyme lost to Buddah.",
+    historicalNote: "September 24, 2016. The night Rich $teve removes the suit — revealing the orange wrestling singlet underneath. The moment he officially returns as an in-ring competitor. The Coalition also officially forms tonight: Sly Scarpone, Jesse Skelton, Little Monster Binky, Ray Rumble, Johnny Xross, Alistar Conrad, Drew Bronson, Tony Link, Justin Tyme, and Rich $teve.",
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "September 24, 2016. OTCW. Triple B Arena. Berkeley Springs, WV.",
+        text: "September 24, 2016. OTCW September to Remember. Triple B Arena. Berkeley Springs, WV.",
       },
       {
         speaker: "NARRATOR",
-        text: "Tonight — The Coalition is born. Sly Scarpone. Jesse Skelton. Little Monster Binky. Ray Rumble. Johnny Xross. Alistar Conrad. Drew Bronson. Tony Link. Justin Tyme. Rich $teve.",
+        text: "Tonight — the suit comes off.",
       },
       {
         speaker: "NARRATOR",
-        text: "Ten men. One faction. $teve steps into the ring tonight with Justin Tyme. The opponent: Buddah.",
+        text: "Rich $teve walks to the ring. He unbuttoned the shirt. Underneath: the orange singlet. This is no longer a GM's ring. This is a wrestler's ring.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "And tonight — The Coalition is born. Sly Scarpone. Jesse Skelton. Little Monster Binky. Ray Rumble. Johnny Xross. Alistar Conrad. Drew Bronson. Tony Link. Justin Tyme. Rich $teve. Ten men. One faction.",
       },
       {
         speaker: "Rich $teve",
-        text: "The Coalition isn't just a group. It's a statement. We are the people this company is going to be built around — whether they like it or not.",
+        text: "The suit was a tool. Now the tool is off. I'm back in the ring and I'm bringing all of these people with me. The Coalition isn't just a group — it's an inevitability.",
         isPromo: true,
       },
     ],
@@ -1949,8 +2009,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     city: "Scotland, PA",
     opponentId: "big-new-yorker",
     stipulation: "SSW Tag Team Championship — Stocking Stuffer Contract Cash-In: Impact Society vs The Big New Yorkers",
-    historicalResult: "lose",
-    historicalNote: "November 11, 2017. SSW November Reign. Scotland Community Center, Scotland, PA. Impact Society cashed in the Stocking Stuffer Contract against The Big New Yorkers for the SSW Tag Team Championships — and LOST. The Big New Yorkers' first title victory. The cash-in failed.",
+    historicalResult: "win",
+    historicalNote: "November 11, 2017. SSW November Reign. Scotland Community Center, Scotland, PA. Impact Society cashed in the Stocking Stuffer Contract against The Big New Yorkers for the SSW Tag Team Championships — and WON. Rich $teve and Adam Armstrong's first title. The first championship of Rich $teve's career.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -2190,9 +2250,9 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     date: "December 9, 2017",
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
-    stipulation: "Randolph Scot Memorial 25-Man Rumble + #BRUH Departure — Rampage Pro Wrestling 'Big Mike's Curtain Call'",
+    stipulation: "Randolph Scot Memorial 25-Man Rumble — Rampage Pro Wrestling 'Big Mike's Curtain Call'",
     historicalResult: "story",
-    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Rich $teve entered the Randolph Scot Memorial 25-man rumble and was last eliminated by Big Mike. After the match, Johnny Xross and Ray Rumble (#BRUH) turned face and quit Project Mayhem. Mayhem surrounded the cage and stood tall — but the seeds of the #YearOfMayhem had been planted.",
+    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Rich $teve entered the Randolph Scot Memorial 25-man rumble and was last eliminated by Big Mike. After the rumble, the night ended with events that would define everything that followed.",
     matchless: true,
     introCutscene: [
       {
@@ -2201,19 +2261,15 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "The Randolph Scot Memorial 25-man battle royal. $teve enters. Every man for himself.",
+        text: "Big Mike's last night as ring announcer. The Randolph Scot Memorial 25-man battle royal. $teve enters. Last man standing wins.",
       },
       {
         speaker: "NARRATOR",
-        text: "He's the last one. The final elimination waiting to happen. And the man who throws him out is Big Mike.",
-      },
-      {
-        speaker: "NARRATOR",
-        text: "After the match: Johnny Xross and Ray Rumble take the mic. #BRUH is done with Project Mayhem.",
+        text: "$teve is the last one. One elimination away from the finish. And the man waiting to throw him out is Big Mike himself.",
       },
       {
         speaker: "Rich $teve",
-        text: "They had their moment. Then Mayhem surrounded the cage. BCW. 1CW. Everyone who wanted a piece of us came out — and we stood tall. #BRUH will regret this.",
+        text: "This is Big Mike's night? Fine. Let him have the stage. Because when this rumble is over — every eye in that building will still be on me.",
         isPromo: true,
       },
     ],
@@ -2319,14 +2375,14 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
     opponentId: "yams",
-    stipulation: "Riot Rumble Battle Royal — Winner gets contract: any time, any place",
+    stipulation: "Riot Rumble Battle Royal — Last man standing earns a guaranteed title contract: any time, any place of their choosing",
     historicalResult: "win",
-    historicalNote: "Rich $teve won the Riot Rumble battle royal, earning a guaranteed cash-in contract for any title, at any time and place of his choosing.",
+    historicalNote: "Rich $teve won the Riot Rumble battle royal, earning a guaranteed cash-in briefcase for any Rampage title — redeemable any time, any place of his choosing.",
     riotRumbleChapter: true,
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "The Riot Rumble. Last man standing wins a contract: any title, any time, any place.",
+        text: "The Riot Rumble. Last man standing wins a guaranteed title contract — any Rampage championship, any time, any place of their choosing.",
       },
       {
         speaker: "NARRATOR",
@@ -2950,7 +3006,7 @@ export const ERAS = [
     name: "Era 2",
     subtitle: "Daddy's Money",
     years: "2007–2012",
-    description: "The in-ring debut — first match, first loss. The Grand Championship that should have been his — a Double DQ that robbed him. A spike that sent him home. And the last match before the gap begins.",
+    description: "The in-ring debut. The Grand Championship match. A spike. And then — silence. Five years away from the business.",
     chapterIds: ["ch1-six-man-debut", "ch2-ortiz", "ch2-spike", "ch2-don-e-allen"],
   },
   {
@@ -2958,7 +3014,7 @@ export const ERAS = [
     name: "Era 3",
     subtitle: "OTCW & The Coalition",
     years: "2016–2017",
-    description: "Crazii Shea calls. The suit comes off at Proving Ground. The Coalition forms at September to Remember. Winter War. Spring Brawl. Then — Rampage — and Matt Wylde becomes Mac Mayhem.",
+    description: "Crazii Shea calls. OTCW. The suit. The Coalition forms at September to Remember. Winter War. Spring Brawl. Then — Rampage.",
     chapterIds: ["ch3-hostile-takeover", "ch3-proving-ground", "ch3-september-remember", "ch3-winter-war", "ch3-spring-brawl", "ch3-riot-city-rules"],
   },
   {
@@ -2966,7 +3022,7 @@ export const ERAS = [
     name: "Era 4",
     subtitle: "Welcome to #Hijacked",
     years: "2017",
-    description: "Big Mike's career ended at Retribution. The Randolph Scot Memorial 25-man Rumble. #BRUH turns face and quits Project Mayhem. The core locks in: $teve, Mac, Wrex, Kory, Vox.",
+    description: "Retribution. The Randolph Scot Memorial 25-man Rumble. Big Mike's Curtain Call. And the question of what's left when the dust settles.",
     chapterIds: ["ch4-big-mike", "ch4-bruh-turns"],
   },
   {
@@ -2974,7 +3030,7 @@ export const ERAS = [
     name: "Era 5",
     subtitle: "Mirai no Sutā",
     years: "2017–2018",
-    description: "Impact Society is born. AWA. The Stocking Stuffer Contract. The cash-in that failed. No Turning Back — Rich $teve vs Korpse.",
+    description: "Impact Society is born. AWA. The Stocking Stuffer Contract. The first title. No Turning Back — Rich $teve vs Korpse.",
     chapterIds: ["ch5-impact-debut", "ch5-awa-loss", "ch5-ssw-contract", "ch5-ssw-titles", "ch5-korpse"],
   },
   {
