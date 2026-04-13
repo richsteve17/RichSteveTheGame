@@ -70,7 +70,7 @@ export const RICH_STEVE: Wrestler = {
   faction: "Project Mayhem",
   role: "Main Event",
   style: "Cerebral",
-  bio: "Steve Coleman. 6'1\", 340 lbs. Philadelphia, PA. The Chicken Shit Mastermind. 13 years on the independent circuit (2006–2019). Always a wrestler — framed as The Future of Pro Wrestling since day one at 16. He managed because age restrictions kept him from competing, not because managing was his identity. When the suit came off at OTCW it happened within months — he was always going back in. In-ring appearances in the Coalition/OTCW era (2016) were deliberate and selective: the bigger matches, Riot City Rules, formation events. Through 2017, steadily built his in-ring credibility with Impact Society (Adam Armstrong) in SSW and other promotions — separate from the Rampage storyline, earning match by match. In Rampage itself the arc was slower and deliberate. By November 2017 he named himself the 4th man at Retribution — the visible statement that he was now Mayhem's in-ring lead. From late 2017 onward: full-time lead competitor in Rampage. First championship: Impact Society at SSW November Reign (November 11, 2017), pinning The Big New Yorkers for the SSW Tag Team titles. Rampage Pro Wrestling debut: 'Winter Warfare,' December 9, 2016 — Delaware Agricultural Museum, Dover, DE. The cycle, documented: Coalition/OTCW (2016) — brought in Conrad, Bronson, used #BRUH, others; shed Conrad and Bronson once their value was spent, kept Mac. Added Vox, added Kory, added Wrex; Mac began to drift (the 'Emphasis on ME' promo signaled it coming). Replaced Mac with Killian McMurphy (who beat Vox for the Open Challenge Championship). Replaced Vox and Kory with KTB after they turned at Cosplayers Unite. Wrex remained. New patsys, same machine. It is the same story told over and over, and nobody in the audience was supposed to notice until it was already done. The endgame: win the Rampage Heavyweight title from Yams, hold both RPW Tag titles as a solo champion, and hold the Heavyweight — three belts at the head of his own promotion. That is what all of it was always building toward. Always heel. Always. Founded Project Mayhem. 2017 Match of the Year: Mayhem vs Rampage. 2017 Feud of the Year: Rich $teve vs Big Mike. 2018 Riot Rumble Winner. 2018 Feud of the Year: Mayhem vs Rampage. Entrance theme: 'Jet Black New Year' by Thursday — personal blessing from Geoff Rickly at a Warped Tour signing. Same song became the exit theme at the Lethal Lottery cash-in, cued to the bridge countdown. The #Hijacked concept: a promo style. Taking over opponents' social media, showing up unannounced, getting log-ins before events, breaking into Yams' house, the Big Mike bookstore. Blurring kayfabe and real life. 'Do we have your attention yet?' Confirmed in Kyngs and Qweens Magazine (December 13, 2017): 'I am doing this interview as Rich $teve, I don't need to be doing it from my page for it to still be me. We are one in the same.'",
+  bio: "Steve Coleman. 6'1\", 340 lbs. Philadelphia, PA. The Chicken Shit Mastermind. 13 years on the independent circuit (2006–2019). Always a wrestler — framed as The Future of Pro Wrestling since day one at 16. He managed because age restrictions kept him from competing, not because managing was his identity. When the suit came off at OTCW it happened within months — he was always going back in. In-ring appearances in the Coalition/OTCW era (2016) were deliberate and selective: the bigger matches, Riot City Rules, formation events. Through 2017, steadily built his in-ring credibility with Impact Society (Adam Armstrong) in SSW and other promotions — separate from the Rampage storyline, earning match by match. In Rampage itself the arc was slower and deliberate. By November 2017 he named himself the 4th man at Retribution — the visible statement that he was now Mayhem's in-ring lead. From late 2017 onward: full-time lead competitor in Rampage. First championship: Impact Society at SSW November Reign (November 11, 2017), pinning The Big New Yorkers for the SSW Tag Team titles. Rampage Pro Wrestling debut: 'Winter Warfare,' December 9, 2016 — Delaware Agricultural Museum, Dover, DE. The cycle, documented. Original Coalition (OTCW, 2016): Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve — the full OTCW stable. When the move to Rampage came, the Coalition trimmed down: Rampage Coalition was #BRUH, Conrad, Bronson, $teve. Then Conrad and Bronson were shed. Project Mayhem formed: Mac Mayhem, #BRUH, Kory Cross, $teve, Wrex Savage, Ralyan Vox — and Jay Cortez as the concealed Higher Power (the face owner of Rampage, revealed at Big Mike's Curtain Call). Mac began to drift with the 'Emphasis on ME' promo. Vox and Kory turned at Cosplayers Unite. Killian McMurphy came in as the new Mac. KTB (Myles Millennium and Tim Taylor) came in as the new Vox/Kory. Wrex remained. New patsys, same machine. Nobody was supposed to notice the pattern until it was already done. The endgame: win the Rampage Heavyweight title from Yams, hold both RPW Tag titles solo, hold the Heavyweight — three belts at the head of his own promotion. That is what all of it was always building toward. Always heel. Always. Founded Project Mayhem. 2017 Match of the Year: Mayhem vs Rampage. 2017 Feud of the Year: Rich $teve vs Big Mike. 2018 Riot Rumble Winner. 2018 Feud of the Year: Mayhem vs Rampage. Entrance theme: 'Jet Black New Year' by Thursday — personal blessing from Geoff Rickly at a Warped Tour signing. Same song became the exit theme at the Lethal Lottery cash-in, cued to the bridge countdown. The #Hijacked concept: a promo style. Taking over opponents' social media, showing up unannounced, getting log-ins before events, breaking into Yams' house, the Big Mike bookstore. Blurring kayfabe and real life. 'Do we have your attention yet?' Confirmed in Kyngs and Qweens Magazine (December 13, 2017): 'I am doing this interview as Rich $teve, I don't need to be doing it from my page for it to still be me. We are one in the same.'",
   stamina: 100,
   moves: ["Shoulder Block", "Headlock", "Body Slam", "Back Elbow", "Nerve Hold"],
   signatureMove: "Market Crash (Side Effect)",
@@ -155,13 +155,39 @@ export const WRESTLERS: Wrestler[] = [
     ratings: { power: 74, speed: 65, technical: 75, toughness: 76, mic: 72, heat: 70, overall: 73 },
   },
   // ─── ERA 3: OTCW/COALITION ────────────────────────────────────
+  // Original Coalition (OTCW): Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve
+  // Rampage Coalition: #BRUH, Conrad, Bronson, $teve — the rest were OTCW-only
+  {
+    id: "little-monster-binky",
+    name: "Little Monster Binky",
+    faction: "The Original Coalition",
+    role: "Midcard",
+    style: "Brawler",
+    bio: "Original Coalition member — OTCW era only. Part of the full OTCW stable that Rich $teve assembled: Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve. When the Coalition moved to Rampage, the roster trimmed to #BRUH, Conrad, Bronson, and $teve. Binky was OTCW-only.",
+    stamina: 70,
+    moves: ["Brawl", "Clothesline", "Scoop Slam", "Running Shoulder"],
+    signatureMove: null,
+    ratings: { power: 68, speed: 66, technical: 63, toughness: 67, mic: 57, heat: 58, overall: 63 },
+  },
+  {
+    id: "tony-link",
+    name: "Tony Link",
+    faction: "The Original Coalition",
+    role: "Midcard",
+    style: "Technical",
+    bio: "Original Coalition member — OTCW era only. Part of the full OTCW stable Rich $teve assembled alongside Little Monster Binky, Jesse Skelton, Justin Tyme, Bronson, Conrad, and #BRUH. Did not carry over to the Rampage Coalition when $teve moved the operation.",
+    stamina: 72,
+    moves: ["Armbar", "Neckbreaker", "Running Knee", "Suplex"],
+    signatureMove: null,
+    ratings: { power: 68, speed: 70, technical: 71, toughness: 67, mic: 58, heat: 59, overall: 64 },
+  },
   {
     id: "justin-tyme",
     name: "Justin Tyme",
     faction: "OTCW",
     role: "Midcard",
     style: "Brawler",
-    bio: "OTCW roster member. Faced Rich $teve at OTCW Proving Ground on August 27, 2016 — still in manager mode, building toward the Coalition. Later tagged with $teve at September to Remember when The Coalition officially formed.",
+    bio: "OTCW roster member — Original Coalition, OTCW era only. Faced Rich $teve at OTCW Proving Ground on August 27, 2016. Tagged with $teve at September to Remember when The Coalition officially formed. Part of the full OTCW stable: Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve. Did not carry over to the Rampage Coalition.",
     stamina: 74,
     moves: ["Running Forearm", "Scoop Slam", "Shoulder Block", "Corner Clothesline"],
     signatureMove: null,
@@ -173,7 +199,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "The Original Coalition",
     role: "Midcard",
     style: "Power",
-    bio: "Original Coalition member in OTCW. Lightning bolt chest tattoo. Rich $teve managed him to victories at OTCW. Kicked to the curb when Project Mayhem streamlined its roster.",
+    bio: "Original Coalition member. Lightning bolt chest tattoo. Rich $teve managed him to victories at OTCW. Carried over to the Rampage Coalition (#BRUH, Conrad, Bronson, $teve) — one of the four who made the transition from OTCW to Rampage. Kicked to the curb when Project Mayhem streamlined its roster.",
     stamina: 78,
     moves: ["Powerbomb", "Clothesline", "Running Shoulder Block", "Slam"],
     signatureMove: null,
@@ -185,7 +211,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "The Original Coalition",
     role: "Midcard",
     style: "Technical",
-    bio: "British gimmick. Union Jack flag at ringside, waved by Rich $teve. Original Coalition member in OTCW. Kicked to the curb when Project Mayhem streamlined.",
+    bio: "British gimmick. Union Jack flag at ringside, waved by Rich $teve. Original Coalition member — carried over to the Rampage Coalition (#BRUH, Conrad, Bronson, $teve) as one of the four who made the transition from OTCW. Kicked to the curb when Project Mayhem streamlined.",
     stamina: 76,
     moves: ["European Uppercut", "Neckbreaker", "Armbar", "Knee Strike"],
     signatureMove: null,
@@ -197,7 +223,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "The Original Coalition",
     role: "Midcard",
     style: "Brawler",
-    bio: "Cowboy hat, denim vest, heavily tattooed. Original Coalition member. Stood next to Rich $teve in a suit at OTCW outdoor night shows.",
+    bio: "Cowboy hat, denim vest, heavily tattooed. Original Coalition member — OTCW era only. Stood next to Rich $teve in a suit at OTCW outdoor night shows. Part of the full OTCW stable (Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve). Did not carry over to the Rampage Coalition.",
     stamina: 73,
     moves: ["Lariat", "Brawling Combo", "Spinebuster", "Elbow Drop"],
     signatureMove: null,
@@ -261,7 +287,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Project Mayhem",
     role: "Authority Figure",
     style: "Brawler",
-    bio: "The Higher Power of Project Mayhem — not a trained wrestler. The feud origin: on June 24, 2017, Rich $teve was beating the snot out of Jay Cortez when Big Mike ran out with a baseball bat and interfered. Steve posted the next day: 'I want to know who in the hell let Big Michael Scott into Rampage Pro Wrestling last night. You retired. Everyone cried. They chanted for you... You just HAD to get involved when I was finally giving Jay Cortez what he had coming to him. If there's a new sheriff in town, then I guess I'm gonna be fighting the law.' That interference set off the entire 2017 feud. Big Mike became GM afterward. Jay's son Mike Sweeney was beaten down by $teve later, deepening the personal dimension. Jay waited in the background through everything — then revealed himself as the 4th member of Project Mayhem at Big Mike's Curtain Call, cementing the final lineup. At The Final Shot (April 27, 2019), Jay gets pinned — and Big Mike becomes GM as a result. Jay being pinned is the stipulation's fulcrum, not a competitive wrestling result.",
+    bio: "The Higher Power of Project Mayhem — and the face owner of Rampage Pro Wrestling. The biggest heel move of the entire run: the man who ran the company, the one everyone trusted, was the one who built the poison inside it. Jay Cortez founded and owned Rampage Pro Wrestling. He was the beloved authority figure — fans trusted him, the locker room respected him. And he was behind Project Mayhem the entire time. Injecting poison into his own product. Funding it. Protecting it. The reveal came at Big Mike's Curtain Call (December 9, 2017): Cortez stepped out and declared himself the 4th member and Higher Power of Project Mayhem. The face owner was the mastermind. Everything that happened in Rampage — every Mayhem attack, every title shot, every advantageous booking decision — happened because the man signing the checks wanted it to. The feud origin reads differently knowing this: on June 24, 2017, Rich $teve was beating Jay Cortez when Big Mike ran out with a baseball bat. Steve posted: 'I want to know who in the hell let Big Michael Scott into Rampage Pro Wrestling last night.' Steve was doing what Jay wanted — putting pressure on Big Mike, the one person who threatened the Cortez/Mayhem arrangement. Big Mike became GM afterward and spent a year fighting back. Jay's son Mike Sweeney was beaten down by $teve, deepening the personal dimension. At The Final Shot (April 27, 2019), Jay gets pinned — and Big Mike becomes GM as a result. The owner loses his own company. Jay being pinned is the stipulation's fulcrum, not a competitive wrestling result.",
     stamina: 60,
     moves: ["Brawl", "Corner Punch", "Cheap Shot", "Interference"],
     signatureMove: null,
@@ -2995,7 +3021,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "big-mike",
     stipulation: "6-Man Tag — Team Big Mike (Yams + Big Mike + Working Class Heroes) vs Project Mayhem — Camden Moose Lodge, Camden, Delaware",
     historicalResult: "story",
-    historicalNote: "April 27, 2019. The Final Shot. Camden Moose Lodge, Camden, Delaware. The last Rampage Pro Wrestling show. Team Big Mike vs Project Mayhem. Rich $teve enters still holding both RPW Tag Team Championship belts — a solo 6-month reign since October 13, 2018. The framing: Yams is the only actual wrestler on Team Big Mike's side — Big Mike is not a wrestler, Kory is not a wrestler. Rampage's final show comes down to one real wrestler against Project Mayhem. Jay Cortez gets pinned — the stipulation's fulcrum, not a competitive result. Big Mike becomes GM. The company closes. The last chapter of Rich $teve's career.",
+    historicalNote: "April 27, 2019. The Final Shot. Camden Moose Lodge, Camden, Delaware — not the usual Delaware Agricultural Museum in Dover. This show was an audible. The plan had been 'Wargames' — a war games match to close out the Mayhem vs Rampage feud in the format it deserved. A week before that show, the world fell apart. Greywolf dropped. Ryan Vox dropped. Killian McMurphy dropped. The company threw together what they could with who was still available and moved the show to the Camden Moose Lodge. The result is still real — it happened, everyone did their time — but the conclusion they had built toward never came. Big Mike becomes GM. Jay Cortez gets pinned — the stipulation's fulcrum. The company went dormant after. A few one-off shows followed, none involving Rich $teve. The ending the story deserved only happens now — in the game.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -3054,6 +3080,73 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   // ══ ERA 6: THE LOST ENDING ══════════════════════════════════
 
   {
+    id: "ch6-wargames",
+    era: 7,
+    eraName: "Era 7: The Lost Ending",
+    title: "War Games — The Match That Never Happened",
+    date: "The Night That Was Supposed To Be",
+    venue: "Rampage Pro Wrestling",
+    city: "Devil's Playpen",
+    opponentId: "yams",
+    stipulation: "War Games — Project Mayhem vs Team Rampage",
+    historicalResult: "win",
+    historicalNote: "The Wargames match was the planned conclusion to the Mayhem vs Rampage feud — two rings inside one giant cage, teams entering one at a time, the format that matches the scope of what they built. A week before the show, everything fell apart. Greywolf dropped. Vox dropped. Killian dropped. The company threw together The Final Shot in Camden instead. In real life, the story ended there. In the game — it ends here, the right way.",
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "This match was never supposed to be a game.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "The plan was Wargames. Mayhem vs Rampage. Two rings. One cage. The format that fits what they spent three years building.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "A week before the show — the world fell apart. Greywolf dropped. Vox dropped. Killian dropped. They threw together The Final Shot with whoever was left.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "The Final Shot was real. Everyone who showed up did their time. But the ending the story deserved never came.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Now it does.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "I've been writing this check since July 2016 at OTCW. Tonight — in this cage — it finally clears.",
+        isPromo: true,
+      },
+    ],
+    outroCutscene: {
+      win: [
+        {
+          speaker: "NARRATOR",
+          text: "Project Mayhem wins War Games.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "The feud that started June 24, 2017 — the baseball bat, the GM, the retirement tour, the bookstore, the Rumble, the loophole — is over.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Jay Cortez, the face owner, built Rampage with one hand and fed it poison with the other. Big Mike fought it the whole way. The GM seat is decided. The cage is unlocked.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Yams still has the Heavyweight Championship. The next chapter has already started.",
+        },
+      ],
+      lose: [
+        {
+          speaker: "NARRATOR",
+          text: "Team Rampage wins War Games. This chapter doesn't close until Project Mayhem wins.",
+        },
+      ],
+    },
+  },
+
+  {
     id: "ch6-mac-mayhem",
     era: 7,
     eraName: "Era 7: The Lost Ending",
@@ -3068,15 +3161,19 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "This match never happened.",
+        text: "This match never happened. But it was supposed to.",
       },
       {
         speaker: "NARRATOR",
-        text: "Rampage Pro Wrestling collapsed before the story reached its ending. The Mayhem Rules Match was scheduled. Jay Cortez had revealed himself as Higher Power. Mac had gone full 'Emphasis on ME.'",
+        text: "Mac Mayhem beat Yams for the Rampage Heavyweight Championship. He wasn't trying to be Yams' friend. He just wanted the shot. He got it. Yams lost.",
       },
       {
         speaker: "NARRATOR",
-        text: "The Rampage Heavyweight Championship was supposed to come home to $teve. Here — it does.",
+        text: "Now Mac holds the belt. And the 'Emphasis on ME' promo wasn't just talk — he meant every word.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Jay Cortez had already revealed himself as Higher Power. The face owner behind the whole machine. The pieces are on the board. One piece is left out of place — the Heavyweight title.",
       },
       {
         speaker: "Rich $teve",
@@ -3090,17 +3187,12 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "Rich $teve",
-        text: "Oh really? For the past couple of months it's always been Rich $teve this, Rich $teve that. And you're wearing Riot City gear. At least I know what a team is!",
-        isPromo: true,
-      },
-      {
-        speaker: "Mac Mayhem",
-        text: "At least I know what a team is!",
+        text: "For the past couple of months it's always been Rich $teve this, Rich $teve that. You're wearing Riot City gear. At least I know what a team is!",
         isPromo: true,
       },
       {
         speaker: "Rich $teve",
-        text: "If it wasn't for me — we wouldn't have gotten to the level we're at. Tonight, I prove it. Not for you. Not for them. For the history of this character. For everything I built.",
+        text: "If it wasn't for me — we wouldn't be at this level. Tonight, I prove it. Not for you. Not for them. For the history of this character. For everything I built.",
         isPromo: true,
       },
     ],
@@ -3143,23 +3235,40 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "johnny-xross",
     stipulation: "Rampage Heavyweight Championship",
     historicalResult: "lose",
-    historicalNote: "The planned ending: Johnny Xross returns immediately to challenge. $teve puts him over — crowning a new champion. The Credibility Rule made real. The full circle.",
+    historicalNote: "The planned true ending. Xross had been sending signals for weeks — promos of him at a sporting goods store, asking the clerk: 'What hurts more? The wood bat or the aluminum?' Callbacks to June 2016 at OTCW. The check was being written for a long time. #BRUH went face for a reason that had nothing to do with storyline: after a show, a little Black kid in the crowd asked Steve where 'the army man' was — Xross and Ray Rumble in their BRUH camouflage gear. Steve never broke character. He didn't give that kid a high five. But he walked backstage and said: '#BRUH can't be heels anymore. They're too important for representation.' The turn wasn't a booking decision. It was that kid asking for the army man. Xross returning means every wrong across OTCW, Rampage, and three years of being used by Mayhem gets answered. In one match. This is the retribution.",
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "You are the Rampage Heavyweight Champion.",
+        text: "You are the Rampage Heavyweight Champion. Three belts. Everything you said you'd build — built.",
       },
       {
         speaker: "NARRATOR",
-        text: "Johnny Xross returns immediately. The man from The Original Coalition. The man who turned babyface. One of the best in Rampage.",
+        text: "For weeks, promos had been airing. Johnny Xross at a sporting goods store. Asking a clerk: 'What hurts more — the wood bat or the aluminum?' Walking the aisles. Picking them both up. Putting them back.",
       },
       {
         speaker: "NARRATOR",
-        text: "This was the plan: $teve holds it long enough to make it mean something. Then passes it to the right guy.",
+        text: "The callbacks to June 2016 at OTCW. The Original Coalition. The beginning of the whole check.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Why did #BRUH go face? Not just storyline. After a show, a little kid asked Steve where 'the army man' was — Xross and Ray Rumble, the ones in the camouflage. Steve never broke character. He didn't give that kid a high five.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "He walked backstage and said one thing: '#BRUH can't be heels anymore. They're too important for representation.' That kid asking for the army man did what nothing in the storyline could do.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Now Johnny Xross is here. Not just for himself. For Ray. For every person in Rampage who watched Mayhem operate. For OTCW. For everyone Steve used and discarded. For that kid in the crowd.",
       },
       {
         speaker: "Rich $teve",
-        text: "Johnny. You want this? Then earn it.",
+        text: "Johnny. You want this? You want everything I built? Then earn it. Show me it means something.",
+        isPromo: true,
+      },
+      {
+        speaker: "Johnny Xross",
+        text: "I've been earning it since 2016. You've been cashing in on everyone around you. Tonight — it's my turn.",
         isPromo: true,
       },
     ],
@@ -3167,25 +3276,33 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       win: [
         {
           speaker: "NARRATOR",
-          text: "You kept the title. That wasn't the plan — but you're the champion. That choice is yours.",
+          text: "You kept the title. That wasn't the plan — but you're the champion. The story doesn't always end the way it was written.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Three belts. The head of the promotion. Everything you said.",
         },
       ],
       lose: [
         {
           speaker: "NARRATOR",
-          text: "Johnny Xross wins the Rampage Pro Wrestling Heavyweight Championship.",
+          text: "Johnny Xross pins Rich $teve. New Rampage Heavyweight Champion.",
         },
         {
           speaker: "NARRATOR",
-          text: "The Credibility Rule. Build up your opponent. Don't bury them. If you bury your opponent and then beat them, you defeated a nobody. Keep them credible — and your loss means something.",
+          text: "This is what the Credibility Rule actually means. You built everyone up. You never buried them. When Xross pins you — it means something. It means everything.",
         },
         {
           speaker: "NARRATOR",
-          text: "This was the plan all along. The story Steve Coleman spent 13 years writing — it ends with him putting someone else over.",
+          text: "The retribution for OTCW. The retribution for Rampage. The retribution for #BRUH, for Ray Rumble, for every person in that locker room who watched the machine operate.",
         },
         {
           speaker: "NARRATOR",
-          text: "That's not losing. That's the business.",
+          text: "And for a little kid in the crowd asking where the army man was.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Steve Coleman spent 13 years writing this check. The full amount was always: putting the right person over at the right time.",
         },
         {
           speaker: "Rich $teve",
@@ -3253,8 +3370,8 @@ export const ERAS = [
     name: "Era 7",
     subtitle: "The Lost Ending",
     years: "The Night That Never Came",
-    description: "Rampage collapsed before the story finished. The Mayhem Rules Match against Mac Mayhem. The Heavyweight Championship. And the ending that was always supposed to happen — against Johnny Xross.",
-    chapterIds: ["ch6-mac-mayhem", "ch6-johnny-xross"],
+    description: "The Wargames match was supposed to close the book. A week before — the world fell apart. Greywolf, Vox, Killian all dropped. They threw together The Final Shot with who was left. The story that Rampage never got to finish only exists here. War Games. Mac Mayhem holds the title after beating Yams. Then $teve. Then — Johnny Xross returns. The check that's been cashing since July 2016 at OTCW finally clears.",
+    chapterIds: ["ch6-wargames", "ch6-mac-mayhem", "ch6-johnny-xross"],
   },
 ];
 
