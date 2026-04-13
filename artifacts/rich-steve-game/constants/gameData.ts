@@ -814,12 +814,12 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     era: 1,
     eraName: "Era 1: The Future",
     title: "The Casket Match",
-    date: "2006–2007",
-    venue: "ACPW Circuit",
+    date: "October 21, 2006",
+    venue: "ACPW — Northeast Community Center",
     city: "Philadelphia, PA",
-    stipulation: "Managing Korpse — The Road Dog Partnership Begins",
+    stipulation: "Managing Korpse — Casket Match: Korpse vs Dr. Spider",
     historicalResult: "story",
-    historicalNote: "After Living Dead 2k6 dissolved, Rich $teve managed Korpse exclusively until March 2007. They became best friends — Road Dogs — in the process.",
+    historicalNote: "October 21, 2006. ACPW. Northeast Community Center. Philadelphia, PA. After Living Dead 2k6 dissolved, Rich $teve managed Korpse exclusively. Tonight: Korpse (w/Rich $teve) vs Dr. Spider — a casket match. WIN. They built something lasting. Crazii Shea is at these shows. The connections forming now will define everything that comes after.",
     matchless: true,
     introCutscene: [
       {
@@ -1390,7 +1390,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "justin-tyme",
     stipulation: "Singles Match — GM Managing At Ringside",
     historicalResult: "story",
-    historicalNote: "Rich $teve is still the GM at Proving Ground — wearing the suit, managing at ringside. The in-ring return hasn't happened yet. September is coming. He competes in a match this night but the suit stays on — still building.",
+    historicalNote: "August 27, 2016. OTCW Proving Ground. Triple B Arena. Berkeley Springs, WV. Rich $teve is still the GM — suit on, managing at ringside. Three managed victories tonight: Jesse Skelton wins, Tony Link wins, Justin Tyme wins. The in-ring return has not happened yet. That's September.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -1435,9 +1435,9 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "OTCW September to Remember — Triple B Arena",
     city: "Berkeley Springs, WV",
     opponentId: "buddah",
-    stipulation: "Tag Team Match — Rich $teve & Justin Tyme vs Buddah",
+    stipulation: "The Coalition Forms — Hair vs Hair (Link vs Justice) — Rich $teve & Tyme vs Buddah",
     historicalResult: "lose",
-    historicalNote: "September 24, 2016. The night Rich $teve removes the suit — revealing the orange wrestling singlet underneath. The moment he officially returns as an in-ring competitor. The Coalition also officially forms tonight: Sly Scarpone, Jesse Skelton, Little Monster Binky, Ray Rumble, Johnny Xross, Alistar Conrad, Drew Bronson, Tony Link, Justin Tyme, and Rich $teve.",
+    historicalNote: "September 24, 2016. OTCW September to Remember. Triple B Arena. Berkeley Springs, WV. The Coalition officially forms: Sly Scarpone, Jesse Skelton, Little Monster Binky, Ray Rumble, Johnny Xross, Alistar Conrad, Drew Bronson, Tony Link, Justin Tyme, and Rich $teve. The suit comes off — $teve reveals the orange singlet and returns to in-ring competition. Tony Link loses to Justice with a shaving stipulation attached — Rich $teve, as Link's manager, gets his head shaved. Then $teve and Justin Tyme face Buddah — LOSS.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -1445,19 +1445,19 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Tonight — the suit comes off.",
+        text: "Tonight — the suit comes off. Rich $teve walks to the ring. He unbuttons the shirt. Underneath: the orange singlet. In-ring competition officially begins.",
       },
       {
         speaker: "NARRATOR",
-        text: "Rich $teve walks to the ring. He unbuttoned the shirt. Underneath: the orange singlet. This is no longer a GM's ring. This is a wrestler's ring.",
+        text: "The Coalition forms tonight. Ten men. One faction. But the night comes with a cost.",
       },
       {
         speaker: "NARRATOR",
-        text: "And tonight — The Coalition is born. Sly Scarpone. Jesse Skelton. Little Monster Binky. Ray Rumble. Johnny Xross. Alistar Conrad. Drew Bronson. Tony Link. Justin Tyme. Rich $teve. Ten men. One faction.",
+        text: "Tony Link's match against Justice has a shaving stipulation. Link loses. Rich $teve — as Link's manager — takes the consequence. The hair comes off.",
       },
       {
         speaker: "Rich $teve",
-        text: "The suit was a tool. Now the tool is off. I'm back in the ring and I'm bringing all of these people with me. The Coalition isn't just a group — it's an inevitability.",
+        text: "You want my hair? Fine. Take it. Take everything you can get tonight — because after tonight, you get nothing. The Coalition is real. The suit is gone. And I will not forget a single person in that ring.",
         isPromo: true,
       },
     ],
@@ -2251,8 +2251,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
     stipulation: "Randolph Scot Memorial 25-Man Rumble — Rampage Pro Wrestling 'Big Mike's Curtain Call'",
-    historicalResult: "story",
-    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Rich $teve entered the Randolph Scot Memorial 25-man rumble and was last eliminated by Big Mike. After the rumble, the night ended with events that would define everything that followed.",
+    historicalResult: "lose",
+    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Rich $teve entered the Randolph Scot Memorial 25-man rumble — and was the last man eliminated. Big Mike threw him out. After the rumble ended, the night was far from over.",
     matchless: true,
     introCutscene: [
       {
@@ -2371,13 +2371,13 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     era: 6,
     eraName: "Era 6: The Year of Mayhem",
     title: "The Riot Rumble",
-    date: "2018",
-    venue: "Rampage Pro Wrestling",
-    city: "Devil's Playpen",
-    opponentId: "yams",
+    date: "March 10, 2018",
+    venue: "Rampage Pro Wrestling 'Vengeance' — Delaware Agricultural Museum",
+    city: "Dover, DE",
+    opponentId: "eb-cohen",
     stipulation: "Riot Rumble Battle Royal — Last man standing earns a guaranteed title contract: any time, any place of their choosing",
     historicalResult: "win",
-    historicalNote: "Rich $teve won the Riot Rumble battle royal, earning a guaranteed cash-in briefcase for any Rampage title — redeemable any time, any place of his choosing.",
+    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Rich $teve won the Riot Rumble battle royal — last eliminating E.B. Cohen — earning a guaranteed briefcase redeemable for any Rampage title, any time, any place of his choosing.",
     riotRumbleChapter: true,
     introCutscene: [
       {
@@ -2428,13 +2428,13 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     era: 6,
     eraName: "Era 6: The Year of Mayhem",
     title: "The Guerrero Special",
-    date: "2018",
-    venue: "Rampage Pro Wrestling",
-    city: "Devil's Playpen",
+    date: "April 21, 2018",
+    venue: "Rampage Pro Wrestling 'Apocalypse' — Delaware Agricultural Museum",
+    city: "Dover, DE",
     opponentId: "eb-cohen",
     stipulation: "Singles Match — Riot Rumble Contract on the Line",
     historicalResult: "win",
-    historicalNote: "$teve tossed the Riot Rumble lockbox to E.B. Cohen, faked a concussion so convincingly that building security called for medical help. After the DQ bell, he dropped the act entirely. Security bowed on the way out.",
+    historicalNote: "April 21, 2018. Rampage Pro Wrestling 'Apocalypse.' Delaware Agricultural Museum. Dover, DE. $teve tossed the Riot Rumble lockbox to E.B. Cohen, faked a concussion so convincingly that building security called for medical help. After the DQ bell rang, he dropped the act entirely. Security bowed on the way out. Contract retained.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -2483,8 +2483,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     era: 6,
     eraName: "Era 6: The Year of Mayhem",
     title: "Big Mike Day",
-    date: "2018",
-    venue: "Bookstore Signing — Lancaster, PA",
+    date: "July 14, 2018",
+    venue: "The Book Warehouses — Lancaster, PA",
     city: "Lancaster, PA",
     stipulation: "The Bookstore Incident — Big Mike's 'The Weird One' Book Signing",
     historicalResult: "story",
@@ -2720,30 +2720,34 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     era: 6,
     eraName: "Era 6: The Year of Mayhem",
     title: "The Solo Tag Title Heist",
-    date: "October 2018",
-    venue: "Rampage Pro Wrestling — Lethal Lottery",
+    date: "October 13, 2018",
+    venue: "PTV Lethal Lottery — Rampage Pro Wrestling",
     city: "Devil's Playpen",
     opponentId: "ray-rumble",
     stipulation: "Riot Rumble Cash-In — Rampage Tag Team Championships",
     historicalResult: "win",
-    historicalNote: "The Lethal Lottery randomly assigned $teve and Ray Rumble as partners. Johnny Xross was not at the show. After losing to RCMW in the semifinals, $teve hit the Money Drop on a vulnerable Ray Rumble, cashed the Riot Rumble contract, and pinned him — walking out as sole holder of both Rampage Tag Team Championship belts.",
+    historicalNote: "October 13, 2018. PTV Lethal Lottery. The tournament randomly assigned $teve and Ray Rumble as partners. First round: $teve & Ray Rumble defeated Muddy Waters & Brother Greatness. Semifinals: Riot City's Most Wanted eliminated them. Johnny Xross was not at the show. After the semi-final loss, Ray Rumble was shaken and vulnerable. $teve hit the Money Drop, cashed the Riot Rumble briefcase, and pinned his own partner — walking out as sole holder of both Rampage Pro Wrestling Tag Team Championship belts.",
     riotRumbleChapter: true,
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "October 2018. The Lethal Lottery. Partners assigned by random draw.",
+        text: "October 13, 2018. PTV Lethal Lottery. Partners assigned by random draw.",
       },
       {
         speaker: "NARRATOR",
-        text: "Rich $teve's partner: Ray Rumble. Johnny Xross is not at the show.",
+        text: "Rich $teve's partner: Ray Rumble. Johnny Xross is not at the show — he's alone.",
       },
       {
         speaker: "NARRATOR",
-        text: "George Burkett sees $teve's name next to Ray's on the sheet. He tells the crowd: don't trust Rich $teve. He cannot be trusted.",
+        text: "George Burkett sees $teve's name next to Ray's on the bracket. He warns the crowd: don't trust Rich $teve. He cannot be trusted.",
       },
       {
         speaker: "NARRATOR",
-        text: "They lose in the semifinals to Riot City's Most Wanted. Ray Rumble is shaken. Vulnerable.",
+        text: "First round: Rich $teve and Ray Rumble defeat Muddy Waters and Brother Greatness to advance.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Semifinals: Riot City's Most Wanted eliminates them. The tournament is over. Ray Rumble is shaken. Vulnerable. Still in the building.",
       },
       {
         speaker: "George Burkett",
@@ -3014,7 +3018,7 @@ export const ERAS = [
     name: "Era 3",
     subtitle: "OTCW & The Coalition",
     years: "2016–2017",
-    description: "Crazii Shea calls. OTCW. The suit. The Coalition forms at September to Remember. Winter War. Spring Brawl. Then — Rampage.",
+    description: "Crazii Shea calls. OTCW. The suit comes off. The Coalition forms. The scalping. Winter War. Spring Brawl. Then — Rampage.",
     chapterIds: ["ch3-hostile-takeover", "ch3-proving-ground", "ch3-september-remember", "ch3-winter-war", "ch3-spring-brawl", "ch3-riot-city-rules"],
   },
   {
