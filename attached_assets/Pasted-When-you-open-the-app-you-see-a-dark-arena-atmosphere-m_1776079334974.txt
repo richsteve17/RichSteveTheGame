@@ -1,0 +1,78 @@
+When you open the app, you see a dark, arena-atmosphere main menu. Rich $teve in his suit — illustrated from those photos — stands on screen against a moody, gold-accented background. Two buttons: Career Mode and Exhibition Match. It looks and feels like a wrestling game, not a text box.
+
+In Career Mode, each chapter opens like a cutscene — a dark screen with Rich $teve's illustrated face, real promo text appearing word by word (the actual lines from the archive), and the opponent's illustrated portrait on the other side. Think the kind of dramatic text/image storytelling you see in fighting game story modes. You read the setup, then tap to start the match.
+
+During a match, both wrestlers are shown as illustrated character portraits — Rich $teve in his gear (Hijacked shirt over black singlet, or R$ singlet depending on the era), opponent across from him. Both have a stamina bar at the top. Each turn you tap from a menu of moves:
+
+Regular moves (chip away at stamina)
+Market Crash — your signature Side Effect, grayed out when on cooldown, glows when ready
+Heel options — distract the crowd, bribe the ref, pull a loophole — these are buttons, not text
+Money Drop — the Big Splash finisher, only lights up when the opponent is low enough. When you hit it, it triggers a win animation
+The whole thing is tap-driven — no typing, no reading simulation text, just button presses with satisfying visual feedback.
+
+The Roster screen looks like a faction war board — Project Mayhem on one side, #BRUH on another, RCMW, 410 Massiv all organized. Each wrestler has a portrait card with their name, role, and a short bio. Tap any card to expand it.
+
+The boots, gear, and branding all show up in illustrated form throughout — the black/orange R$ sparkle boots on the match screen, the suit for all non-match screens (the Suit Rule enforced visually), the Riot Rumble contract as a glowing collectible trophy in your career inventory.
+
+The Lost Ending — the final unlockable chapter — plays out like a cinematic. You get to finish the story that never happened in real life: defeating Mac Mayhem, putting over Johnny Xross, the championship moment that was always supposed to happen.
+
+The current text simulation is the engine running under all of this — the stamina math, the cooldowns, the win/loss logic. What's being built now is putting a real visual shell around it so every punch, every promo, every championship moment looks the part.
+
+Here's everything running under the hood, explained plainly:
+
+The Game App (what you play)
+
+React Native via Expo — this is what makes it a real mobile app that runs on iPhone and Android from a single codebase. It's the same technology used by major apps like Discord and Shopify. You could publish it to the App Store and Google Play.
+React Navigation — handles moving between screens (menu → career → match → roster) with smooth transitions
+AsyncStorage — saves your career progress locally on the phone, so it persists between sessions like any real game save
+The Match Engine
+
+Pure JavaScript/TypeScript logic — the stamina math, cooldown timers, move outcomes, heel action effects, and finisher trigger conditions all live here. The text simulation that exists now is this layer — the visual build wraps around it.
+The Visual Layer
+
+React Native's built-in UI components styled with a custom dark/gold design system
+Illustrated character art (generated from your photos as style references) displayed as image assets
+Animated transitions for move impacts, stamina bar drains, and win/loss sequences using React Native Animated
+The Content Layer
+
+All career chapter data, promo dialogue, roster bios, and match records stored as structured data files (JSON/TypeScript objects) — pulled directly from the Master Archive
+No internet connection needed to play — everything runs offline on the device
+The API Server
+
+A lightweight Express.js backend already running in the project — available if you ever want leaderboards, cloud saves, or future online features, but the game works fully without it for now
+
+Here's the full breakdown of everything you've provided and exactly where it shows up in the game:
+
+Your Real Photos — Used as Character Art References
+
+The illustrated portraits in the game are drawn to match these exactly:
+
+What You Provided	Where It Shows Up
+Suit photos (multiple angles, expressions)	Rich $teve's portrait on every non-match screen — menu, career chapters, roster, cutscenes
+R$ white singlet (front, back, kanji leg detail)	Rich $teve's in-match portrait for Era 1 & 2 matches
+#Hijacked black shirt + black/white singlet underneath	Rich $teve's in-match portrait for Era 3 matches (the Rampage Invasion era)
+Promotional blue-background shot (arms crossed, R$ singlet)	Used as the character select / career profile card
+Kendo stick pose (Hijacked shirt clearest)	Cutscene illustration for Hijacked storyline chapters
+Helping Ray up in-ring shot	Storyline cutscene for the #BRUH partnership moments
+Spinebuster action shot	Match animation reference for the Market Crash (Side Effect) move
+Black/orange R$ sparkle boots with red soles	Rendered on the in-match character portrait, also shown in the gear collection screen
+White "What Would Dusty Do" boots (WW/DD patches)	Shown in the career inventory / collectibles section with their lore note
+White R$ boots	Rendered on the white singlet in-match portrait
+Singlet back ("Rich $teve" old English lettering)	Used for the character name plate design and branding throughout
+Kanji close-up (未来の星)	Appears as a detail element in the career chapter title cards
+The Master Archive (already in the project)
+
+The HTML archive file is the content engine for the entire game:
+
+Every career chapter's story, dates, and opponents
+All real promo dialogue used in cutscenes word-for-word
+The full roster — every wrestler's name, faction, and role
+The Riot Rumble contract moment
+The Lost Ending setup
+What Would Still Round It Out
+
+If you can get them, these would complete the asset set:
+
+Money Drop (Big Splash) action shot — for the finisher win animation reference
+One photo each of Mac Mayhem, Johnny Xross, Korpse, Ryan Vox — so their illustrated opponent portraits match real likenesses rather than being generic
+Everything else is already in hand. The photos you've provided give the illustrator and the game builder everything needed to make this look and feel like a real, true-to-life Rich $teve product

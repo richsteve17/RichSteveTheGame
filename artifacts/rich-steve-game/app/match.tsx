@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Animated,
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -14,6 +15,7 @@ import {
 import { useGame } from "@/context/GameContext";
 import { useColors } from "@/hooks/useColors";
 import { CAREER_CHAPTERS, WRESTLERS } from "@/constants/gameData";
+import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
 
 type Phase = "pre-match" | "fighting" | "post-match";
 type LogEntry = { text: string; type: "player" | "opponent" | "special" | "system" };
@@ -28,6 +30,64 @@ const OPPONENT_MOVES = [
   { name: "Elbow Drop", damage: 8 },
 ];
 
+function WrestlerPortrait({
+  photo,
+  name,
+  isPlayer,
+  size = 140,
+  borderColor,
+}: {
+  photo: any | null;
+  name: string;
+  isPlayer: boolean;
+  size?: number;
+  borderColor: string;
+}) {
+  if (photo) {
+    return (
+      <View style={[styles.portraitBox, { width: size, height: size, borderColor, borderWidth: 2, borderRadius: 8 }]}>
+        <Image source={photo} style={styles.portraitImg} resizeMode="cover" />
+        <View style={[styles.portraitNameBar, { backgroundColor: isPlayer ? borderColor + "EE" : "#000000CC" }]}>
+          <Text style={styles.portraitNameText} numberOfLines={1}>
+            {isPlayer ? "RICH $TEVE" : name.toUpperCase()}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+  return (
+    <View style={[styles.portraitBox, styles.portraitPlaceholder, { width: size, height: size, borderColor, borderWidth: 2, borderRadius: 8 }]}>
+      <MaterialCommunityIcons name="account-outline" size={size * 0.45} color={borderColor + "66"} />
+      <Text style={[styles.portraitNameText, { color: borderColor }]} numberOfLines={1}>
+        {isPlayer ? "RICH $TEVE" : name.toUpperCase()}
+      </Text>
+    </View>
+  );
+}
+
+function SmallPortrait({
+  photo,
+  size = 44,
+  borderColor,
+}: {
+  photo: any | null;
+  size?: number;
+  borderColor: string;
+}) {
+  if (photo) {
+    return (
+      <View style={{ width: size, height: size, borderRadius: 6, overflow: "hidden", borderWidth: 1.5, borderColor }}>
+        <Image source={photo} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+      </View>
+    );
+  }
+  return (
+    <View style={{ width: size, height: size, borderRadius: 6, borderWidth: 1.5, borderColor, alignItems: "center", justifyContent: "center", backgroundColor: borderColor + "22" }}>
+      <MaterialCommunityIcons name="account" size={size * 0.6} color={borderColor + "66"} />
+    </View>
+  );
+}
+
 export default function MatchScreen() {
   const colors = useColors();
   const router = useRouter();
@@ -37,6 +97,9 @@ export default function MatchScreen() {
   const opponent = WRESTLERS.find((w) => w.id === params.opponentId) ?? WRESTLERS[0]!;
   const chapter = CAREER_CHAPTERS.find((c) => c.id === params.chapterId);
   const isExhibition = params.mode === "exhibition";
+
+  const stevePhoto = getWrestlerPhoto("rich-steve");
+  const opponentPhoto = getWrestlerPhoto(opponent.id);
 
   const [phase, setPhase] = useState<Phase>("pre-match");
   const [playerStamina, setPlayerStamina] = useState(PLAYER_BASE_STAMINA);
@@ -234,21 +297,42 @@ export default function MatchScreen() {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.preMatch}>
-          <Text style={[styles.preVS, { color: colors.mutedForeground }]}>VS</Text>
-          <Text style={[styles.prePlayer, { color: colors.primary }]}>RICH $TEVE</Text>
-          <Text style={[styles.preVS2, { color: colors.mutedForeground }]}>vs.</Text>
-          <Text style={[styles.preOpponent, { color: colors.foreground }]}>{opponent.name}</Text>
-          <Text style={[styles.preStip, { color: colors.mutedForeground }]}>
-            {chapter?.stipulation ?? "Exhibition Match"}
+          <Text style={[styles.preEra, { color: colors.mutedForeground }]}>
+            {chapter?.venue ? `${chapter.venue} · ${chapter.city}` : "EXHIBITION MATCH"}
           </Text>
-          {chapter && (
-            <Text style={[styles.preVenue, { color: colors.mutedForeground }]}>
-              {chapter.venue} · {chapter.city}
+          {chapter?.stipulation && (
+            <Text style={[styles.preStip, { color: colors.primary }]}>
+              {chapter.stipulation}
             </Text>
           )}
+
+          <View style={styles.faceoffRow}>
+            <View style={styles.faceoffSide}>
+              <WrestlerPortrait
+                photo={stevePhoto}
+                name="Rich $teve"
+                isPlayer
+                borderColor={colors.primary}
+              />
+            </View>
+
+            <View style={styles.vsCircle}>
+              <Text style={[styles.vsText, { color: colors.mutedForeground }]}>VS</Text>
+            </View>
+
+            <View style={styles.faceoffSide}>
+              <WrestlerPortrait
+                photo={opponentPhoto}
+                name={opponent.name}
+                isPlayer={false}
+                borderColor={colors.destructive}
+              />
+            </View>
+          </View>
+
           <View style={[styles.preNote, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.preNoteText, { color: colors.mutedForeground }]}>
-              Turn-based match. Use your moves, signature, and finisher strategically. Heel tactics are one-time-use per match.
+              Turn-based match. Use moves, signature, and finisher strategically. Heel tactics are one-time-use per match.
             </Text>
           </View>
           <Pressable
@@ -273,11 +357,15 @@ export default function MatchScreen() {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.postMatch}>
-          <MaterialCommunityIcons
-            name={won ? "trophy" : "emoticon-sad"}
-            size={60}
-            color={won ? colors.primary : colors.mutedForeground}
-          />
+          <View style={styles.postPortraitRow}>
+            <SmallPortrait photo={stevePhoto} size={64} borderColor={won ? colors.primary : colors.mutedForeground} />
+            <MaterialCommunityIcons
+              name={won ? "trophy" : "emoticon-sad"}
+              size={44}
+              color={won ? colors.primary : colors.mutedForeground}
+            />
+            <SmallPortrait photo={opponentPhoto} size={64} borderColor={won ? colors.mutedForeground : colors.destructive} />
+          </View>
           <Text style={[styles.postResult, { color: won ? colors.primary : colors.destructive }]}>
             {won ? "VICTORY" : "DEFEAT"}
           </Text>
@@ -332,54 +420,55 @@ export default function MatchScreen() {
           pointerEvents="none"
         />
 
-        <View style={styles.matchHeader}>
+        <View style={[styles.matchHUD, { borderBottomColor: colors.border }]}>
           <Pressable onPress={() => router.back()} style={styles.backBtn}>
             <Ionicons name="chevron-back" size={22} color={colors.mutedForeground} />
           </Pressable>
-          <Text style={[styles.turnLabel, { color: colors.mutedForeground }]}>TURN {turn}</Text>
+
+          <View style={styles.hudInner}>
+            <View style={styles.hudFighter}>
+              <SmallPortrait photo={stevePhoto} size={44} borderColor={colors.primary} />
+              <View style={styles.hudStaminaCol}>
+                <View style={[styles.hudBar, { backgroundColor: colors.secondary }]}>
+                  <Animated.View
+                    style={[
+                      styles.hudBarFill,
+                      {
+                        width: `${staminaPct(playerStamina, PLAYER_BASE_STAMINA) * 100}%`,
+                        backgroundColor: getStaminaColor(staminaPct(playerStamina, PLAYER_BASE_STAMINA)),
+                      },
+                    ]}
+                  />
+                </View>
+                <Text style={[styles.hudName, { color: colors.primary }]}>$TEVE</Text>
+              </View>
+            </View>
+
+            <Text style={[styles.hudTurn, { color: colors.mutedForeground }]}>T{turn}</Text>
+
+            <View style={[styles.hudFighter, { flexDirection: "row-reverse" }]}>
+              <SmallPortrait photo={opponentPhoto} size={44} borderColor={colors.destructive} />
+              <View style={[styles.hudStaminaCol, { alignItems: "flex-end" }]}>
+                <View style={[styles.hudBar, { backgroundColor: colors.secondary }]}>
+                  <Animated.View
+                    style={[
+                      styles.hudBarFill,
+                      {
+                        width: `${staminaPct(opponentStamina, opponent.stamina) * 100}%`,
+                        backgroundColor: getStaminaColor(staminaPct(opponentStamina, opponent.stamina)),
+                        alignSelf: "flex-end",
+                      },
+                    ]}
+                  />
+                </View>
+                <Text style={[styles.hudName, { color: colors.destructive }]} numberOfLines={1}>
+                  {opponent.name.split(" ")[0]!.toUpperCase()}
+                </Text>
+              </View>
+            </View>
+          </View>
+
           <View style={{ width: 40 }} />
-        </View>
-
-        <View style={styles.staminaBars}>
-          <View style={styles.staminaRow}>
-            <Text style={[styles.fighterLabel, { color: colors.primary }]}>RICH $TEVE</Text>
-            <Text style={[styles.staminaNum, { color: getStaminaColor(staminaPct(playerStamina, PLAYER_BASE_STAMINA)) }]}>
-              {playerStamina}
-            </Text>
-          </View>
-          <View style={[styles.staminaBar, { backgroundColor: colors.secondary }]}>
-            <View
-              style={[
-                styles.staminaFill,
-                {
-                  width: `${staminaPct(playerStamina, PLAYER_BASE_STAMINA) * 100}%`,
-                  backgroundColor: getStaminaColor(staminaPct(playerStamina, PLAYER_BASE_STAMINA)),
-                },
-              ]}
-            />
-          </View>
-
-          <View style={[styles.divider, { backgroundColor: colors.border }]} />
-
-          <View style={styles.staminaRow}>
-            <Text style={[styles.fighterLabel, { color: colors.foreground }]} numberOfLines={1}>
-              {opponent.name.toUpperCase()}
-            </Text>
-            <Text style={[styles.staminaNum, { color: getStaminaColor(staminaPct(opponentStamina, opponent.stamina)) }]}>
-              {opponentStamina}
-            </Text>
-          </View>
-          <View style={[styles.staminaBar, { backgroundColor: colors.secondary }]}>
-            <View
-              style={[
-                styles.staminaFill,
-                {
-                  width: `${staminaPct(opponentStamina, opponent.stamina) * 100}%`,
-                  backgroundColor: getStaminaColor(staminaPct(opponentStamina, opponent.stamina)),
-                },
-              ]}
-            />
-          </View>
         </View>
 
         <ScrollView
@@ -524,19 +613,49 @@ const styles = StyleSheet.create({
     zIndex: 99,
     pointerEvents: "none",
   },
-  preMatch: { flex: 1, alignItems: "center", justifyContent: "center", padding: 32, gap: 8 },
-  preVS: { fontSize: 11, letterSpacing: 4, fontFamily: "Inter_500Medium" },
-  prePlayer: { fontSize: 36, fontFamily: "Inter_700Bold", letterSpacing: -1 },
-  preVS2: { fontSize: 14, fontFamily: "Inter_400Regular" },
-  preOpponent: { fontSize: 28, fontFamily: "Inter_600SemiBold", textAlign: "center" },
-  preStip: { fontSize: 12, fontFamily: "Inter_500Medium", textAlign: "center", marginTop: 4 },
-  preVenue: { fontSize: 11, fontFamily: "Inter_400Regular", textAlign: "center" },
-  preNote: { borderWidth: 1, borderRadius: 6, padding: 14, marginTop: 16, marginBottom: 8 },
-  preNoteText: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18, textAlign: "center" },
-  startBtn: { marginTop: 8, borderRadius: 6, paddingVertical: 16, paddingHorizontal: 48 },
+
+  preMatch: { flex: 1, alignItems: "center", justifyContent: "center", padding: 20, gap: 12 },
+  preEra: { fontSize: 10, letterSpacing: 3, fontFamily: "Inter_500Medium", textAlign: "center" },
+  preStip: { fontSize: 13, fontFamily: "Inter_700Bold", letterSpacing: 1, textAlign: "center" },
+
+  faceoffRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 12,
+    marginVertical: 8,
+    width: "100%",
+  },
+  faceoffSide: { flex: 1, alignItems: "center" },
+  vsCircle: { alignItems: "center", justifyContent: "center" },
+  vsText: { fontSize: 22, fontFamily: "Inter_700Bold" },
+
+  portraitBox: { overflow: "hidden", position: "relative" },
+  portraitImg: { width: "100%", height: "100%" },
+  portraitPlaceholder: { alignItems: "center", justifyContent: "center", gap: 4 },
+  portraitNameBar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
+    alignItems: "center",
+  },
+  portraitNameText: {
+    fontSize: 9,
+    fontFamily: "Inter_700Bold",
+    letterSpacing: 1,
+    color: "#FFFFFF",
+  },
+
+  preNote: { borderWidth: 1, borderRadius: 6, padding: 12, width: "100%" },
+  preNoteText: { fontSize: 11, fontFamily: "Inter_400Regular", lineHeight: 16, textAlign: "center" },
+  startBtn: { borderRadius: 6, paddingVertical: 16, paddingHorizontal: 48, marginTop: 4 },
   startBtnText: { fontSize: 15, fontFamily: "Inter_700Bold", letterSpacing: 2 },
 
   postMatch: { flex: 1, alignItems: "center", justifyContent: "center", padding: 32, gap: 12 },
+  postPortraitRow: { flexDirection: "row", alignItems: "center", gap: 16, marginBottom: 8 },
   postResult: { fontSize: 40, fontFamily: "Inter_700Bold", letterSpacing: 2 },
   postReason: { fontSize: 14, fontFamily: "Inter_500Medium", textAlign: "center" },
   postTurns: { fontSize: 12, fontFamily: "Inter_400Regular" },
@@ -547,37 +666,76 @@ const styles = StyleSheet.create({
   postBtn: { borderRadius: 6, paddingVertical: 14, alignItems: "center" },
   postBtnText: { fontSize: 13, fontFamily: "Inter_600SemiBold", letterSpacing: 1 },
 
-  matchHeader: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 12, paddingVertical: 8 },
-  backBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
-  turnLabel: { fontSize: 12, fontFamily: "Inter_600SemiBold", letterSpacing: 2 },
+  matchHUD: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    gap: 4,
+  },
+  backBtn: { width: 40, height: 44, alignItems: "center", justifyContent: "center" },
+  hudInner: { flex: 1, flexDirection: "row", alignItems: "center", gap: 8 },
+  hudFighter: { flex: 1, flexDirection: "row", alignItems: "center", gap: 8 },
+  hudStaminaCol: { flex: 1 },
+  hudBar: { height: 8, borderRadius: 4, overflow: "hidden", marginBottom: 3 },
+  hudBarFill: { height: "100%", borderRadius: 4 },
+  hudName: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 1 },
+  hudTurn: { fontSize: 11, fontFamily: "Inter_600SemiBold", letterSpacing: 1, textAlign: "center", minWidth: 28 },
 
-  staminaBars: { paddingHorizontal: 16, paddingBottom: 8, gap: 4 },
-  staminaRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 2 },
-  fighterLabel: { fontSize: 12, fontFamily: "Inter_700Bold", letterSpacing: 1, flex: 1 },
-  staminaNum: { fontSize: 14, fontFamily: "Inter_700Bold" },
-  staminaBar: { height: 8, borderRadius: 4, overflow: "hidden" },
-  staminaFill: { height: "100%", borderRadius: 4 },
-  divider: { height: 1, marginVertical: 8 },
-
-  logArea: { flex: 1, marginHorizontal: 12, borderRadius: 6, borderWidth: 1, marginBottom: 8 },
+  logArea: {
+    flex: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    marginHorizontal: 0,
+  },
   logEntry: { fontSize: 13, lineHeight: 20 },
 
-  moves: { paddingHorizontal: 12, paddingBottom: 12, gap: 8 },
-  movesRow: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
-  moveBtn: { flex: 1, minWidth: "45%", borderRadius: 6, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 8, alignItems: "center", flexDirection: "row", justifyContent: "space-between" },
-  moveBtnText: { fontSize: 11, fontFamily: "Inter_500Medium" },
-  moveDmg: { fontSize: 11, fontFamily: "Inter_700Bold" },
+  moves: { paddingTop: 8, paddingBottom: 4 },
+  movesRow: { flexDirection: "row", paddingHorizontal: 8, gap: 6, marginBottom: 8 },
+  moveBtn: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingVertical: 10,
+    alignItems: "center",
+    gap: 2,
+  },
+  moveBtnText: { fontSize: 9, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5, textAlign: "center" },
+  moveDmg: { fontSize: 9, fontFamily: "Inter_700Bold" },
 
-  specialRow: { flexDirection: "row", gap: 8 },
-  sigBtn: { flex: 2, borderRadius: 6, borderWidth: 1, paddingVertical: 12, paddingHorizontal: 12, alignItems: "center" },
-  sigBtnText: { fontSize: 13, fontFamily: "Inter_700Bold", letterSpacing: 1 },
-  sigSub: { fontSize: 10, fontFamily: "Inter_400Regular", marginTop: 2 },
-  finBtn: { flex: 1, borderRadius: 6, borderWidth: 1, paddingVertical: 12, paddingHorizontal: 8, alignItems: "center", justifyContent: "center", gap: 4 },
-  finBtnText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 0.5, textAlign: "center" },
+  specialRow: { flexDirection: "row", paddingHorizontal: 8, gap: 8, marginBottom: 8 },
+  sigBtn: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignItems: "center",
+  },
+  sigBtnText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 1 },
+  sigSub: { fontSize: 9, fontFamily: "Inter_400Regular", marginTop: 2 },
+  finBtn: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  finBtnText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 1 },
 
-  heelRow: { gap: 6 },
-  heelLabel: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 2 },
-  heelBtns: { flexDirection: "row", gap: 6 },
-  heelBtn: { flex: 1, borderRadius: 6, borderWidth: 1, paddingVertical: 10, alignItems: "center" },
-  heelBtnText: { fontSize: 10, fontFamily: "Inter_600SemiBold", letterSpacing: 1 },
+  heelRow: { paddingHorizontal: 8, paddingBottom: 8 },
+  heelLabel: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 2, marginBottom: 6 },
+  heelBtns: { flexDirection: "row", gap: 8 },
+  heelBtn: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingVertical: 8,
+    alignItems: "center",
+  },
+  heelBtnText: { fontSize: 9, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5 },
 });

@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -13,6 +14,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGame } from "@/context/GameContext";
 import { useColors } from "@/hooks/useColors";
+import { WRESTLER_PHOTOS } from "@/constants/wrestlerPhotos";
 
 export default function HomeScreen() {
   const colors = useColors();
@@ -48,12 +50,22 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
     >
       <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
-        <View style={styles.header}>
-          <Text style={[styles.location, { color: colors.mutedForeground }]}>
-            PHILADELPHIA, PA · 2006–2019
-          </Text>
-          <Text style={[styles.title, { color: colors.primary }]}>RICH $TEVE</Text>
-          <Text style={[styles.titleSub, { color: colors.foreground }]}>THE GAME</Text>
+        <View style={[styles.heroSection, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+          <Image
+            source={WRESTLER_PHOTOS["rich-steve-suit"]}
+            style={styles.heroPhoto}
+            resizeMode="cover"
+          />
+          <View style={[styles.heroOverlay, { backgroundColor: colors.background + "CC" }]}>
+            <Text style={[styles.location, { color: colors.mutedForeground }]}>
+              PHILADELPHIA, PA · 2006–2019
+            </Text>
+            <Text style={[styles.title, { color: colors.primary }]}>RICH $TEVE</Text>
+            <Text style={[styles.titleSub, { color: colors.foreground }]}>THE GAME</Text>
+          </View>
+        </View>
+
+        <View style={[styles.taglineBlock, { borderBottomColor: colors.border }]}>
           <View style={[styles.divider, { backgroundColor: colors.primary }]} />
           <Text style={[styles.tagline, { color: colors.mutedForeground }]}>
             "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
@@ -144,17 +156,36 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: {
+  heroSection: {
+    height: 280,
+    position: "relative",
+    overflow: "hidden",
+    borderBottomWidth: 1,
+  },
+  heroPhoto: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
+  heroOverlay: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20,
+    paddingBottom: 24,
+  },
+  taglineBlock: {
     alignItems: "center",
     paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 8,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
   },
   location: {
     fontSize: 11,
     letterSpacing: 3,
     fontFamily: "Inter_500Medium",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   title: {
     fontSize: 52,
@@ -167,12 +198,11 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     letterSpacing: 8,
     marginTop: 2,
-    marginBottom: 16,
   },
   divider: {
     width: 40,
     height: 2,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   tagline: {
     fontSize: 12,
@@ -180,7 +210,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontStyle: "italic",
     lineHeight: 18,
-    paddingHorizontal: 16,
   },
   championBanner: {
     flexDirection: "row",

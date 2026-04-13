@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -11,6 +12,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { WRESTLERS } from "@/constants/gameData";
+import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
 
 const ROLE_COLORS: Record<string, string> = {
   "Main Event": "#D4AF37",
@@ -32,7 +34,9 @@ const FACTIONS = [
   {
     name: "PROJECT MAYHEM",
     color: "#D4AF37",
+    logo: null as any,
     members: ["Rich $teve", "Mac Mayhem", "Ryan Vox", "Wrex Savage"],
+    memberIds: ["rich-steve", "mac-mayhem", "ryan-vox", "wrex-savage"],
     manager: "Kory Cross",
     higherPower: "Jay Cortez",
     description:
@@ -41,16 +45,20 @@ const FACTIONS = [
   {
     name: "#BRUH",
     color: "#60a5fa",
-    members: ["Johnny Xross", "Ray Rumble", "Trish Adora"],
+    logo: null as any,
+    members: ["Johnny Xross", "Ray Rumble"],
+    memberIds: ["johnny-xross", "ray-rumble"],
     manager: "George Burkett",
     higherPower: null,
     description:
-      "Started inside The Coalition. Turned babyface December 2017. Became Rampage Tag Team Champions. The Lethal Lottery made Ray Rumble the most expensive transaction of $teve's career.",
+      "Started inside The Coalition. Turned babyface December 2017. Became Rampage Tag Team Champions. The Lethal Lottery made Ray Rumble the most expensive transaction of $teve's career. Johnny Xross (L) · George Burkett mgr (C) · Ray Rumble (R).",
   },
   {
     name: "RIOT CITY'S MOST WANTED",
     color: "#ef4444",
+    logo: null as any,
     members: ["Siccend", "Vic Ramone", "Jason Andrews"],
+    memberIds: ["siccend", "vic-ramone", "jason-drake"],
     manager: null,
     higherPower: null,
     description:
@@ -59,15 +67,19 @@ const FACTIONS = [
   {
     name: "410 MASSIV",
     color: "#888888",
+    logo: null as any,
     members: ["R.D. Cordova", "Andre Cash"],
+    memberIds: ["rd-cordova", "andre-cash"],
     manager: null,
     higherPower: null,
     description: "Tag team. R.D. Cordova was pinned by $teve to end Big Mike's run as ring announcer.",
   },
   {
     name: "THE TALENT AGENCY",
-    color: "#888888",
+    color: "#D4AF37",
+    logo: null as any,
     members: ["Beard Villain Johnny Malloy"],
+    memberIds: ["johnny-malloy"],
     manager: null,
     higherPower: null,
     description:
@@ -76,23 +88,19 @@ const FACTIONS = [
   {
     name: "RUFFNECKS",
     color: "#888888",
+    logo: null as any,
     members: ["Muddy Waters", "Josh Austin"],
+    memberIds: ["muddy-waters"],
     manager: null,
     higherPower: null,
     description: "Rampage tag team.",
   },
   {
-    name: "WOMEN'S DIVISION",
-    color: "#c084fc",
-    members: ["Trish Adora"],
-    manager: null,
-    higherPower: null,
-    description: "Rampage women's division. Trish Adora was affiliated with #BRUH.",
-  },
-  {
     name: "LEGENDS & ATTRACTIONS",
     color: "#60a5fa",
+    logo: null as any,
     members: ["Shane Douglas", "Justin Credible"],
+    memberIds: ["shane-douglas", "justin-credible"],
     manager: null,
     higherPower: null,
     description:
@@ -101,6 +109,21 @@ const FACTIONS = [
 ];
 
 type ViewMode = "factions" | "all";
+
+function FactionMemberPhotos({ memberIds }: { memberIds: string[] }) {
+  const colors = useColors();
+  const photos = memberIds.map((id) => ({ id, photo: getWrestlerPhoto(id) })).filter((p) => p.photo);
+  if (photos.length === 0) return null;
+  return (
+    <View style={styles.factionPhotos}>
+      {photos.map(({ id, photo }) => (
+        <View key={id} style={[styles.factionThumb, { borderColor: colors.border }]}>
+          <Image source={photo} style={styles.factionThumbImg} resizeMode="cover" />
+        </View>
+      ))}
+    </View>
+  );
+}
 
 export default function RosterScreen() {
   const colors = useColors();
@@ -144,7 +167,7 @@ export default function RosterScreen() {
 
       {view === "factions" &&
         FACTIONS.map((faction) => (
-          <View key={faction.name} style={[styles.factionBlock, { borderColor: colors.border }]}>
+          <View key={faction.name} style={[styles.factionBlock, { borderColor: colors.border, backgroundColor: colors.card }]}>
             <View style={[styles.factionAccent, { backgroundColor: faction.color }]} />
             <View style={styles.factionContent}>
               <View style={styles.factionHeader}>
@@ -160,6 +183,7 @@ export default function RosterScreen() {
                   </Text>
                 )}
               </View>
+              <FactionMemberPhotos memberIds={faction.memberIds} />
               <Text style={[styles.factionDesc, { color: colors.mutedForeground }]}>
                 {faction.description}
               </Text>
@@ -179,6 +203,7 @@ export default function RosterScreen() {
           const expanded = expandedId === w.id;
           const roleColor = ROLE_COLORS[w.role] ?? colors.mutedForeground;
           const styleIcon = STYLE_ICONS[w.style] ?? "help-circle";
+          const photo = getWrestlerPhoto(w.id);
 
           return (
             <Pressable
@@ -194,7 +219,15 @@ export default function RosterScreen() {
               onPress={() => setExpandedId(expanded ? null : w.id)}
             >
               <View style={styles.wrestlerRow}>
-                <View style={[styles.roleBar, { backgroundColor: roleColor }]} />
+                {photo ? (
+                  <View style={[styles.wrestlerPhoto, { borderColor: roleColor }]}>
+                    <Image source={photo} style={styles.wrestlerPhotoImg} resizeMode="cover" />
+                  </View>
+                ) : (
+                  <View style={[styles.wrestlerPhoto, styles.wrestlerPhotoPlaceholder, { borderColor: roleColor, backgroundColor: roleColor + "22" }]}>
+                    <MaterialCommunityIcons name="account" size={28} color={roleColor + "66"} />
+                  </View>
+                )}
                 <View style={styles.wrestlerInfo}>
                   <Text style={[styles.wrestlerName, { color: colors.foreground }]}>{w.name}</Text>
                   <Text style={[styles.wrestlerRole, { color: roleColor }]}>
@@ -216,6 +249,11 @@ export default function RosterScreen() {
 
               {expanded && (
                 <View style={[styles.expandedContent, { borderTopColor: colors.border }]}>
+                  {photo && (
+                    <View style={styles.expandedPhotoWrap}>
+                      <Image source={photo} style={styles.expandedPhoto} resizeMode="cover" />
+                    </View>
+                  )}
                   <Text style={[styles.wrestlerBio, { color: colors.mutedForeground }]}>
                     {w.bio}
                   </Text>
@@ -257,6 +295,7 @@ const styles = StyleSheet.create({
   },
   toggleBtn: { flex: 1, paddingVertical: 10, alignItems: "center" },
   toggleText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
+
   factionBlock: {
     marginHorizontal: 16,
     marginBottom: 12,
@@ -270,10 +309,14 @@ const styles = StyleSheet.create({
   factionHeader: { marginBottom: 8 },
   factionName: { fontSize: 14, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
   factionRole: { fontSize: 11, fontFamily: "Inter_500Medium", marginTop: 2 },
+  factionPhotos: { flexDirection: "row", gap: 6, marginBottom: 10 },
+  factionThumb: { width: 52, height: 52, borderRadius: 6, overflow: "hidden", borderWidth: 1 },
+  factionThumbImg: { width: "100%", height: "100%" },
   factionDesc: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18, marginBottom: 10 },
   factionMembers: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
   memberPill: { borderRadius: 4, paddingHorizontal: 8, paddingVertical: 4 },
   memberPillText: { fontSize: 11, fontFamily: "Inter_500Medium" },
+
   wrestlerCard: {
     marginHorizontal: 16,
     marginBottom: 8,
@@ -281,15 +324,26 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: "hidden",
   },
-  wrestlerRow: { flexDirection: "row", alignItems: "center", padding: 14 },
-  roleBar: { width: 4, height: 40, borderRadius: 2, marginRight: 10 },
+  wrestlerRow: { flexDirection: "row", alignItems: "center", padding: 12, gap: 10 },
+  wrestlerPhoto: {
+    width: 56,
+    height: 56,
+    borderRadius: 6,
+    overflow: "hidden",
+    borderWidth: 1.5,
+  },
+  wrestlerPhotoImg: { width: "100%", height: "100%" },
+  wrestlerPhotoPlaceholder: { alignItems: "center", justifyContent: "center" },
   wrestlerInfo: { flex: 1 },
   wrestlerName: { fontSize: 15, fontFamily: "Inter_600SemiBold" },
   wrestlerRole: { fontSize: 11, fontFamily: "Inter_500Medium", marginTop: 1 },
   wrestlerFaction: { fontSize: 10, fontFamily: "Inter_400Regular", marginTop: 1 },
   wrestlerRight: { alignItems: "center", gap: 2, paddingLeft: 8 },
   wrestlerStamina: { fontSize: 11, fontFamily: "Inter_700Bold" },
+
   expandedContent: { padding: 14, paddingTop: 12, borderTopWidth: 1 },
+  expandedPhotoWrap: { width: "100%", height: 180, borderRadius: 6, overflow: "hidden", marginBottom: 12 },
+  expandedPhoto: { width: "100%", height: "100%" },
   wrestlerBio: { fontSize: 13, fontFamily: "Inter_400Regular", lineHeight: 20 },
   moveBadge: {
     alignSelf: "flex-start",
@@ -299,6 +353,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   moveBadgeText: { fontSize: 10, fontFamily: "Inter_700Bold", letterSpacing: 1 },
+
   noteBlock: { margin: 16, borderWidth: 1, borderRadius: 8, padding: 16 },
   noteTitle: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 3, marginBottom: 8 },
   noteText: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18, fontStyle: "italic" },
