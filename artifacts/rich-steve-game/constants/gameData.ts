@@ -70,7 +70,7 @@ export const RICH_STEVE: Wrestler = {
   faction: "Project Mayhem",
   role: "Main Event",
   style: "Cerebral",
-  bio: "Steve Coleman. The Chicken Shit Mastermind. 13 years on the independent circuit (2006–2019). Started as a manager at 16 due to age restrictions. Became the most cerebral heel on the East Coast indie scene. Never wore gear unless he was wrestling. Always heel. Always. His entrance theme: 'Jet Black New Year' by Thursday — used after a direct blessing from Geoff Rickly at a Warped Tour signing. The same song became his exit theme at the Lethal Lottery cash-in, cued to the countdown section — the sound of a long game coming due.",
+  bio: "Steve Coleman. 6'1\", 340 lbs. Philadelphia, PA. The Chicken Shit Mastermind. 13 years on the independent circuit (2006–2019). Started as a manager at 16 due to age restrictions. Rampage Pro Wrestling debut: 'Winter Warfare,' December 9, 2016 — Delaware Agricultural Museum, Dover, DE. Became the most cerebral heel on the East Coast indie scene. Always heel. Always. Founded Project Mayhem. 2017 Match of the Year: Mayhem vs Rampage. 2017 Feud of the Year: Rich $teve vs Big Mike. 2018 Riot Rumble Winner. 2018 Feud of the Year: Mayhem vs Rampage. His entrance theme: 'Jet Black New Year' by Thursday — a personal blessing from Geoff Rickly at a Warped Tour signing. The same song became the exit theme at the Lethal Lottery cash-in, cued to the bridge countdown — the sound of a long game collected. The #Hijacked concept: not just a shirt. A promo style. Taking over opponents' social media accounts and going live. Showing up unannounced at their houses, their signings, their shows. Getting log-ins from people before events. Breaking into Yams' house. The Big Mike bookstore. Blurring what was kayfabe and what was real life. 'Do we have your attention yet?' The answer to every question was always the same: we are three steps ahead.",
   stamina: 100,
   moves: ["Shoulder Block", "Headlock", "Body Slam", "Back Elbow", "Nerve Hold"],
   signatureMove: "Market Crash (Side Effect)",
@@ -222,7 +222,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Project Mayhem",
     role: "Midcard",
     style: "High-Flyer",
-    bio: "The Livewire. 5'7\", 170 lbs. Philadelphia, PA. Debut: Roots of Rampage 8/13/16. Open Challenge Champ. Former Working Class Hero with Yams — until $teve weaponized that history. Filmed the home invasion of Yams' house. Phase 2 Project Mayhem. Ultimately turned face and joined Yams and Kory Cross as Working Class Heroes.",
+    bio: "The Livewire. 5'7\", 170 lbs. Philadelphia, PA. Debut: Roots of Rampage 8/13/16. Originally one-third of Working Class Heroes alongside Yams and Kory Cross before Rampage. At RPW, tagged in Motley Tü with Ian Cross (Kory's brother) — until Kory left Motley Tü to manage Riot City's Most Wanted. When Kory joined Mayhem with Mac, he brought Vox in as Project Mayhem's wildcard. The logic was airtight: when $teve decided to invade Yams' home, Vox was the one who made it possible — he knew where the house was, knew the dogs, calmed them down. What Vox didn't expect was walking into the basement and finding $teve sitting there wiping his ass with a picture of Working Class Heroes (Yams, Vox, Kory). Vox said it was cool. The seed was planted. Then at Cosplayers Unite (August 18, 2018), Steve shaved Yams' beard in the ring — and that was the line for both Vox and Kory. They attacked $teve. They turned face. Working Class Heroes reformed — the song promo cut, the faction reunited. R.P.W. Open Challenge Champion (March 10, 2018). Ultimately joined Yams and Kory through The Final Shot.",
     stamina: 78,
     moves: ["Springboard Elbow", "Diving Cross Body", "Hurricanrana", "Moonsault", "Running Forearm"],
     signatureMove: null,
@@ -237,7 +237,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Project Mayhem",
     role: "Midcard",
     style: "Brawler",
-    bio: "Phase 2 Project Mayhem. His unexplained presence at a show sparked the 'Emphasis on ME' confrontation between $teve and Mac Mayhem. Held his own heading into The Last Shot.",
+    bio: "Originally a face. Had been working the independent circuit and felt undervalued and overlooked — specifically by Jay Cortez, who he'd been losing under. $teve and Mac operated Mayhem like cult leaders: 'We are your wasted life.' The Fight Club logic of it attracted people who felt cast aside. Wrex was one of them. He crossed the ring and joined Project Mayhem in Phase 2. His unexpected appearance at a show sparked the 'Emphasis on ME' confrontation between $teve and Mac over who the cult leader really was. Held his own through The Final Shot.",
     stamina: 80,
     moves: ["Lariat", "Powerbomb", "Spear", "Overhead Belly-to-Belly"],
     signatureMove: null,
@@ -249,7 +249,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Project Mayhem",
     role: "Manager",
     style: "Cerebral",
-    bio: "Started as manager of Riot City's Most Wanted. Followed Matt Wylde when he defected and became Mac Mayhem — joining Project Mayhem alongside him. $teve's logistics man for the Rampage invasion. Turned face with Ryan Vox when $teve tried to shave Yams' beard — quit Mayhem and managed the Working Class Heroes (Yams + Vox) through The Last Shot.",
+    bio: "Manager. One-third of original Working Class Heroes (with Yams and Ryan Vox) before Rampage. At RPW, managed Motley Tü alongside his brother Ian Cross and Vox — until he left to manage Riot City's Most Wanted instead. When Matt Wylde crossed the ring and became Mac Mayhem, Kory joined Project Mayhem with him. From there, Kory facilitated Ryan Vox joining Mayhem as their wildcard — Vox's pre-existing relationship with Yams was the key that unlocked the home invasion. When $teve shaved Yams' beard at Cosplayers Unite (August 18, 2018), Kory hit his limit alongside Vox. Both attacked $teve and turned face. Working Class Heroes reformed with Yams. Kory managed them as WCH through The Final Shot.",
     stamina: 60,
     moves: ["Distraction", "Object Throw", "Foreign Object", "Low Blow"],
     signatureMove: null,
@@ -287,7 +287,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "#BRUH",
     role: "Main Event",
     style: "Technical",
-    bio: "One half of #BRUH with Ray Rumble. Original Coalition member and the tag backbone of Project Mayhem throughout all of 2017. Under manager George Burkett, he and Ray won the Rampage Tag Team Championships. December 9, 2017 — Big Mike's Curtain Call — #BRUH turned face and quit Project Mayhem. In the aftermath, Rich $teve cornered Xross through the cage and told him directly: 'I want you to remember one thing, #Bruh — I created you. I made you both who you are. Without me you would be nothing. You betrayed what was supposed to be a real friendship, and for what? For some idiot in a stupid hat? You made the biggest mistake you could when you crossed us.' Johnny was not at the Lethal Lottery show. That was the final piece of the plan. The man $teve's Lost Ending was always designed to put over.",
+    bio: "One half of #BRUH with Ray Rumble. Original Coalition member and the tag backbone of Project Mayhem throughout all of 2017. Under manager George Burkett, won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club — the same night Yams won the Heavyweight Title. December 9, 2017 — Big Mike's Curtain Call — #BRUH turned face and quit Project Mayhem. In the aftermath, Rich $teve cornered Xross through the cage and told him directly: 'I want you to remember one thing, #Bruh — I created you. I made you both who you are. Without me you would be nothing. You betrayed what was supposed to be a real friendship, and for what? For some idiot in a stupid hat? You made the biggest mistake you could when you crossed us.' Johnny was not at the Lethal Lottery show. That was the final piece of the plan. The man $teve's Lost Ending was always designed to put over.",
     stamina: 90,
     moves: ["Crossbody", "Armbar", "Neckbreaker", "Spinning Elbow", "Running Dropkick"],
     signatureMove: null,
@@ -299,7 +299,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "#BRUH",
     role: "Main Event",
     style: "Brawler",
-    bio: "One half of #BRUH. Tag backbone of Project Mayhem through all of 2017 alongside Johnny Xross, managed by George Burkett. Won the Rampage Tag Team Championships. Left Mayhem December 9, 2017 with Xross. When the Lethal Lottery paired him with Rich $teve — his former boss, sworn enemy — Ray went through stages: rage, reluctant acceptance, and eventually proclaiming 'the band is back together for one night.' George Burkett begged him not to trust $teve. Ray didn't listen. He found out the hard way why Burkett was right. The plan was never Yams. The plan was always #BRUH.",
+    bio: "One half of #BRUH. Tag backbone of Project Mayhem through all of 2017 alongside Johnny Xross, managed by George Burkett. Won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club. Left Mayhem December 9, 2017 with Xross. When the Lethal Lottery paired him with Rich $teve — his former boss, sworn enemy — Ray went through stages: rage, reluctant acceptance, and eventually proclaiming 'the band is back together for one night.' George Burkett begged him not to trust $teve. Ray didn't listen. He found out the hard way why Burkett was right. The plan was never Yams. The plan was always #BRUH.",
     stamina: 88,
     moves: ["Haymaker", "Spinebuster", "Clothesline", "Back Suplex", "Running Knee"],
     signatureMove: null,
@@ -373,7 +373,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Working Class Heroes",
     role: "Main Event",
     style: "Brawler",
-    bio: "Rampage Heavyweight Champion. The Working Man. $teve's public target for all of 2018 — while the real plan was running underneath. $teve broke into Yams' house, filmed a promo from his bathtub. Showed up at a cosplay show dressed as Yams. Shaved Yams' beard off in the ring. Was so insufferable that Vox and Kory Cross quit Mayhem over it — forming Working Class Heroes (Yams + Vox, managed by Kory). Yams cut a title match for $teve as payback for the Invasion promo. The match ended in a DQ — no decision, no satisfaction. Everyone assumed the Riot Rumble lockbox was coming for Yams. Yams played his part perfectly. He was the distraction. The plan was never him. After Kory and Vox joined him at The Last Shot, Yams led the final fight against Project Mayhem.",
+    bio: "Rampage Heavyweight Champion. The Working Man. Won the R.P.W. Heavyweight Title from Johnny Malloy at Stairway to Gold II (June 23, 2018) — the same night BRUH won the tag titles in a Ladder Match. That was peak Rampage before Mayhem came for it. $teve's public target for all of 2018 — while the real plan was running underneath. Vox (who used to tag with Yams, knew his house) joined $teve for the home invasion — bathtub promo filmed from Yams' own bathroom. $teve showed up at Cosplayers Unite dressed as Yams. Then shaved the beard in the ring. That beard shave was the line for Vox and Kory — they both turned face and reformed Working Class Heroes with Yams. Yams gave $teve a title match as payback for the Invasion promo; it ended in a DQ (no finish). Everyone assumed the Riot Rumble lockbox was coming for Yams. Yams played his part perfectly. He was the distraction. The plan was never him. After Kory and Vox joined him, Yams led the final fight at The Final Shot.",
     stamina: 88,
     moves: ["Lariat", "German Suplex", "Running Powerslam", "Headbutt", "Corner Splash"],
     signatureMove: null,
@@ -2071,7 +2071,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "rd-cordova",
     stipulation: "5-on-5 Elimination — Team Mayhem ($teve, Mac, Vox, Wrex, Grizzly Redwood) vs Team Rampage (Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash)",
     historicalResult: "win",
-    historicalNote: "November 4, 2017. Rampage Pro Wrestling 'Retribution.' Mayhem at full strength: Rich $teve and Mac Mayhem leading, with #BRUH (Johnny Xross and Ray Rumble) as the tag backbone, Wrex Savage, Grizzly Redwood. Team Rampage: Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash. If Team Rampage loses, Big Mike's career as ring announcer is over. Rich $teve pinned R.D. Cordova to seal the win. Mayhem's last great triumph — one month before everything changed.",
+    historicalNote: "November 4, 2017. Rampage Pro Wrestling 'Retribution.' Team Mayhem: Rich $teve, Mac Mayhem, Ryan Vox, Wrex Savage, Grizzly Redwood. Team Rampage: Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash. If Team Rampage loses, Big Mike retires as ring announcer — permanently. Rich $teve pinned R.D. Cordova to seal the win. Mayhem's largest team triumph. Five weeks later, everything changed.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -2261,7 +2261,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "This is the night after Retribution — Mayhem's biggest win. $teve. Mac. Wrex. Vox. And the tag backbone: #BRUH — Johnny Xross and Ray Rumble, managed by George Burkett. They have been together through all of 2017. Coalition to Mayhem. One unit.",
+        text: "Five weeks after Retribution — Mayhem's biggest team win. $teve and Mac built this from the ground up. #BRUH (Xross and Rumble) have been the tag team spine of Mayhem all year. Kory Cross brought Vox in as their wildcard. Wrex crossed the ring from the face side because he felt cast aside. All of them drawn by the same logic: 'We are your wasted life.'",
       },
       {
         speaker: "NARRATOR",
@@ -2384,7 +2384,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
             text: "You betrayed what was supposed to be a real friendship. For what? For some idiot in a stupid hat.",
             isCorrect: true,
             crowdReaction: "heat",
-            feedback: "Now you're in the real language of the moment. The 'idiot in a stupid hat' is Burkett. The crowd doesn't hear this — but Xross does. That's the point.",
+            feedback: "Real language. 'The idiot in a stupid hat' is Big Mike — it was his night, and #BRUH chose his side over yours. This is the real quote. Xross will not forget it.",
           },
           {
             text: "This is just business. No hard feelings. Good luck out there.",
@@ -2410,7 +2410,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "eb-cohen",
     stipulation: "Riot Rumble Battle Royal — Last man standing earns a guaranteed title contract: any time, any place of their choosing",
     historicalResult: "win",
-    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Rich $teve won the Riot Rumble battle royal — last eliminating E.B. Cohen — earning a guaranteed briefcase redeemable for any Rampage title, any time, any place of his choosing.",
+    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Rich $teve won the Riot Rumble battle royal — last eliminating E.B. Cohen — earning a guaranteed briefcase redeemable for any Rampage title, any time, any place of his choosing. On the same night: The Bully Club defeated BRUH (w/ George Burkett) to become the NEW Rampage Tag Team Champions — beginning a Bully Club reign that #BRUH would chase for three months.",
     riotRumbleChapter: true,
     introCutscene: [
       {
@@ -2776,7 +2776,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Everyone assumes the Riot Rumble briefcase is going to be cashed on Yams. $teve has been feuding with him all year. The beard. The bathtub. The cosplay. Everyone is watching that hand.",
+        text: "Everyone assumes the Riot Rumble briefcase is going to be cashed on Yams. $teve has been feuding with him all year — broke into his house with Ryan Vox (who used to tag with Yams, knew the address, calmed the dogs), filmed a promo from the bathtub, showed up at a cosplay event dressed as Yams, shaved his beard at Cosplayers Unite. That beard shave cost $teve Vox and Kory, who turned face and reformed Working Class Heroes. None of that matters right now. Everyone is watching that hand.",
       },
       {
         speaker: "Rich $teve",
@@ -2868,11 +2868,11 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     title: "The Final Shot",
     date: "April 27, 2019",
     venue: "Rampage Pro Wrestling — The Final Shot",
-    city: "Devil's Playpen",
+    city: "Camden, DE",
     opponentId: "big-mike",
-    stipulation: "6-Man Tag — Jay Cortez + Rich $teve + Wrex Savage vs Yams + Big Mike + Kory Cross (WCH)",
+    stipulation: "6-Man Tag — Team Big Mike (Yams + Big Mike + Working Class Heroes) vs Project Mayhem — Camden Moose Lodge, Camden, Delaware",
     historicalResult: "story",
-    historicalNote: "The final Rampage Pro Wrestling show. 6-man tag: Jay Cortez, Rich $teve, and Wrex Savage vs Yams, Big Mike, and Kory Cross (managing Working Class Heroes). Jay Cortez gets pinned. Big Mike becomes GM. Mac Mayhem turned face. The last chapter.",
+    historicalNote: "April 27, 2019. The Final Shot. Camden Moose Lodge, Camden, Delaware. The last Rampage Pro Wrestling show. Team Big Mike vs Project Mayhem. Rich $teve enters still holding both RPW Tag Team Championship belts — a solo 6-month reign since October 13, 2018. Working Class Heroes (Yams + Vox, managed by Kory Cross) on the opposing side. Jay Cortez gets pinned. Big Mike becomes GM. The company closes. The last chapter of Rich $teve's career.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -3102,7 +3102,7 @@ export const ERAS = [
     name: "Era 4",
     subtitle: "Welcome to #Hijacked",
     years: "2017",
-    description: "#BRUH at full power. Mayhem at its peak — $teve and Mac leading, Xross and Rumble as the tag backbone, Wrex, Vox. Retribution. Big Mike's Curtain Call. Then December 9th. The night that started the clock.",
+    description: "Mayhem at its peak. The #Hijacked era — blurring real and kayfabe, taking over social media, showing up uninvited. 'We are your wasted life.' 'Do we have your attention yet?' Retribution. Then December 9th — the night that started the clock.",
     chapterIds: ["ch4-big-mike", "ch4-bruh-turns"],
   },
   {
@@ -3164,7 +3164,7 @@ export const FACTIONS = [
     members: ["Rich $teve", "Mac Mayhem", "Ryan Vox", "Wrex Savage"],
     manager: "Kory Cross",
     higherPower: "Jay Cortez",
-    description: "Born when Matt Wylde crossed the ring and renamed himself Mac Mayhem. Phase 1: $teve, Mac, Kory Cross, and #BRUH. Phase 2: Ryan Vox and Wrex Savage. The Emphasis on ME split almost broke it. The Lost Ending was supposed to bring it home.",
+    description: "Born when Matt Wylde crossed the ring and renamed himself Mac Mayhem. Phase 1: $teve, Mac, Kory Cross, and #BRUH (Xross + Rumble as tag spine). Phase 2: Kory facilitated Ryan Vox joining as their wildcard — Vox's history with Yams was the skeleton key. Wrex Savage crossed from the face side after feeling overlooked by Jay Cortez. $teve and Mac ran the whole thing as cult leaders: 'We are your wasted life.' That was #Hijacked — blurring kayfabe and real life, taking over opponents' social media, showing up uninvited. The Emphasis on ME split almost broke it. The Lost Ending was supposed to bring it home.",
   },
   {
     name: "#BRUH",
