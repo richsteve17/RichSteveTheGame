@@ -6,6 +6,7 @@ const WRESTLER_PHOTOS: Record<string, any> = {
   "rich-steve-hijacked": require("@/assets/images/wrestlers/steve-hijacked-card.jpeg"),
   "rich-steve-debut": require("@/assets/images/wrestlers/steve-debut-promo.jpeg"),
   "rich-steve-pm": require("@/assets/images/wrestlers/steve-pm-entrance.jpeg"),
+  "rich-steve-ssw": require("@/assets/images/wrestlers/steve-ssw-impact.jpeg"),
 
   "onslaught": require("@/assets/images/wrestlers/onslaught.jpeg"),
   "kj-hellfire": require("@/assets/images/wrestlers/steve-suit-kj-hellfire.jpeg"),

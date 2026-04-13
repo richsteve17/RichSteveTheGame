@@ -38,7 +38,7 @@ export default function CareerScreen() {
       <View style={styles.pageHeader}>
         <Text style={[styles.pageTitle, { color: colors.primary }]}>CAREER MODE</Text>
         <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-          13 YEARS · 7 ERAS · 28 CHAPTERS
+          13 YEARS · 7 ERAS · 29 CHAPTERS
         </Text>
       </View>
 

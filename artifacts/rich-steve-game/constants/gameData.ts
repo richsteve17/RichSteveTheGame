@@ -44,6 +44,7 @@ export interface CareerChapter {
   riotRumbleChapter?: boolean;
   matchless?: boolean;
   promoGame?: PromoChallenge[];
+  playerPhotoKey?: string;
 }
 
 export interface CutsceneSlide {
@@ -1801,6 +1802,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "Super Star Wrestling",
     city: "SSW Circuit",
     stipulation: "Impact Society Debut — Rich $teve & Adam Armstrong",
+    playerPhotoKey: "rich-steve-ssw",
     historicalResult: "story",
     historicalNote: "March 2017. Impact Society — Rich $teve and Adam Armstrong — debuted in Super Star Wrestling. Two cousins from Baltimore taking their game beyond Delaware. The first appearance in SSW territory.",
     matchless: true,
@@ -1889,6 +1891,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     id: "ch5-awa-loss",
     era: 5,
     eraName: "Era 5: Mirai no Sutā",
+    playerPhotoKey: "rich-steve-ssw",
     title: "AWA Spring Fever",
     date: "April 8, 2017",
     venue: "Appalachian Wrestling Alliance 2nd Annual Spring Fever — Ellamore VFD",
@@ -1944,6 +1947,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     id: "ch5-ssw-contract",
     era: 5,
     eraName: "Era 5: Mirai no Sutā",
+    playerPhotoKey: "rich-steve-ssw",
     title: "The Stocking Stuffer Contract",
     date: "August 26, 2017",
     venue: "Super Star Wrestling",
@@ -2066,6 +2070,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     id: "ch5-ssw-titles",
     era: 5,
     eraName: "Era 5: Mirai no Sutā",
+    playerPhotoKey: "rich-steve-ssw",
     title: "The Cash-In",
     date: "November 11, 2017",
     venue: "Super Star Wrestling November Reign — Scotland Community Center",

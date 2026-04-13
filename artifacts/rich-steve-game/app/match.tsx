@@ -101,7 +101,7 @@ export default function MatchScreen() {
   const characterWrestler = WRESTLERS.find((w) => w.id === characterId);
   const playerName = characterId === "rich-steve" ? "Rich $teve" : (characterWrestler?.name ?? "Rich $teve");
 
-  const stevePhoto = getWrestlerPhoto(characterId);
+  const stevePhoto = (chapter?.playerPhotoKey ? getWrestlerPhoto(chapter.playerPhotoKey) : null) ?? getWrestlerPhoto(characterId);
   const opponentPhoto = getWrestlerPhoto(opponent.id);
 
   const [phase, setPhase] = useState<Phase>("pre-match");
