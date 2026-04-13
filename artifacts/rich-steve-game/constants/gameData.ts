@@ -682,7 +682,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Project Mayhem",
     role: "Midcard",
     style: "Brawler",
-    bio: "Killing The Business. Brought into Project Mayhem's orbit as Vox and Kory Cross turned face at Cosplayers Unite (August 18, 2018). Attacked alongside Jay Cortez after Yams' title defense against Vic Ramon — the moment the shears came out of the lockbox. That attack is what confirmed KTB's allegiance: #BRUH had already beaten KTB in a 4-Way Tag earlier that night, making him available and angry. Steve had been working to convert him, and the Cosplayers Unite show was the confirmation. KTB fills the exact vacancy Vox and Kory just created by turning face — he is the new Vox/Kory in the Mayhem structure. Positioned as the next patsy in the cycle: useful until he isn't.",
+    bio: "KTB — Killing The Business. The tag team of Myles Millennium and Tim Taylor. Brought into Project Mayhem's orbit as Vox and Kory Cross turned face at Cosplayers Unite (August 18, 2018). Attacked alongside Jay Cortez after Yams' title defense against Vic Ramon — the moment the shears came out of the lockbox. That attack confirmed KTB's allegiance: #BRUH had already beaten Myles and Tim in a 4-Way Tag earlier that night, making them available and angry. Steve had been working to convert them, and Cosplayers Unite was the confirmation. KTB fills the exact vacancy Vox and Kory just created by turning face — Myles Millennium and Tim Taylor are the new Vox/Kory in the Mayhem structure. Positioned as the next patsies in the cycle: useful until they aren't.",
     stamina: 78,
     moves: ["Lariat", "Powerbomb", "Running Shoulder", "Brawl"],
     signatureMove: null,
