@@ -1,7 +1,8 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -11,19 +12,27 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
-import { WRESTLERS } from "@/constants/gameData";
+import { WRESTLERS, RICH_STEVE, type WrestlerRatings } from "@/constants/gameData";
+import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
 
-const AVAILABLE_OPPONENTS = WRESTLERS.filter(
-  (w) => w.id !== "rich-steve" && w.role !== "Manager"
-);
+const RATING_ATTRS: { key: keyof Omit<WrestlerRatings, "overall">; label: string; color: string }[] = [
+  { key: "power",     label: "PWR",   color: "#ef4444" },
+  { key: "speed",     label: "SPD",   color: "#22c55e" },
+  { key: "technical", label: "TEC",   color: "#3b82f6" },
+  { key: "toughness", label: "TOUGH", color: "#f97316" },
+  { key: "mic",       label: "MIC",   color: "#D4AF37" },
+  { key: "heat",      label: "HEAT",  color: "#a855f7" },
+];
 
-const STYLE_LABELS: Record<string, string> = {
-  Technical: "TECHNICAL",
-  Power: "POWER",
-  Brawler: "BRAWLER",
-  "High-Flyer": "HIGH-FLYER",
-  Cerebral: "CEREBRAL",
-};
+function OvrBadge({ overall, selected }: { overall: number; selected: boolean }) {
+  const color = overall >= 90 ? "#D4AF37" : overall >= 80 ? "#22c55e" : overall >= 70 ? "#3b82f6" : "#888888";
+  return (
+    <View style={[styles.ovrBadge, { borderColor: selected ? "#ffffff" : color }]}>
+      <Text style={[styles.ovrNumber, { color: selected ? "#ffffff" : color }]}>{overall}</Text>
+      <Text style={[styles.ovrLabel, { color: selected ? "#ffffffbb" : color }]}>OVR</Text>
+    </View>
+  );
+}
 
 export default function PlayScreen() {
   const colors = useColors();
@@ -33,145 +42,137 @@ export default function PlayScreen() {
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
-  const selected = AVAILABLE_OPPONENTS.find((w) => w.id === selectedId);
+  const ranked = [...WRESTLERS]
+    .filter((w) => w.id !== "rich-steve" && w.role !== "Manager" && w.ratings)
+    .sort((a, b) => b.ratings!.overall - a.ratings!.overall);
+
+  const selected = ranked.find((w) => w.id === selectedId);
 
   const startMatch = () => {
     if (!selectedId) return;
     router.push({
       pathname: "/match",
-      params: {
-        opponentId: selectedId,
-        chapterId: "",
-        mode: "exhibition",
-      },
+      params: { opponentId: selectedId, chapterId: "", mode: "exhibition" },
     });
   };
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { paddingTop: topPad + 8 }]}>
-        <Text style={[styles.pageTitle, { color: colors.primary }]}>EXHIBITION</Text>
-        <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-          PICK YOUR OPPONENT
-        </Text>
-      </View>
-
       <ScrollView
-        style={styles.list}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: insets.bottom + 120, gap: 8 }}
+        style={styles.scroll}
+        contentContainerStyle={{
+          paddingTop: topPad + 8,
+          paddingBottom: insets.bottom + 130,
+        }}
         showsVerticalScrollIndicator={false}
       >
-        {AVAILABLE_OPPONENTS.map((w) => {
+        <View style={styles.pageHeader}>
+          <Text style={[styles.pageTitle, { color: colors.primary }]}>EXHIBITION</Text>
+          <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
+            PICK YOUR OPPONENT
+          </Text>
+        </View>
+
+        <View style={[styles.leaderboardHeader, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <View style={[styles.leakedStamp, { borderColor: "#ef4444" }]}>
+            <Text style={[styles.leakedStampText, { color: "#ef4444" }]}>⚠ CONFIDENTIAL — DO NOT DISTRIBUTE</Text>
+          </View>
+          <Text style={[styles.leaderboardTitle, { color: colors.primary }]}>OFFICIAL RATINGS</Text>
+          <Text style={[styles.leaderboardSubtitle, { color: colors.mutedForeground }]}>
+            Rampage Pro Wrestling · 2006–2019 · All promotions
+          </Text>
+        </View>
+
+        {ranked.map((w, i) => {
           const isSelected = selectedId === w.id;
+          const photo = getWrestlerPhoto(w.id);
+          const roleColor = isSelected ? colors.primaryForeground : (
+            w.role === "Main Event" ? "#D4AF37" :
+            w.role === "Legend" ? "#60a5fa" :
+            w.role === "Women's Division" ? "#c084fc" : "#888888"
+          );
+          const r = w.ratings!;
+          const rankColor = i === 0 ? "#D4AF37" : i === 1 ? "#aaaaaa" : i === 2 ? "#cd7f32" : colors.mutedForeground;
+
           return (
             <Pressable
-              key={w.id}
+              key={`${i}-${w.id}`}
               style={({ pressed }) => [
-                styles.card,
+                styles.rankCard,
                 {
                   backgroundColor: isSelected ? colors.primary : colors.card,
                   borderColor: isSelected ? colors.primary : colors.border,
-                  opacity: pressed ? 0.85 : 1,
+                  opacity: pressed ? 0.88 : 1,
                 },
               ]}
               onPress={() => setSelectedId(isSelected ? null : w.id)}
             >
-              <View style={styles.cardLeft}>
-                <View
-                  style={[
-                    styles.staminaDot,
-                    {
-                      backgroundColor: isSelected
-                        ? colors.primaryForeground
-                        : colors.primary,
-                    },
-                  ]}
-                />
-                <View>
-                  <Text
-                    style={[
-                      styles.cardName,
-                      { color: isSelected ? colors.primaryForeground : colors.foreground },
-                    ]}
-                  >
-                    {w.name}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.cardMeta,
-                      { color: isSelected ? colors.primaryForeground + "bb" : colors.mutedForeground },
-                    ]}
-                  >
-                    {STYLE_LABELS[w.style] ?? w.style} · {w.faction ?? "Independent"}
-                  </Text>
+              <Text style={[styles.rankNum, { color: isSelected ? colors.primaryForeground + "aa" : rankColor }]}>
+                #{i + 1}
+              </Text>
+
+              {photo ? (
+                <View style={[styles.rankPhoto, { borderColor: isSelected ? colors.primaryForeground + "55" : roleColor + "88" }]}>
+                  <Image source={photo} style={styles.rankPhotoImg} resizeMode="cover" />
+                </View>
+              ) : (
+                <View style={[styles.rankPhoto, styles.rankPhotoPlaceholder, { borderColor: isSelected ? colors.primaryForeground + "55" : "#44444455" }]}>
+                  <MaterialCommunityIcons name="account" size={22} color={isSelected ? colors.primaryForeground + "66" : "#44444488"} />
+                </View>
+              )}
+
+              <View style={styles.rankInfo}>
+                <Text style={[styles.rankName, { color: isSelected ? colors.primaryForeground : colors.foreground }]} numberOfLines={1}>
+                  {w.name}
+                </Text>
+                <View style={styles.rankMiniStats}>
+                  {RATING_ATTRS.map((attr) => (
+                    <View key={attr.key} style={styles.rankMiniStat}>
+                      <Text style={[styles.rankMiniLabel, { color: isSelected ? colors.primaryForeground + "99" : colors.mutedForeground }]}>
+                        {attr.label}
+                      </Text>
+                      <Text style={[styles.rankMiniValue, { color: isSelected ? colors.primaryForeground : attr.color }]}>
+                        {r[attr.key]}
+                      </Text>
+                    </View>
+                  ))}
                 </View>
               </View>
-              <View style={styles.cardRight}>
-                <Text
-                  style={[
-                    styles.cardStamina,
-                    { color: isSelected ? colors.primaryForeground : colors.mutedForeground },
-                  ]}
-                >
-                  {w.stamina}
-                </Text>
-                <Text
-                  style={[
-                    styles.cardStaminaLabel,
-                    { color: isSelected ? colors.primaryForeground + "99" : colors.mutedForeground },
-                  ]}
-                >
-                  STA
-                </Text>
-              </View>
+
+              <OvrBadge overall={r.overall} selected={isSelected} />
             </Pressable>
           );
         })}
       </ScrollView>
 
-      {selected && (
+      {selected ? (
         <View
           style={[
             styles.bottomBar,
-            {
-              backgroundColor: colors.background,
-              borderTopColor: colors.border,
-              paddingBottom: insets.bottom + 90,
-            },
+            { backgroundColor: colors.background, borderTopColor: colors.border, paddingBottom: insets.bottom + 90 },
           ]}
         >
           <View style={styles.selectedInfo}>
-            <Text style={[styles.selectedName, { color: colors.foreground }]}>
-              {selected.name}
-            </Text>
-            <Text style={[styles.selectedBio, { color: colors.mutedForeground }]} numberOfLines={2}>
-              {selected.bio}
+            <Text style={[styles.selectedName, { color: colors.foreground }]}>{selected.name}</Text>
+            <Text style={[styles.selectedMeta, { color: colors.mutedForeground }]} numberOfLines={1}>
+              {selected.role} · OVR {selected.ratings!.overall}
             </Text>
           </View>
-          <Pressable
-            style={[styles.goBtn, { backgroundColor: colors.primary }]}
-            onPress={startMatch}
-          >
+          <Pressable style={[styles.fightBtn, { backgroundColor: colors.primary }]} onPress={startMatch}>
             <MaterialCommunityIcons name="sword-cross" size={20} color={colors.primaryForeground} />
-            <Text style={[styles.goBtnText, { color: colors.primaryForeground }]}>FIGHT</Text>
+            <Text style={[styles.fightBtnText, { color: colors.primaryForeground }]}>FIGHT</Text>
           </Pressable>
         </View>
-      )}
-
-      {!selected && (
+      ) : (
         <View
           style={[
             styles.bottomHint,
-            {
-              paddingBottom: insets.bottom + 90,
-              borderTopColor: colors.border,
-              backgroundColor: colors.background,
-            },
+            { backgroundColor: colors.background, borderTopColor: colors.border, paddingBottom: insets.bottom + 90 },
           ]}
         >
-          <Ionicons name="hand-left-outline" size={16} color={colors.mutedForeground} />
+          <MaterialCommunityIcons name="gesture-tap" size={16} color={colors.mutedForeground} />
           <Text style={[styles.hintText, { color: colors.mutedForeground }]}>
-            Select an opponent above
+            Tap a wrestler to challenge them
           </Text>
         </View>
       )}
@@ -181,61 +182,68 @@ export default function PlayScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: {
-    paddingHorizontal: 24,
-    paddingBottom: 16,
-  },
-  pageTitle: {
-    fontSize: 28,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 2,
-  },
-  pageSubtitle: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-    letterSpacing: 2,
-    marginTop: 4,
-  },
-  list: { flex: 1 },
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 8,
+  scroll: { flex: 1 },
+  pageHeader: { paddingHorizontal: 24, paddingBottom: 16 },
+  pageTitle: { fontSize: 28, fontFamily: "Inter_700Bold", letterSpacing: 2 },
+  pageSubtitle: { fontSize: 11, fontFamily: "Inter_500Medium", letterSpacing: 2, marginTop: 4 },
+
+  leaderboardHeader: {
+    marginHorizontal: 16,
+    marginBottom: 12,
     borderWidth: 1,
-    padding: 14,
+    borderRadius: 8,
+    padding: 16,
+    alignItems: "center",
   },
-  cardLeft: {
-    flex: 1,
+  leakedStamp: {
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    marginBottom: 10,
+  },
+  leakedStampText: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
+  leaderboardTitle: { fontSize: 22, fontFamily: "Inter_700Bold", letterSpacing: 3 },
+  leaderboardSubtitle: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 4 },
+
+  rankCard: {
+    marginHorizontal: 16,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
   },
-  staminaDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+  rankNum: { fontSize: 14, fontFamily: "Inter_700Bold", width: 28, textAlign: "center" },
+  rankPhoto: {
+    width: 46,
+    height: 46,
+    borderRadius: 5,
+    overflow: "hidden",
+    borderWidth: 1.5,
   },
-  cardName: {
-    fontSize: 15,
-    fontFamily: "Inter_600SemiBold",
-  },
-  cardMeta: {
-    fontSize: 11,
-    fontFamily: "Inter_400Regular",
-    marginTop: 2,
-  },
-  cardRight: {
+  rankPhotoImg: { width: "100%", height: "100%" },
+  rankPhotoPlaceholder: { alignItems: "center", justifyContent: "center", backgroundColor: "#1a1a1a" },
+  rankInfo: { flex: 1 },
+  rankName: { fontSize: 13, fontFamily: "Inter_600SemiBold", marginBottom: 4 },
+  rankMiniStats: { flexDirection: "row", gap: 6 },
+  rankMiniStat: { alignItems: "center" },
+  rankMiniLabel: { fontSize: 7, fontFamily: "Inter_700Bold", letterSpacing: 0.5 },
+  rankMiniValue: { fontSize: 11, fontFamily: "Inter_700Bold" },
+
+  ovrBadge: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 2,
     alignItems: "center",
+    justifyContent: "center",
   },
-  cardStamina: {
-    fontSize: 18,
-    fontFamily: "Inter_700Bold",
-  },
-  cardStaminaLabel: {
-    fontSize: 9,
-    fontFamily: "Inter_500Medium",
-    letterSpacing: 1,
-  },
+  ovrNumber: { fontSize: 18, fontFamily: "Inter_700Bold" },
+  ovrLabel: { fontSize: 7, fontFamily: "Inter_700Bold", letterSpacing: 1, marginTop: -2 },
+
   bottomBar: {
     position: "absolute",
     bottom: 0,
@@ -247,20 +255,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
   },
-  selectedInfo: {
-    flex: 1,
-  },
-  selectedName: {
-    fontSize: 14,
-    fontFamily: "Inter_600SemiBold",
-  },
-  selectedBio: {
-    fontSize: 11,
-    fontFamily: "Inter_400Regular",
-    lineHeight: 16,
-    marginTop: 2,
-  },
-  goBtn: {
+  selectedInfo: { flex: 1 },
+  selectedName: { fontSize: 14, fontFamily: "Inter_600SemiBold" },
+  selectedMeta: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 2 },
+  fightBtn: {
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 6,
@@ -268,11 +266,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     gap: 8,
   },
-  goBtnText: {
-    fontSize: 14,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1.5,
-  },
+  fightBtnText: { fontSize: 14, fontFamily: "Inter_700Bold", letterSpacing: 1.5 },
+
   bottomHint: {
     position: "absolute",
     bottom: 0,
@@ -285,8 +280,5 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 16,
   },
-  hintText: {
-    fontSize: 12,
-    fontFamily: "Inter_400Regular",
-  },
+  hintText: { fontSize: 12, fontFamily: "Inter_400Regular" },
 });

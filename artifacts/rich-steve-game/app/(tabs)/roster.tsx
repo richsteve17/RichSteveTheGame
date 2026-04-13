@@ -1,9 +1,7 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React from "react";
 import {
   Image,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,33 +9,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
-import { WRESTLERS, RICH_STEVE, type WrestlerRatings } from "@/constants/gameData";
 import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
-
-const ROLE_COLORS: Record<string, string> = {
-  "Main Event": "#D4AF37",
-  Midcard: "#888888",
-  "Women's Division": "#c084fc",
-  Legend: "#60a5fa",
-  Manager: "#f87171",
-};
-
-const STYLE_ICONS: Record<string, keyof typeof MaterialCommunityIcons.glyphMap> = {
-  Technical: "cog",
-  Power: "arm-flex",
-  Brawler: "boxing-glove",
-  "High-Flyer": "airplane",
-  Cerebral: "brain",
-};
-
-const RATING_ATTRS: { key: keyof Omit<WrestlerRatings, "overall">; label: string; color: string }[] = [
-  { key: "power",     label: "PWR",   color: "#ef4444" },
-  { key: "speed",     label: "SPD",   color: "#22c55e" },
-  { key: "technical", label: "TEC",   color: "#3b82f6" },
-  { key: "toughness", label: "TOUGH", color: "#f97316" },
-  { key: "mic",       label: "MIC",   color: "#D4AF37" },
-  { key: "heat",      label: "HEAT",  color: "#a855f7" },
-];
 
 const FACTIONS = [
   {
@@ -117,7 +89,6 @@ const FACTIONS = [
   },
 ];
 
-type ViewMode = "factions" | "all" | "ratings";
 
 function FactionMemberPhotos({ memberIds }: { memberIds: string[] }) {
   const colors = useColors();
@@ -134,46 +105,12 @@ function FactionMemberPhotos({ memberIds }: { memberIds: string[] }) {
   );
 }
 
-function RatingBar({ label, value, color }: { label: string; value: number; color: string }) {
-  const colors = useColors();
-  const grade = value >= 90 ? "S" : value >= 80 ? "A" : value >= 70 ? "B" : value >= 60 ? "C" : "D";
-  return (
-    <View style={styles.ratingBarRow}>
-      <Text style={[styles.ratingBarLabel, { color: colors.mutedForeground }]}>{label}</Text>
-      <View style={[styles.ratingBarTrack, { backgroundColor: colors.secondary }]}>
-        <View style={[styles.ratingBarFill, { width: `${value}%`, backgroundColor: color }]} />
-      </View>
-      <Text style={[styles.ratingBarValue, { color }]}>{value}</Text>
-      <Text style={[styles.ratingBarGrade, { color: colors.mutedForeground }]}>{grade}</Text>
-    </View>
-  );
-}
-
-function OvrBadge({ overall, size = "md" }: { overall: number; size?: "sm" | "md" | "lg" }) {
-  const sz = size === "lg" ? 68 : size === "sm" ? 36 : 50;
-  const fs = size === "lg" ? 26 : size === "sm" ? 14 : 20;
-  const lfs = size === "lg" ? 9 : size === "sm" ? 7 : 8;
-  const color = overall >= 90 ? "#D4AF37" : overall >= 80 ? "#22c55e" : overall >= 70 ? "#3b82f6" : "#888888";
-  return (
-    <View style={[styles.ovrBadge, { width: sz, height: sz, borderRadius: sz / 2, borderColor: color }]}>
-      <Text style={[styles.ovrNumber, { fontSize: fs, color }]}>{overall}</Text>
-      <Text style={[styles.ovrLabel, { fontSize: lfs, color }]}>OVR</Text>
-    </View>
-  );
-}
 
 export default function RosterScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [view, setView] = useState<ViewMode>("factions");
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
-
-  const allWrestlers = [RICH_STEVE, ...WRESTLERS];
-  const ranked = [...allWrestlers]
-    .filter((w) => w.ratings)
-    .sort((a, b) => (b.ratings!.overall) - (a.ratings!.overall));
 
   return (
     <ScrollView
@@ -188,230 +125,44 @@ export default function RosterScreen() {
         </Text>
       </View>
 
-      <View style={[styles.toggle, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <Pressable
-          style={[styles.toggleBtn, view === "factions" && { backgroundColor: colors.primary }]}
-          onPress={() => setView("factions")}
-        >
-          <Text style={[styles.toggleText, { color: view === "factions" ? colors.primaryForeground : colors.mutedForeground }]}>
-            FACTIONS
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.toggleBtn, view === "all" && { backgroundColor: colors.primary }]}
-          onPress={() => setView("all")}
-        >
-          <Text style={[styles.toggleText, { color: view === "all" ? colors.primaryForeground : colors.mutedForeground }]}>
-            ALL
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.toggleBtn, view === "ratings" && { backgroundColor: colors.primary }]}
-          onPress={() => setView("ratings")}
-        >
-          <Text style={[styles.toggleText, { color: view === "ratings" ? colors.primaryForeground : colors.mutedForeground }]}>
-            RATINGS
-          </Text>
-        </Pressable>
-      </View>
-
-      {view === "factions" &&
-        FACTIONS.map((faction) => (
-          <View key={faction.name} style={[styles.factionBlock, { borderColor: colors.border, backgroundColor: colors.card }]}>
-            <View style={[styles.factionAccent, { backgroundColor: faction.color }]} />
-            <View style={styles.factionContent}>
-              <View style={styles.factionHeader}>
-                <Text style={[styles.factionName, { color: faction.color }]}>{faction.name}</Text>
-                {faction.manager && (
-                  <Text style={[styles.factionRole, { color: colors.mutedForeground }]}>
-                    MGR: {faction.manager}
-                  </Text>
-                )}
-                {faction.higherPower && (
-                  <Text style={[styles.factionRole, { color: colors.mutedForeground }]}>
-                    HIGHER POWER: {faction.higherPower}
-                  </Text>
-                )}
-              </View>
-              <FactionMemberPhotos memberIds={faction.memberIds} />
-              <Text style={[styles.factionDesc, { color: colors.mutedForeground }]}>
-                {faction.description}
-              </Text>
-              <View style={styles.factionMembers}>
-                {faction.members.map((m) => (
-                  <View key={m} style={[styles.memberPill, { backgroundColor: colors.secondary }]}>
-                    <Text style={[styles.memberPillText, { color: colors.foreground }]}>{m}</Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          </View>
-        ))}
-
-      {view === "all" &&
-        WRESTLERS.map((w, idx) => {
-          const expanded = expandedId === w.id;
-          const roleColor = ROLE_COLORS[w.role] ?? colors.mutedForeground;
-          const styleIcon = STYLE_ICONS[w.style] ?? "help-circle";
-          const photo = getWrestlerPhoto(w.id);
-
-          return (
-            <Pressable
-              key={`wrestler-${idx}-${w.id}`}
-              style={({ pressed }) => [
-                styles.wrestlerCard,
-                {
-                  backgroundColor: colors.card,
-                  borderColor: expanded ? colors.primary : colors.border,
-                  opacity: pressed ? 0.9 : 1,
-                },
-              ]}
-              onPress={() => setExpandedId(expanded ? null : w.id)}
-            >
-              <View style={styles.wrestlerRow}>
-                {photo ? (
-                  <View style={[styles.wrestlerPhoto, { borderColor: roleColor }]}>
-                    <Image source={photo} style={styles.wrestlerPhotoImg} resizeMode="cover" />
-                  </View>
-                ) : (
-                  <View style={[styles.wrestlerPhoto, styles.wrestlerPhotoPlaceholder, { borderColor: roleColor, backgroundColor: roleColor + "22" }]}>
-                    <MaterialCommunityIcons name="account" size={28} color={roleColor + "66"} />
-                  </View>
-                )}
-                <View style={styles.wrestlerInfo}>
-                  <Text style={[styles.wrestlerName, { color: colors.foreground }]}>{w.name}</Text>
-                  <Text style={[styles.wrestlerRole, { color: roleColor }]}>
-                    {w.role} · {w.style}
-                  </Text>
-                  {w.faction && (
-                    <Text style={[styles.wrestlerFaction, { color: colors.mutedForeground }]}>
-                      {w.faction}
-                    </Text>
-                  )}
-                </View>
-                <View style={styles.wrestlerRight}>
-                  {w.ratings ? (
-                    <OvrBadge overall={w.ratings.overall} size="sm" />
-                  ) : (
-                    <>
-                      <MaterialCommunityIcons name={styleIcon} size={18} color={colors.mutedForeground} />
-                      <Text style={[styles.wrestlerStamina, { color: colors.mutedForeground }]}>
-                        {w.stamina}
-                      </Text>
-                    </>
-                  )}
-                </View>
-              </View>
-
-              {expanded && (
-                <View style={[styles.expandedContent, { borderTopColor: colors.border }]}>
-                  {photo && (
-                    <View style={styles.expandedPhotoWrap}>
-                      <Image source={photo} style={styles.expandedPhoto} resizeMode="cover" />
-                    </View>
-                  )}
-                  <Text style={[styles.wrestlerBio, { color: colors.mutedForeground }]}>
-                    {w.bio}
-                  </Text>
-                  {w.signatureMove && (
-                    <View style={[styles.moveBadge, { backgroundColor: colors.primary }]}>
-                      <Text style={[styles.moveBadgeText, { color: colors.primaryForeground }]}>
-                        FINISHER: {w.signatureMove}
-                      </Text>
-                    </View>
-                  )}
-                  {w.ratings && (
-                    <View style={[styles.ratingsCard, { backgroundColor: colors.background, borderColor: colors.primary + "44" }]}>
-                      <View style={styles.ratingsHeader}>
-                        <Text style={[styles.ratingsTitle, { color: colors.primary }]}>RATINGS</Text>
-                        <View style={[styles.leakedBadge, { backgroundColor: "#ef444422", borderColor: "#ef4444" }]}>
-                          <Text style={styles.leakedText}>LEAKED</Text>
-                        </View>
-                      </View>
-                      <View style={styles.ratingsBody}>
-                        <OvrBadge overall={w.ratings.overall} size="lg" />
-                        <View style={styles.ratingBars}>
-                          {RATING_ATTRS.map((attr) => (
-                            <RatingBar
-                              key={attr.key}
-                              label={attr.label}
-                              value={w.ratings![attr.key]}
-                              color={attr.color}
-                            />
-                          ))}
-                        </View>
-                      </View>
-                    </View>
-                  )}
-                </View>
+      {FACTIONS.map((faction) => (
+        <View key={faction.name} style={[styles.factionBlock, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <View style={[styles.factionAccent, { backgroundColor: faction.color }]} />
+          <View style={styles.factionContent}>
+            <View style={styles.factionHeader}>
+              <Text style={[styles.factionName, { color: faction.color }]}>{faction.name}</Text>
+              {faction.manager && (
+                <Text style={[styles.factionRole, { color: colors.mutedForeground }]}>
+                  MGR: {faction.manager}
+                </Text>
               )}
-            </Pressable>
-          );
-        })}
-
-      {view === "ratings" && (
-        <View>
-          <View style={[styles.leaderboardHeader, { borderColor: colors.border, backgroundColor: colors.card }]}>
-            <View style={[styles.leakedStamp, { borderColor: "#ef4444" }]}>
-              <Text style={[styles.leakedStampText, { color: "#ef4444" }]}>⚠ CONFIDENTIAL — DO NOT DISTRIBUTE</Text>
+              {faction.higherPower && (
+                <Text style={[styles.factionRole, { color: colors.mutedForeground }]}>
+                  HIGHER POWER: {faction.higherPower}
+                </Text>
+              )}
             </View>
-            <Text style={[styles.leaderboardTitle, { color: colors.primary }]}>OFFICIAL RATINGS</Text>
-            <Text style={[styles.leaderboardSubtitle, { color: colors.mutedForeground }]}>
-              Rampage Pro Wrestling · 2006–2019 · All promotions
+            <FactionMemberPhotos memberIds={faction.memberIds} />
+            <Text style={[styles.factionDesc, { color: colors.mutedForeground }]}>
+              {faction.description}
             </Text>
-          </View>
-
-          {ranked.map((w, i) => {
-            const photo = getWrestlerPhoto(w.id);
-            const roleColor = ROLE_COLORS[w.role] ?? colors.mutedForeground;
-            const r = w.ratings!;
-            const rankColor = i === 0 ? "#D4AF37" : i === 1 ? "#aaaaaa" : i === 2 ? "#cd7f32" : colors.mutedForeground;
-
-            return (
-              <View key={`rank-${i}-${w.id}`} style={[styles.rankCard, { backgroundColor: colors.card, borderColor: i === 0 ? colors.primary : colors.border }]}>
-                <Text style={[styles.rankNum, { color: rankColor }]}>#{i + 1}</Text>
-                {photo ? (
-                  <View style={[styles.rankPhoto, { borderColor: roleColor }]}>
-                    <Image source={photo} style={styles.rankPhotoImg} resizeMode="cover" />
-                  </View>
-                ) : (
-                  <View style={[styles.rankPhoto, styles.rankPhotoPlaceholder, { borderColor: roleColor }]}>
-                    <MaterialCommunityIcons name="account" size={22} color={roleColor + "66"} />
-                  </View>
-                )}
-                <View style={styles.rankInfo}>
-                  <Text style={[styles.rankName, { color: colors.foreground }]} numberOfLines={1}>{w.name}</Text>
-                  <View style={styles.rankMiniStats}>
-                    {RATING_ATTRS.map((attr) => (
-                      <View key={attr.key} style={styles.rankMiniStat}>
-                        <Text style={[styles.rankMiniLabel, { color: colors.mutedForeground }]}>{attr.label}</Text>
-                        <Text style={[styles.rankMiniValue, { color: attr.color }]}>{r[attr.key]}</Text>
-                      </View>
-                    ))}
-                  </View>
+            <View style={styles.factionMembers}>
+              {faction.members.map((m) => (
+                <View key={m} style={[styles.memberPill, { backgroundColor: colors.secondary }]}>
+                  <Text style={[styles.memberPillText, { color: colors.foreground }]}>{m}</Text>
                 </View>
-                <OvrBadge overall={r.overall} size="md" />
-              </View>
-            );
-          })}
-
-          <View style={[styles.noteBlock, { borderColor: colors.border, marginTop: 8 }]}>
-            <Text style={[styles.noteTitle, { color: "#ef4444" }]}>METHODOLOGY NOTE</Text>
-            <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
-              Ratings reflect peak performance window during active storyline periods. MIC and HEAT scores weight promo ability and crowd response independently of in-ring work. OVR is composite — a 97 MIC can carry an otherwise average performer to the top of this list. Ask Rich $teve about it.
-            </Text>
+              ))}
+            </View>
           </View>
         </View>
-      )}
+      ))}
 
-      {view !== "ratings" && (
-        <View style={[styles.noteBlock, { borderColor: colors.border }]}>
-          <Text style={[styles.noteTitle, { color: colors.primary }]}>SUIT RULE</Text>
-          <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
-            Rich $teve only wore wrestling gear during active matches. For promos, segments, or managing outside the ring — suits only. "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
-          </Text>
-        </View>
-      )}
+      <View style={[styles.noteBlock, { borderColor: colors.border }]}>
+        <Text style={[styles.noteTitle, { color: colors.primary }]}>SUIT RULE</Text>
+        <Text style={[styles.noteText, { color: colors.mutedForeground }]}>
+          Rich $teve only wore wrestling gear during active matches. For promos, segments, or managing outside the ring — suits only. "Why would I wear gear if I'm not wrestling? That's what idiots and poor people do."
+        </Text>
+      </View>
     </ScrollView>
   );
 }
