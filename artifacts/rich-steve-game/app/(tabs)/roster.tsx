@@ -119,9 +119,9 @@ export default function RosterScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.pageHeader}>
-        <Text style={[styles.pageTitle, { color: colors.primary }]}>RAMPAGE ROSTER</Text>
+        <Text style={[styles.pageTitle, { color: colors.primary }]}>THE ROSTER</Text>
         <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-          THE REAL NAMES · THE REAL PEOPLE
+          SSW · ACPW · AWA · OTCW · CODE RED · RAMPAGE · MORE
         </Text>
       </View>
 

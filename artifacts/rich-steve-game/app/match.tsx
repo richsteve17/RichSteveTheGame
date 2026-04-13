@@ -49,7 +49,7 @@ function WrestlerPortrait({
         <Image source={photo} style={styles.portraitImg} resizeMode="cover" />
         <View style={[styles.portraitNameBar, { backgroundColor: isPlayer ? borderColor + "EE" : "#000000CC" }]}>
           <Text style={styles.portraitNameText} numberOfLines={1}>
-            {isPlayer ? "RICH $TEVE" : name.toUpperCase()}
+            {name.toUpperCase()}
           </Text>
         </View>
       </View>
@@ -59,7 +59,7 @@ function WrestlerPortrait({
     <View style={[styles.portraitBox, styles.portraitPlaceholder, { width: size, height: size, borderColor, borderWidth: 2, borderRadius: 8 }]}>
       <MaterialCommunityIcons name="account-outline" size={size * 0.45} color={borderColor + "66"} />
       <Text style={[styles.portraitNameText, { color: borderColor }]} numberOfLines={1}>
-        {isPlayer ? "RICH $TEVE" : name.toUpperCase()}
+        {name.toUpperCase()}
       </Text>
     </View>
   );
@@ -91,14 +91,17 @@ function SmallPortrait({
 export default function MatchScreen() {
   const colors = useColors();
   const router = useRouter();
-  const params = useLocalSearchParams<{ opponentId: string; chapterId: string; mode: string }>();
+  const params = useLocalSearchParams<{ opponentId: string; chapterId: string; mode: string; characterId?: string }>();
   const { completeChapter } = useGame();
 
   const opponent = WRESTLERS.find((w) => w.id === params.opponentId) ?? WRESTLERS[0]!;
   const chapter = CAREER_CHAPTERS.find((c) => c.id === params.chapterId);
   const isExhibition = params.mode === "exhibition";
+  const characterId = params.characterId ?? "rich-steve";
+  const characterWrestler = WRESTLERS.find((w) => w.id === characterId);
+  const playerName = characterId === "rich-steve" ? "Rich $teve" : (characterWrestler?.name ?? "Rich $teve");
 
-  const stevePhoto = getWrestlerPhoto("rich-steve");
+  const stevePhoto = getWrestlerPhoto(characterId);
   const opponentPhoto = getWrestlerPhoto(opponent.id);
 
   const [phase, setPhase] = useState<Phase>("pre-match");
@@ -243,8 +246,8 @@ export default function MatchScreen() {
 
     if (type === "guerrero") {
       setGuerreroUsed(true);
-      addLog("$teve tosses the Riot Rumble Lockbox to the opponent and drops!", "special");
-      addLog("The referee sees the weapon — DISQUALIFICATION! $teve wins by DQ!", "special");
+      addLog(`${playerName} tosses the Riot Rumble Lockbox to the opponent and drops!`, "special");
+      addLog(`The referee sees the weapon — DISQUALIFICATION! ${playerName} wins by DQ!`, "special");
       flash();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       endMatch("player", "Win by Disqualification (The Guerrero Special)");
@@ -270,11 +273,11 @@ export default function MatchScreen() {
       flash();
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     } else {
-      addLog(`$teve hits ${moveName} for ${finalDmg} damage.`, "player");
+      addLog(`${playerName} hits ${moveName} for ${finalDmg} damage.`, "player");
     }
 
     if (newOppStam === 0) {
-      addLog(`${opponent.name} is out cold! $teve covers!`, "player");
+      addLog(`${opponent.name} is out cold! ${playerName} covers!`, "player");
       endMatch("player", "Win by Pinfall");
     } else {
       setIsOpponentTurn(true);
@@ -310,7 +313,7 @@ export default function MatchScreen() {
             <View style={styles.faceoffSide}>
               <WrestlerPortrait
                 photo={stevePhoto}
-                name="Rich $teve"
+                name={playerName}
                 isPlayer
                 borderColor={colors.primary}
               />
@@ -339,8 +342,8 @@ export default function MatchScreen() {
             style={[styles.startBtn, { backgroundColor: colors.primary }]}
             onPress={() => {
               setPhase("fighting");
-              addLog(`The bell rings. Rich $teve vs. ${opponent.name}.`, "system");
-              addLog(`$teve is dressed for war. The gear is on.`, "system");
+              addLog(`The bell rings. ${playerName} vs. ${opponent.name}.`, "system");
+              addLog(`${playerName} is dressed for war. The gear is on.`, "system");
             }}
           >
             <Text style={[styles.startBtnText, { color: colors.primaryForeground }]}>
@@ -373,14 +376,6 @@ export default function MatchScreen() {
           <Text style={[styles.postTurns, { color: colors.mutedForeground }]}>
             Turn {turn} · {opponent.name} ended at {opponentStamina}% stamina
           </Text>
-          {!isExhibition && chapter && (
-            <View style={[styles.postNote, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.postNoteTitle, { color: colors.primary }]}>HISTORICAL RECORD</Text>
-              <Text style={[styles.postNoteText, { color: colors.mutedForeground }]}>
-                {chapter.historicalNote}
-              </Text>
-            </View>
-          )}
           <View style={styles.postButtons}>
             {!isExhibition && chapter && (
               <Pressable
