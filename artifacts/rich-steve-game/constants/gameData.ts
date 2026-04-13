@@ -299,7 +299,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "#BRUH",
     role: "Main Event",
     style: "Brawler",
-    bio: "One half of #BRUH. Tag backbone of Project Mayhem through all of 2017 alongside Johnny Xross, managed by George Burkett. Won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club. Left Mayhem December 9, 2017 with Xross. When the Lethal Lottery paired him with Rich $teve — his former boss, sworn enemy — Ray went through stages: rage, reluctant acceptance, and eventually proclaiming 'the band is back together for one night.' George Burkett begged him not to trust $teve. Ray didn't listen. He found out the hard way why Burkett was right. The plan was never Yams. The plan was always #BRUH.",
+    bio: "One half of #BRUH. Tag backbone of Project Mayhem through all of 2017 alongside Johnny Xross, managed by George Burkett. Won the Rampage Tag Team Championships in a Ladder Match at Stairway to Gold II (June 23, 2018) over The Bully Club. Left Mayhem December 9, 2017 with Xross. When the Lethal Lottery randomly paired him with Rich $teve — his former boss, sworn enemy — Steve ran a calculated three-stage social media campaign: furious outrage on Oct 2, then a short disbelieving 'Ray Rumble. Ray freaking Rumble?! #Bruh' the same day, then on Oct 4 he posted an old photo of happier times with Ray and Jonny Xross and said they'd put their differences aside for one night for PTV. On a memorial show named after a fallen wrestler, that sentiment was completely believable. Ray started warming to it. The band was back together — for one night, for PTV. George Burkett begged him not to trust $teve. Ray didn't listen. At the show, before the Money Drop, $teve turned, found Burkett's eyes, and smiled — the same smile he gave Cohen before the Guerrero Special. Face dropped. Ray went up. The plan was never Yams. The plan was always #BRUH.",
     stamina: 88,
     moves: ["Haymaker", "Spinebuster", "Clothesline", "Back Suplex", "Running Knee"],
     signatureMove: null,
@@ -373,7 +373,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Working Class Heroes",
     role: "Main Event",
     style: "Brawler",
-    bio: "Rampage Heavyweight Champion. The Working Man. Won the R.P.W. Heavyweight Title from Johnny Malloy at Stairway to Gold II (June 23, 2018) — the same night BRUH won the tag titles in a Ladder Match. That was peak Rampage before Mayhem came for it. $teve's public target for all of 2018 — while the real plan was running underneath. Vox (who used to tag with Yams, knew his house) joined $teve for the home invasion — bathtub promo filmed from Yams' own bathroom. $teve showed up at Cosplayers Unite dressed as Yams. Then shaved the beard in the ring. That beard shave was the line for Vox and Kory — they both turned face and reformed Working Class Heroes with Yams. Yams gave $teve a title match as payback for the Invasion promo; it ended in a DQ (no finish). Everyone assumed the Riot Rumble lockbox was coming for Yams. Yams played his part perfectly. He was the distraction. The plan was never him. After Kory and Vox joined him, Yams led the final fight at The Final Shot.",
+    bio: "Rampage Heavyweight Champion. The Working Man. Won the R.P.W. Heavyweight Title from Johnny Malloy at Stairway to Gold II (June 23, 2018) via cash-in — the same night BRUH won the tag titles in a Ladder Match. That was peak Rampage before Mayhem came for it. $teve's stated public enemy for all of 2018 — while the real plan ran underneath. Vox (who used to tag with Yams, knew his house) joined $teve for the home invasion. The bathtub promo was filmed from Yams' own bathroom. On July 22, 2018, Yams interrupted Steve's rap group's post-show concert at Outbreak Pro Wrestling with a rap battle challenge — it ended in a brawl, Steve bloodied. Steve posted the photos and wrote: 'August 18th I WILL have retribution at Infinity CosPlayers Unite.' At Cosplayers Unite (August 18, 2018), Steve appeared earlier in the show as 'Scams the Working Man' — yellow shirt, long wig, fake beard, MINI traffic cone (Yams carried a large one named Quinton), Rampage title made from a toilet paper box ('because the title means shit to me'). After Yams successfully defended the HW title against Vic Ramon in the main event, Steve came to the ring with KTB (Killing The Business) and Jay Cortez — he'd been trying to convert KTB to Mayhem, and the Cosplayers Unite show confirmed why: BRUH had already put KTB away earlier in the night in a 4-Way Tag, so they were available and aligned. Everyone assumed this was the cash-in. Yams exhausted after a hard title defense. Referee called. Lockbox opened. Inside: a pair of SHEARS — not a contract. Steve used them to shave Yams' beard to humiliate, not to win the title. Vox and Kory attacked Steve to stop it — turning face and reforming Working Class Heroes. The KTB rationale was now revealed: they filled the exact vacancy Vox and Kory just created. Steve walked out backstage and opened the door — the Beard Villain Johnny Malloy was standing there. Pissed that he'd lost his belt to Yams and never got a rematch because Steve kept inserting himself. But he RESPECTED Steve as a villain. 'Whoever wins, I'm waiting on the other side.' Steve's post-show social media: RIP Beard gravestone meme, WANTED poster ('Son of Sam'), 'Now open for business — ask Yams The Working Man!' barbershop meme, MISSING milk carton of Yams' beard, Bubbles shed meme with photos of Yams on the walls and the Outbreak title/Steve's belts on the table. Yams gave Steve a title shot (payback for the invasion promos) — it ended in a DQ. Yams played his part perfectly as the distraction. The plan was never him. After Kory and Vox joined him, Yams led the final fight at The Final Shot.",
     stamina: 88,
     moves: ["Lariat", "German Suplex", "Running Powerslam", "Headbutt", "Corner Splash"],
     signatureMove: null,
@@ -479,7 +479,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "The Talent Agency",
     role: "Main Event",
     style: "Technical",
-    bio: "6'0\", 280 lbs. Centereach, NY. Debut: Roots of Rampage 8/13/16. Rampage Pro Wrestling Heavyweight Champion. Never pinned or submitted in Dover. Talent Agency founder. The one man Rich $teve publicly respected: 'I still respect him because he did bring people in for Dover vs. The World.'",
+    bio: "6'0\", 280 lbs. Centereach, NY. Debut: Roots of Rampage 8/13/16. Rampage Pro Wrestling Heavyweight Champion. Never pinned or submitted in Dover. Talent Agency founder. Lost the R.P.W. Heavyweight Title to Yams The Working Man at Stairway to Gold II (June 23, 2018) — Yams cashed in a contract on him. Malloy never got an immediate rematch because Rich $teve inserted himself into the picture with the Riot Rumble lockbox, hovering at ringside during all of Malloy's summer 2018 matches and teasing the cash-in constantly. (That meddling got Steve beaten down by Bull James after Malloy defeated him.) Malloy watched Steve leapfrog his own rematch entirely — and instead of being furious, he RESPECTED it. It takes a special type of sicko to do that. A real gaul. The backstage encounter at Infinity Cosplayers Unite (August 18, 2018), captured in the Rampage video still: Malloy's line was 'whoever wins, I'm waiting on the other side.' The one man Rich $teve publicly acknowledged: 'I still respect him because he did bring people in for Dover vs. The World.'",
     stamina: 87,
     moves: ["Suplex Combo", "Figure Four", "Headlock Driver", "Running Knee", "Belly-to-Back"],
     signatureMove: null,
@@ -2410,7 +2410,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "eb-cohen",
     stipulation: "Riot Rumble Battle Royal — Last man standing earns a guaranteed title contract: any time, any place of their choosing",
     historicalResult: "win",
-    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Rich $teve won the Riot Rumble battle royal — last eliminating E.B. Cohen — earning a guaranteed briefcase redeemable for any Rampage title, any time, any place of his choosing. On the same night: The Bully Club defeated BRUH (w/ George Burkett) to become the NEW Rampage Tag Team Champions — beginning a Bully Club reign that #BRUH would chase for three months.",
+    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Rich $teve entered the Riot Rumble as entrant #1 — and immediately slid out the BOTTOM rope (not over the top — the only way to avoid elimination). Like Vince McMahon at the 1999 Royal Rumble, he sat at ringside doing commentary, refusing to set foot back in the ring, letting every other entrant wear themselves out. He waited until the very end, got back in, and last eliminated E.B. Cohen to win the briefcase — a guaranteed contract redeemable for any Rampage title, any time, any place of his choosing. Cohen PROTESTED. The contract was held up pending a formal ruling: if Steve entered first and slid out the bottom, was the win legitimate? The lockbox was frozen until a proper protest match could settle the dispute. On the same night: The Bully Club defeated BRUH (w/ George Burkett) to become the NEW Rampage Tag Team Champions — beginning a Bully Club reign that #BRUH would chase for three months.",
     riotRumbleChapter: true,
     introCutscene: [
       {
@@ -2423,28 +2423,36 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Win this, and the champion's title is just a matter of when $teve decides to cash in.",
+        text: "$teve entered this match as entrant number one. There's a plan here. It requires patience.",
       },
       {
         speaker: "Rich $teve",
-        text: "Any time. Any place. Of my choosing. That's the contract. And I intend to collect.",
+        text: "I enter first. I slide out the BOTTOM rope — not over the top, so I can't be eliminated. I sit at ringside. I do commentary. I let these idiots destroy each other for thirty minutes. Then I get back in and finish it.",
         isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Like Vince McMahon in 1999. The genius of it is that it's technically legal.",
       },
     ],
     outroCutscene: {
       win: [
         {
           speaker: "NARRATOR",
-          text: "Rich $teve wins the Riot Rumble. The briefcase — the contract — is his.",
+          text: "Rich $teve wins the Riot Rumble — last eliminating E.B. Cohen. The briefcase is his.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "E.B. Cohen immediately files a protest. Entrant number one slid out the bottom rope — was that a violation? The lockbox is HELD UP pending a formal ruling.",
         },
         {
           speaker: "Rich $teve",
-          text: "Yams. I have this. And you don't know when. That's the point.",
+          text: "Protest all you want, Pancakes. The plan worked. And the next time we meet, I'll prove it wasn't luck.",
           isPromo: true,
         },
         {
           speaker: "NARRATOR",
-          text: "The public story: Rich $teve vs Yams. The briefcase is coming for the Heavyweight Title. Everyone can see it. The bathtub. The cosplay. The beard. The Invasion promo. That's what everyone is supposed to see.",
+          text: "The contract is disputed. Cohen will get his protest match. And $teve is already smiling about it.",
         },
       ],
       lose: [
@@ -2471,7 +2479,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "eb-cohen",
     stipulation: "Singles Match — Riot Rumble Contract on the Line",
     historicalResult: "win",
-    historicalNote: "April 21, 2018. Rampage Pro Wrestling 'Apocalypse.' Delaware Agricultural Museum. Dover, DE. $teve tossed the Riot Rumble lockbox to E.B. Cohen, faked a concussion so convincingly that building security called for medical help. After the DQ bell rang, he dropped the act entirely. Security bowed on the way out. Contract retained.",
+    historicalNote: "April 21, 2018. Rampage Pro Wrestling 'Apocalypse.' Delaware Agricultural Museum. Dover, DE. This was the Cohen PROTEST MATCH — the ruling had determined that Steve's Vince McMahon slide-out-the-bottom strategy required a formal rematch for the contract. Steve's plan: the Guerrero Special. He smiled huge at Cohen right before the bump — full knowledge of what was about to happen. Tossed the Riot Rumble lockbox to Cohen, took the hit, and sold a concussion so convincingly that building security called for medical personnel. DQ bell rang. Act dropped entirely. Security bowed on the way out. This was the SECOND time Steve had beaten Cohen for the contract — and he did it by faking a serious injury. Contract retained.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -2529,7 +2537,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     city: "Lancaster, PA",
     stipulation: "The Bookstore Incident — Big Mike's 'The Weird One' Book Signing",
     historicalResult: "story",
-    historicalNote: "July 14, 2018. Lancaster, PA. Rich $teve crashed Big Mike's memoir signing at The Book Warehouses. Zero customers. He pulled out the Riot Rumble contract, mocked the book, took the candy, drank Mike's water, and left with the rest of the candy for the road. Context: by this point in 2018, $teve had already broken into Yams' house (bathtub promo), showed up at a cosplay event dressed as Yams, and shaved Yams' beard. Ryan Vox and Kory Cross quit Mayhem over it — forming Working Class Heroes with Yams. Steve had cut an Invasion promo that angered Yams enough to offer a title match (resulting in a DQ). Everyone was watching the Yams feud. Nobody was watching the lockbox.",
+    historicalNote: "July 14, 2018. Lancaster, PA. Rich $teve crashed Big Mike's memoir signing at The Book Warehouses. Zero customers. He pulled out the Riot Rumble contract, mocked the book, took the candy, drank Mike's water, and left with the rest of the candy for the road. Context: by this point in 2018, $teve had already broken into Yams' house (bathtub promo filmed from Yams' own bathroom) and won the Riot Rumble contract (March 10), retained it at the Guerrero Special (April 21). The bookstore visit was July 14. Eight days later, on July 22 at an Outbreak Pro Wrestling post-show concert, Yams interrupted Steve's rap group's set with a rap battle challenge — it ended in a brawl, Steve left bloody. Steve posted the photos and vowed retribution at Infinity CosPlayers Unite (August 18). The beard shave hadn't happened yet. The Vox/Kory turn hadn't happened yet. Everyone was watching the Yams feud. Nobody was watching the lockbox.",
     matchless: true,
     introCutscene: [
       {
@@ -2767,16 +2775,24 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "ray-rumble",
     stipulation: "Riot Rumble Cash-In — Rampage Tag Team Championships",
     historicalResult: "win",
-    historicalNote: "October 13, 2018. Rampage Pro Wrestling PTV Lethal Lottery. Dover, DE. The year-long plan comes due. The bracket randomly assigns Rich $teve and Ray Rumble as partners. Everyone assumes the Riot Rumble briefcase will be cashed on Yams — $teve has feuded publicly with Yams all year (bathtub promo, cosplay show appearance, shaving Yams' beard, the Invasion promo, the DQ title match, the formation of Working Class Heroes). Nobody remembers the lockbox could go anywhere. Nobody except George Burkett, who immediately warns the crowd: don't trust Rich $teve. First round: $teve and Ray defeat Muddy Waters and Brother Greatness. Stage Three: the band is back together. Semifinals: Riot City's Most Wanted eliminates them. Tournament is over. Ray is shaken, vulnerable, still in the building. Johnny Xross is not at the show — he's home. $teve hits the Money Drop. Cashes the Riot Rumble briefcase. Pins his own partner. Walks out the sole holder of both Rampage Pro Wrestling Tag Team Championship belts. The plan from day 1. December 9, 2017 was the start. October 13, 2018 was the finish.",
+    historicalNote: "October 13, 2018. Rampage Pro Wrestling PTV Lethal Lottery. Dover, DE. PTV was a wrestler who had passed away — a beloved figure in the Maryland and Delaware indie wrestling scene. The Lethal Lottery was named in his honor. In wrestling, memorial shows are traditionally treated as sacred: usually charity events, all storylines paused, everyone putting the bullshit aside for one night out of respect. The Lethal Lottery format — completely random pairings, anyone can team with anyone — fit this spirit perfectly. The year-long plan comes due. The bracket randomly assigns Rich $teve and Ray Rumble as partners. Everyone assumes the Riot Rumble briefcase will be cashed on Yams — $teve has feuded publicly with Yams all year. Nobody remembers the lockbox could go anywhere. Steve ran a three-stage social media arc: (1) Oct 2 — furious post about being 'forced to team with my former associate and known traitor Ray Rumble'; (2) Oct 2 — second post, short and disbelieving: 'Ray Rumble. Ray freaking Rumble?! #Bruh'; (3) Oct 4 — posted an old photo of him, Johnny Xross, and Ray Rumble together with the caption 'Happier times... on 10/13 Ray and myself will try and put our differences aside for one night to win the damn thing.' On a PTV memorial show, that sentiment was COMPLETELY believable. Nobody would fake sincerity on a memorial show. Nobody except Steve. George Burkett was the only person in the entire wrestling world who publicly warned: don't trust Rich $teve. First round: $teve and Ray defeat Muddy Waters and Brother Greatness. Ray is buying it. Semifinals: Riot City's Most Wanted eliminates them. Tournament over. Ray is shaken, still in the building. Johnny Xross is not at the show — he's home. Before hitting the Money Drop, $teve flashes the same smile he gave Cohen before the Guerrero Special bump — but this time it's directed at George Burkett. The only man who can see his face. Face drops. Ray goes up. Money Drop. Briefcase cashed. Pins his own partner. Walks out solo Rampage Tag Team Champion. Post-match: Steve steals Burkett's signature photo collage format for his own victory post — 'This is how genius works, Ray Rumble should have listened to George Burkett. Now #BRUH will never get their titles back. Picture and format stolen, like the championship, from Mr. Burkett. #3stepsahead #andnew.' The plan from day 1. December 9, 2017 was the start. October 13, 2018 was the finish.",
     riotRumbleChapter: true,
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "October 2, 2018. The PTV Lethal Lottery bracket is announced. Rich $teve's randomly assigned partner: Ray Rumble.",
+        text: "PTV. A wrestler who had passed away — beloved in the Maryland and Delaware indie scene. Rampage named this show in his honor: the PTV Lethal Lottery.",
       },
       {
         speaker: "NARRATOR",
-        text: "Everyone assumes the Riot Rumble briefcase is going to be cashed on Yams. $teve has been feuding with him all year — broke into his house with Ryan Vox (who used to tag with Yams, knew the address, calmed the dogs), filmed a promo from the bathtub, showed up at a cosplay event dressed as Yams, shaved his beard at Cosplayers Unite. That beard shave cost $teve Vox and Kory, who turned face and reformed Working Class Heroes. None of that matters right now. Everyone is watching that hand.",
+        text: "Wrestling memorial shows are sacred. Usually charity events. Traditionally: no storylines. No angles. Everyone puts the bullshit aside for one night out of respect. The Lethal Lottery format fits that spirit — completely random pairings, anyone can team with anyone.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "October 2, 2018. The bracket is announced. Rich $teve's randomly assigned partner: Ray Rumble.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Everyone assumes the Riot Rumble briefcase is going on Yams. $teve has feuded with him publicly all year — broke into his house, filmed from the bathtub, showed up at Cosplayers Unite as 'Scams the Working Man,' shaved Yams' beard in the ring. That's what everyone is watching. That's what they're supposed to see.",
       },
       {
         speaker: "Rich $teve",
@@ -2785,36 +2801,49 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Stage One: Outrage. October 2. That was the public face. The fans bought it. They thought he was furious about the pairing.",
+        text: "Stage One: Outrage. The fans buy it. He's furious. He hates this pairing.",
       },
       {
         speaker: "NARRATOR",
-        text: "George Burkett heard the announcement. He was the only one in the entire wrestling world who immediately called it. He warned Ray. He warned the crowd. Don't trust Rich $teve.",
+        text: "George Burkett hears the announcement. He's the only person in the entire wrestling world who immediately calls it. He warns Ray. He warns the crowd. Don't trust Rich $teve.",
       },
       {
         speaker: "NARRATOR",
-        text: "October 4. Stage Two. Rich $teve posts a photo of happier times — him, Xross, and Ray Rumble.",
+        text: "October 2. Second post. Short. Disbelieving.",
       },
       {
         speaker: "Rich $teve",
-        text: "On 10/13 Ray and myself will try and put our difference aside for one night to win the damn thing. At the PTV Lethal Lottery — see the reunion that no one thought would ever happen.",
+        text: "Ray Rumble. Ray freaking Rumble?! #Bruh",
         isPromo: true,
       },
       {
         speaker: "NARRATOR",
-        text: "Reluctant acceptance. The fans are eating it up. Ray is starting to hear it. The 'band is back together.' One night. For old times.",
+        text: "October 4. Stage Three. $teve posts a photo of happier times — him, Johnny Xross, and Ray Rumble. All three together. Before everything.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Happier times with Jonny Xross and Ray Rumble. On 10/13 Ray and myself will try and put our differences aside for one night to win the damn thing. At the PTV Lethal Lottery — see the reunion that no one thought would ever happen.",
+        isPromo: true,
       },
       {
         speaker: "NARRATOR",
-        text: "October 13. Show night. Johnny Xross is not at the building. He's alone. Ray Rumble is in the tournament with his former boss — the man who stood over him through a cage and said 'I created you.'",
+        text: "On a PTV memorial show — honoring a fallen wrestler, a charity night — that sentiment was COMPLETELY believable. Nobody would fake sincerity on a memorial show. Nobody would exploit PTV's name for an angle. Nobody except Steve.",
       },
       {
         speaker: "NARRATOR",
-        text: "First round: $teve and Ray Rumble defeat Muddy Waters and Brother Greatness. It's working. Ray is starting to trust it. Stage Three — the band is back together.",
+        text: "The fans are eating it up. Ray is starting to hear it.",
       },
       {
         speaker: "NARRATOR",
-        text: "Semifinals: Riot City's Most Wanted eliminates them. The tournament run is over. Ray Rumble is shaken. He's still in the building. The briefcase is still in $teve's pocket. And everyone has forgotten it was never meant for Yams.",
+        text: "October 13. Show night. Johnny Xross is not at the building. He's home. Ray is in the tournament with his former boss — the man who stood over him through a cage and said 'I created you.'",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "First round: $teve and Ray defeat Muddy Waters and Brother Greatness. It's working. The band is back together. Ray is starting to trust it.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Semifinals: Riot City's Most Wanted eliminates them. The tournament is over. Ray Rumble is shaken. He's still in the building. The briefcase is still in $teve's pocket. And everyone has forgotten it was never meant for Yams.",
       },
       {
         speaker: "George Burkett",
@@ -2831,11 +2860,15 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       win: [
         {
           speaker: "NARRATOR",
-          text: "Money Drop. One. Two. Three.",
+          text: "Before the Money Drop — $teve turns. Finds Burkett's eyes across the ring. Smiles. The same smile he gave E.B. Cohen right before the Guerrero Special bump. The only man who can see his face.",
         },
         {
           speaker: "NARRATOR",
-          text: "Rich $teve stands in the ring holding both Rampage Pro Wrestling Tag Team Championship belts. Solo. George Burkett was right. Nobody listened.",
+          text: "Face drops. Ray goes up. Money Drop. One. Two. Three.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Rich $teve stands alone in the ring holding both Rampage Pro Wrestling Tag Team Championship belts. Solo. Burkett was right. Nobody listened.",
         },
         {
           speaker: "Rich $teve",
@@ -2844,11 +2877,16 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         },
         {
           speaker: "NARRATOR",
-          text: "The next day — October 14, 2018. The dust settles. $teve posts the cage photo. December 9, 2017. Steve staring through the cage at Johnny Xross.",
+          text: "The next day — October 14, 2018. The dust settles. $teve posts the cage photo. December 9, 2017. Steve through the cage at Johnny Xross. And for the post layout — he steals George Burkett's own photo collage format.",
         },
         {
           speaker: "Rich $teve",
           text: "Now that the dust has settled — this was the plan from day 1. In this moment, I was telling Johnny Xross that I wasn't going to forget what they did to us. In this moment, I vowed my revenge. In THIS MOMENT, I knew it was only a matter of time. Unlike you idiots, I play the long game. I want to thank Johnny Malloy and Yams for playing their part. Really. You both kept the fans so distracted. They really thought I was going to cash in on one of you two. I even got the chance to shave that stupid beard off of Yams' face as a bonus. But the plan all along was #BRUH. And now I can sit back and smile as your NEW Rampage Pro Wrestling Tag Team Champion.",
+          isPromo: true,
+        },
+        {
+          speaker: "Rich $teve",
+          text: "This is how genius works. Ray Rumble should have listened to George Burkett. Now #BRUH will never get their titles back. Picture and format stolen — like the championship — from Mr. Burkett. #3stepsahead #andnew",
           isPromo: true,
         },
       ],
