@@ -39,7 +39,7 @@ export default function HomeScreen() {
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const completed = gameState.completedChapters.length;
-  const total = 21;
+  const total = 28;
 
   return (
     <ScrollView

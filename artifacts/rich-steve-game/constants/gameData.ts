@@ -15,7 +15,7 @@ export interface Wrestler {
 
 export interface CareerChapter {
   id: string;
-  era: 1 | 2 | 3 | 4 | 5 | 6;
+  era: 1 | 2 | 3 | 4 | 5 | 6 | 7;
   eraName: string;
   title: string;
   date: string;
@@ -109,7 +109,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: null,
     role: "Midcard",
     style: "Brawler",
-    bio: "Untrained and unsafe. The reason Coleman never won the ACPW Grand Championship on August 18, 2007. The match was called a No Contest by management to protect Coleman before he could be injured. He was booked to win.",
+    bio: "Untrained and unsafe. The reason Coleman never won the ACPW Grand Championship on August 18, 2007. The match was called a Double DQ — both men disqualified. He was booked to win.",
     stamina: 60,
     moves: ["Wild Swing", "Bear Hug", "Headlock", "Running Shoulder Block"],
     signatureMove: null,
@@ -492,18 +492,142 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Running Crossbody", "Corner Splash", "Headbutt", "Bull Drop"],
     signatureMove: "Bull Drop",
   },
+  // ─── ERA 3 ADDITIONS ─────────────────────────────────────────
+  {
+    id: "buddah",
+    name: "Buddah",
+    faction: "OTCW",
+    role: "Main Event",
+    style: "Power",
+    bio: "OTCW heavyweight. One of the top names in Berkeley Springs. On September 24, 2016, Rich $teve and Justin Tyme challenged Buddah — and lost. The Coalition formation match.",
+    stamina: 82,
+    moves: ["Scoop Slam", "Running Clothesline", "Spinebuster", "Big Boot", "Powerbomb"],
+    signatureMove: null,
+  },
+  {
+    id: "siccend",
+    name: "Siccend",
+    faction: "Riot City's Most Wanted",
+    role: "Midcard",
+    style: "Brawler",
+    bio: "Member of Riot City's Most Wanted alongside Matt Wylde and Vic Ramone. Managed by Kory Cross before the defection. The Coalition faced RCMW twice — losing the first meeting at Winter War 2016 before winning Spring Brawl 2017.",
+    stamina: 75,
+    moves: ["Headbutt", "DDT", "Running Knee", "Lariat", "Choke Slam"],
+    signatureMove: null,
+  },
+  {
+    id: "vic-ramon",
+    name: "Vic Ramone",
+    faction: "Riot City's Most Wanted",
+    role: "Midcard",
+    style: "Technical",
+    bio: "Riot City's Most Wanted. Technical wrestler who held the unit together alongside Siccend. When Matt Wylde turned on him with an exploder suplex through a table at Mayhem 2017, Vic was the man left standing in the wreckage as Project Mayhem was born.",
+    stamina: 74,
+    moves: ["Suplex", "Armbar", "Running Elbow", "Vertical Suplex", "Neckbreaker"],
+    signatureMove: null,
+  },
+  // ─── ERA 4 ADDITIONS ─────────────────────────────────────────
+  {
+    id: "grizzly-redwood",
+    name: "Grizzly Redwood",
+    faction: "Project Mayhem",
+    role: "Midcard",
+    style: "Brawler",
+    bio: "Project Mayhem member in the Retribution era. Part of Team Mayhem at the Retribution 5-on-5 elimination match on November 4, 2017.",
+    stamina: 72,
+    moves: ["Running Clothesline", "Headlock", "Body Slam", "Big Boot"],
+    signatureMove: null,
+  },
+  {
+    id: "jt-funk",
+    name: "JT Funk",
+    faction: null,
+    role: "Midcard",
+    style: "Brawler",
+    bio: "Team Rampage member at Retribution. Part of the 5-on-5 elimination squad that put Big Mike's announcing career on the line.",
+    stamina: 70,
+    moves: ["Lariat", "Suplex", "DDT", "Corner Punch"],
+    signatureMove: null,
+  },
+  // ─── ERA 5 ADDITIONS ─────────────────────────────────────────
+  {
+    id: "kristopher-kollof",
+    name: "Kristopher Kollof",
+    faction: null,
+    role: "Midcard",
+    style: "Power",
+    bio: "SSW regular. Part of the Triple Threat Stocking Stuffer Contract match at SSW Summer Haze 3 on August 26, 2017 — which Impact Society won to earn the cash-in contract for the SSW Tag Team Championships.",
+    stamina: 74,
+    moves: ["Gorilla Press", "Headlock", "Body Slam", "Lariat", "Bearhug"],
+    signatureMove: null,
+  },
+  {
+    id: "mal-havock",
+    name: "Mal Havock",
+    faction: null,
+    role: "Midcard",
+    style: "Brawler",
+    bio: "Partner of Kristopher Kollof. Part of the SSW triple threat at Summer Haze 3 that Impact Society won to earn the tag title shot contract.",
+    stamina: 72,
+    moves: ["Dropkick", "Suplex", "Neckbreaker", "Running Shoulder Block"],
+    signatureMove: null,
+  },
+  {
+    id: "big-new-yorker",
+    name: "The Big New Yorkers",
+    faction: null,
+    role: "Midcard",
+    style: "Power",
+    bio: "SSW Tag Team Champions who retained their titles at SSW November Reign, November 11, 2017 — defeating Impact Society's Stocking Stuffer Contract cash-in attempt. The Big New Yorkers' WIN was their first title victory defended.",
+    stamina: 78,
+    moves: ["Double Clothesline", "Slam Combo", "Backbreaker", "Running Elbow"],
+    signatureMove: null,
+  },
+  {
+    id: "detroits-finest",
+    name: "Detroit's Finest",
+    faction: null,
+    role: "Midcard",
+    style: "Power",
+    bio: "Tag team opponents at SSW Summer Haze 3 (August 26, 2017). Competed in the Triple Threat Stocking Stuffer Contract match alongside Kristopher Kollof & Mal Havock vs Impact Society — Impact Society won.",
+    stamina: 72,
+    moves: ["Double Shoulder Block", "Slam", "Elbow Drop", "Running Lariat"],
+    signatureMove: null,
+  },
+  {
+    id: "high-voltage",
+    name: "High Voltage",
+    faction: null,
+    role: "Midcard",
+    style: "Brawler",
+    bio: "Tag team opponents at AWA '2nd Annual Spring Fever' (April 8, 2017). Competed against Impact Society and The Rapprochement (Fleck & Slice) in a Falls Count Anywhere AWA Tag Team Championship match — Impact Society lost.",
+    stamina: 74,
+    moves: ["High Crossbody", "Running Clothesline", "Suplex", "Tag Team Slam"],
+    signatureMove: null,
+  },
+  {
+    id: "the-rapprochement",
+    name: "The Rapprochement (Fleck & Slice)",
+    faction: null,
+    role: "Midcard",
+    style: "Technical",
+    bio: "Tag team opponents of Impact Society. Lost to them at SSW Summer Haze 3 in the three-way contract match. Faced Impact Society again at Code Red Wrestling 'Heartbreak City' on February 10, 2018 for the Code Red Tag Team Championships — Impact Society lost.",
+    stamina: 73,
+    moves: ["Combo Slam", "Tag Spike", "Neckbreaker", "Double Team Elbow"],
+    signatureMove: null,
+  },
 ];
 
 // ─── CAREER CHAPTERS ────────────────────────────────────────────
 
 export const CAREER_CHAPTERS: CareerChapter[] = [
 
-  // ══ ERA 1: ACPW ORIGINS ══════════════════════════════════════
+  // ══ ERA 1: THE FUTURE ════════════════════════════════════════
 
   {
     id: "ch1-managing-debut",
     era: 1,
-    eraName: "Era 1: ACPW Origins",
+    eraName: "Era 1: The Future",
     title: "The Managing Debut",
     date: "August 12, 2006",
     venue: "Northeast Community Center",
@@ -629,8 +753,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch1-korpse-manager",
     era: 1,
-    eraName: "Era 1: ACPW Origins",
-    title: "The Road Dog",
+    eraName: "Era 1: The Future",
+    title: "The Casket Match",
     date: "2006–2007",
     venue: "ACPW Circuit",
     city: "Philadelphia, PA",
@@ -749,9 +873,104 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   },
 
   {
-    id: "ch1-six-man-debut",
+    id: "ch1-nightmare-xmas",
     era: 1,
-    eraName: "Era 1: ACPW Origins",
+    eraName: "Era 1: The Future",
+    title: "Nightmare Before Christmas",
+    date: "December 23, 2006",
+    venue: "ACPW Nightmare Before Christmas — Northeast Community Center",
+    city: "Philadelphia, PA",
+    stipulation: "ACPW — Managing Korpse: Pre-Match Segment + Promo",
+    historicalResult: "story",
+    historicalNote: "December 23, 2006. ACPW 'Nightmare Before Christmas.' Rich $teve was managing Korpse, who faced Dr. Spider. The event featured promotional segments, announcements, and a pre-match segment. $teve was the architect behind the scenes.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "December 23, 2006. ACPW. Northeast Community Center. Philadelphia.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Rich $teve doesn't wrestle tonight. He doesn't need to. Korpse is in the ring. $teve is in the room.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "This is what managing looks like: being the most important person at ringside while everyone watches someone else.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "They're watching Korpse. But they're listening to me. That's the difference between a performer and a businessman.",
+        isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "Pre-match. You have the microphone before Korpse's match. The ACPW crowd doesn't know you yet. Establish yourself.",
+        options: [
+          {
+            text: "I'm Rich $teve. And the man behind me is going to do exactly what I tell him.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You established the power dynamic before the bell. The crowd boos both of you. Perfect.",
+          },
+          {
+            text: "Korpse is the most dangerous man in this building tonight!",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You put over your client... without putting over yourself. The Mastermind doesn't play second fiddle even to his own guy.",
+          },
+          {
+            text: "Merry Christmas, Philadelphia! Great to be here!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You just got a pop on December 23rd for being festive. That is not the point.",
+          },
+          {
+            text: "Watch carefully. This is how it's done.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Arrogant. Dismissive. Short. The crowd knew immediately they were supposed to hate you. Correct.",
+          },
+        ],
+      },
+      {
+        situation: "During the match, Dr. Spider starts gaining momentum. Korpse is in trouble. You're at ringside.",
+        options: [
+          {
+            text: "Grab the referee's attention on the far side. Buy Korpse the opening.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Classic distraction play. The crowd catches it. They boo. The plan works.",
+          },
+          {
+            text: "Cheer Korpse on from ringside with encouraging words.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "The crowd liked your enthusiasm. That is not a compliment.",
+          },
+          {
+            text: "Remain expressionless. Let Korpse handle it himself.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You're a manager. Managers manage. You stood there doing nothing when your man needed you.",
+          },
+          {
+            text: "Slap the mat and direct Korpse with sharp hand signals — back to basics.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Tactical. Controlled. You guided the match from ringside. The crowd hated the efficiency of it.",
+          },
+        ],
+      },
+    ],
+  },
+
+  // ══ ERA 2: DADDY'S MONEY ════════════════════════════════════
+
+  {
+    id: "ch1-six-man-debut",
+    era: 2,
+    eraName: "Era 2: Daddy's Money",
     title: "The In-Ring Debut",
     date: "April 7, 2007",
     venue: "Cardinal Krol Center",
@@ -803,12 +1022,12 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     },
   },
 
-  // ══ ERA 2: ACPW SOLO RUN ════════════════════════════════════
+  // ══ ERA 2: DADDY'S MONEY (cont.) ════════════════════════════
 
   {
     id: "ch2-ortiz",
     era: 2,
-    eraName: "Era 2: ACPW Solo Run",
+    eraName: "Era 2: Daddy's Money",
     title: "The Grand Championship",
     date: "August 18, 2007",
     venue: "VFW Post 1451",
@@ -816,7 +1035,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "ruben-ortiz",
     stipulation: "ACPW Grand Championship Match",
     historicalResult: "dq",
-    historicalNote: "Management called a No Contest to protect Coleman from an unsafe, untrained Ruben Ortiz. Coleman was booked to win. He didn't get another title shot until years later.",
+    historicalNote: "Called a Double DQ — both men disqualified. Coleman was booked to win the ACPW Grand Championship but never got it. He didn't get another title shot until years later.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -832,7 +1051,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Management will protect Coleman. They call a No Contest before anyone gets hurt. He will not leave with the title.",
+        text: "It ends in a Double DQ. Both men disqualified. He was booked to win and he'll leave with nothing.",
       },
       {
         speaker: "Rich $teve",
@@ -850,7 +1069,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       lose: [
         {
           speaker: "NARRATOR",
-          text: "No Contest. No title. Management made the call to protect you.",
+          text: "Double DQ. No title. Both men disqualified — and you were booked to win.",
         },
         {
           speaker: "NARRATOR",
@@ -863,7 +1082,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch2-spike",
     era: 2,
-    eraName: "Era 2: ACPW Solo Run",
+    eraName: "Era 2: Daddy's Money",
     title: "The Spike",
     date: "August 25, 2007",
     venue: "Northeast Community Center",
@@ -918,8 +1137,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch2-don-e-allen",
     era: 2,
-    eraName: "Era 2: ACPW Solo Run",
-    title: "The Last Match",
+    eraName: "Era 2: Daddy's Money",
+    title: "The Last Match (Before The Gap)",
     date: "October 6, 2012",
     venue: "Vineland High School",
     city: "Vineland, NJ",
@@ -983,8 +1202,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-hostile-takeover",
     era: 3,
-    eraName: "Era 3: OTCW & The Original Coalition",
-    title: "The Hostile Takeover",
+    eraName: "Era 3: OTCW & The Coalition",
+    title: "Uncivil War",
     date: "July 30, 2016",
     venue: "OTCW Uncivil War — Triple B Arena",
     city: "Berkeley Springs, WV",
@@ -1040,7 +1259,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-proving-ground",
     era: 3,
-    eraName: "Era 3: OTCW & The Original Coalition",
+    eraName: "Era 3: OTCW & The Coalition",
     title: "The Return",
     date: "August 27, 2016",
     venue: "OTCW Proving Ground — Triple B Arena",
@@ -1093,9 +1312,246 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   },
 
   {
+    id: "ch3-september-remember",
+    era: 3,
+    eraName: "Era 3: OTCW & The Coalition",
+    title: "September to Remember",
+    date: "September 24, 2016",
+    venue: "OTCW September to Remember — Triple B Arena",
+    city: "Berkeley Springs, WV",
+    opponentId: "buddah",
+    stipulation: "Tag Team Match — Rich $teve & Justin Tyme vs Buddah",
+    historicalResult: "lose",
+    historicalNote: "September 24, 2016. The night The Coalition officially forms: Sly Scarpone, Jesse Skelton, Little Monster Binky, Ray Rumble, Johnny Xross, Alistar Conrad, Drew Bronson, Tony Link, Justin Tyme, and Rich $teve. Rich $teve and Justin Tyme lost to Buddah.",
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "September 24, 2016. OTCW. Triple B Arena. Berkeley Springs, WV.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Tonight — The Coalition is born. Sly Scarpone. Jesse Skelton. Little Monster Binky. Ray Rumble. Johnny Xross. Alistar Conrad. Drew Bronson. Tony Link. Justin Tyme. Rich $teve.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Ten men. One faction. $teve steps into the ring tonight with Justin Tyme. The opponent: Buddah.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "The Coalition isn't just a group. It's a statement. We are the people this company is going to be built around — whether they like it or not.",
+        isPromo: true,
+      },
+    ],
+    outroCutscene: {
+      win: [
+        {
+          speaker: "NARRATOR",
+          text: "The Coalition wins its first tag match. The group has its statement victory.",
+        },
+      ],
+      lose: [
+        {
+          speaker: "NARRATOR",
+          text: "The Coalition loses its debut tag match. Buddah hands $teve and Tyme a loss.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "The Coalition was just born. The setbacks come early. They don't come forever.",
+        },
+      ],
+    },
+  },
+
+  {
+    id: "ch3-winter-war",
+    era: 3,
+    eraName: "Era 3: OTCW & The Coalition",
+    title: "Winter War",
+    date: "December 9, 2016",
+    venue: "Rampage Pro Wrestling Winter War — Delaware Agriculture Museum",
+    city: "Dover, DE",
+    stipulation: "Tag Team Match — The Coalition (Xross, Bronson, Conrad w/$teve) vs RCMW (Wylde, Vic Ramon, Siccend w/Kory Cross) — LOSS",
+    historicalResult: "story",
+    historicalNote: "December 9, 2016. The Coalition's Rampage debut — Johnny Xross, Drew Bronson, and Alistar Conrad managed by Rich $teve against Riot City's Most Wanted (Matt Wylde, Vic Ramon, Siccend w/Kory Cross). The Coalition lost.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "December 9, 2016. Rampage Pro Wrestling. Delaware Agriculture Museum. Dover, DE.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "The Coalition's Rampage debut. Johnny Xross. Drew Bronson. Alistar Conrad. Rich $teve in the corner.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Across the ring: Riot City's Most Wanted. Matt Wylde. Vic Ramon. Siccend. Kory Cross managing.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "We're in their house for the first time. Riot City thinks they own Rampage. Tonight is our introduction. They won't forget it — even if we lose.",
+        isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "The Coalition is on Rampage for the first time. The crowd doesn't know them. Riot City has home advantage. What's your opening statement?",
+        options: [
+          {
+            text: "We're The Coalition. And we are taking over Rampage Pro Wrestling.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Direct. Territorial. The RPW crowd has a new enemy. Good opening.",
+          },
+          {
+            text: "Thank you RPW! We're excited for this opportunity!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You came into enemy territory as grateful visitors. That's not an invasion.",
+          },
+          {
+            text: "Stay quiet. Let Riot City's entrance get the reaction. Take notes.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You let them own the moment. The Mastermind doesn't observe passively in enemy territory.",
+          },
+          {
+            text: "The Coalition is here. Riot City — your reign ends tonight.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Claiming their territory on the first night. Arrogant. Threatening. Correct.",
+          },
+        ],
+      },
+      {
+        situation: "The Coalition loses the match. The RPW crowd is celebrating. Riot City is standing tall. What do you do?",
+        options: [
+          {
+            text: "Leave the ring slowly. Head held up. Eyes locked on Riot City. Say nothing.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Dignified in defeat. Threatening in silence. The crowd reads the promise of a return.",
+          },
+          {
+            text: "Shake hands with Riot City. Acknowledge the better team won tonight.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Sportsmanship after a heel loss is a babyface move. Do not congratulate them.",
+          },
+          {
+            text: "Snap and attack from behind — turn the celebration into a beatdown.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "You got heat but burned the moment. The slow walk out was more threatening than the attack.",
+          },
+          {
+            text: "Point at each Riot City member one by one. A threat without words.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The crowd felt it. Each pointed finger a promise. The Coalition will be back.",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "ch3-spring-brawl",
+    era: 3,
+    eraName: "Era 3: OTCW & The Coalition",
+    title: "Spring Brawl",
+    date: "March 11, 2017",
+    venue: "Rampage Pro Wrestling Spring Brawl — Delaware Agricultural Museum",
+    city: "Dover, DE",
+    stipulation: "6-Man Tag Elimination — Coalition (Xross, Rumble, Conrad w/$teve) vs RCMW (Wylde, Vic Ramon, Siccend w/Kory Cross) — WIN",
+    historicalResult: "story",
+    historicalNote: "March 11, 2017. The Coalition's rematch against Riot City's Most Wanted — 6-man tag elimination. Johnny Xross, Ray Rumble, and Alistar Conrad (w/Rich $teve) defeated Matt Wylde, Vic Ramon, and Siccend (w/Kory Cross). The tide turns.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "March 11, 2017. Spring Brawl. The Coalition gets its rematch.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Six-man tag. Elimination rules. Johnny Xross. Ray Rumble. Alistar Conrad. Rich $teve in the corner.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Across from them: Riot City's Most Wanted. The same lineup. The same Kory Cross managing.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "We lost in December. In their building. Tonight — elimination rules. Every single one of them gets accounted for.",
+        isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "Before the match. The Coalition has been losing to Riot City. Tonight is the rematch. The RPW crowd still sees you as invaders. Set the tone.",
+        options: [
+          {
+            text: "We studied everything Riot City did in December. Tonight is different.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Calculated. Prepared. The crowd hates that you treat this like a chess game.",
+          },
+          {
+            text: "We just want a fair match tonight! That's all we're asking for!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You just made the heel faction sound sympathetic. The crowd cheered your plea for fairness. Wrong.",
+          },
+          {
+            text: "Let Xross and Rumble do the talking. You stand behind them silently.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You're the Mastermind. You don't defer to your team for the promo.",
+          },
+          {
+            text: "Kory Cross is a good manager. But he's managing the wrong team.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You insulted Kory Cross by complimenting his skills and pivoting to the insult. Clinical.",
+          },
+        ],
+      },
+      {
+        situation: "The Coalition wins. The RPW crowd is stunned. Riot City is down. The Coalition stands in the ring.",
+        options: [
+          {
+            text: "Stand in the center of the ring. Arms out. Let the crowd process what just happened.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The silence followed by boos is the reaction you need. The Coalition owns this moment.",
+          },
+          {
+            text: "Celebrate wildly with the team. Jump around. Big emotion.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "The crowd celebrated with you. You turned a heel win into a feel-good moment.",
+          },
+          {
+            text: "Immediately leave. Don't let them see your reaction.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You gave them nothing. No statement. The win needed to be declared.",
+          },
+          {
+            text: "Grab the mic. One sentence: 'We told you.'",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Three words. Maximum impact. The crowd explodes in boos. Perfect closer.",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
     id: "ch3-riot-city-rules",
     era: 3,
-    eraName: "Era 3: OTCW & The Original Coalition",
+    eraName: "Era 3: OTCW & The Coalition",
     title: "The Invasion",
     date: "2017",
     venue: "Rampage Pro Wrestling",
@@ -1152,112 +1608,260 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     },
   },
 
-  // ══ ERA 4: PROJECT MAYHEM ═══════════════════════════════════
+  // ══ ERA 5: MIRAI NO SUTĀ (IMPACT SOCIETY) ══════════════════
 
   {
-    id: "ch4-impact-society",
-    era: 4,
-    eraName: "Era 4: Project Mayhem",
-    title: "Impact Society",
-    date: "2017",
+    id: "ch5-impact-debut",
+    era: 5,
+    eraName: "Era 5: Mirai no Sutā",
+    title: "Impact Society Debut",
+    date: "March 2017",
     venue: "Super Star Wrestling",
     city: "SSW Circuit",
-    stipulation: "SSW Tag Team Championship — Impact Society (Rich $teve & Adam Armstrong)",
-    historicalResult: "win",
-    historicalNote: "Rich $teve and Adam Armstrong captured the SSW (Super Star Wrestling) Tag Team Championships as Impact Society.",
+    stipulation: "Impact Society Debut — Rich $teve & Adam Armstrong",
+    historicalResult: "story",
+    historicalNote: "March 2017. Impact Society — Rich $teve and Adam Armstrong — debuted in Super Star Wrestling. Two cousins from Baltimore taking their game beyond Delaware. The first appearance in SSW territory.",
     matchless: true,
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "Project Mayhem dominates Rampage. But $teve never limits himself to one market.",
+        text: "March 2017. Super Star Wrestling. A new territory.",
       },
       {
         speaker: "NARRATOR",
-        text: "Super Star Wrestling. Impact Society: Rich $teve and Adam Armstrong. SSW Tag Team Championship.",
+        text: "Rich $teve and Adam Armstrong. Cousins. The Chicken Shit Mastermind and his partner.",
       },
       {
         speaker: "NARRATOR",
-        text: "Two belts. Two markets. That's how the Chicken Shit Mastermind works.",
+        text: "They call themselves Impact Society. They came from Baltimore basements and Philadelphia hardcore. Now they're in SSW — and they're here to take something.",
       },
       {
         speaker: "Rich $teve",
-        text: "Impact Society. SSW Tag Team Champions. I hold gold in every room I walk into. That is not a coincidence.",
+        text: "Delaware was just the beginning. Impact Society goes where the gold is. SSW has gold. Simple math.",
         isPromo: true,
       },
     ],
     promoGame: [
       {
-        situation: "You're in a Super Star Wrestling building. Nobody here knows Project Mayhem. Armstrong is ready. You've got the mic first.",
+        situation: "First night in SSW. The crowd has no idea who you are. Armstrong is beside you. You have the microphone.",
         options: [
           {
-            text: "I'm Rich $teve. And by the end of tonight, you're going to know exactly what that means.",
+            text: "Impact Society is here. And we're not leaving without what we came for.",
             isCorrect: true,
             crowdReaction: "heat",
-            feedback: "Cold intro. No crowd noise. Then confusion. Then boos as the match unfolds. Good start.",
+            feedback: "Territorial and threatening on the first night. The crowd felt it immediately.",
           },
           {
-            text: "Thanks for having us, SSW! We're excited to be here!",
+            text: "What's up SSW! We love this territory already!",
             isCorrect: false,
             crowdReaction: "pop",
-            feedback: "The crowd pops for the humble visitors. You just got a babyface reaction in a heel debut. Wrong.",
+            feedback: "The crowd loved the enthusiasm. You're the heel making a debut. Wrong.",
           },
           {
-            text: "Let Armstrong do all the talking. You stand back and observe the room.",
+            text: "Let Armstrong do the intro. You stand back looking around the building.",
             isCorrect: false,
             crowdReaction: "silence",
-            feedback: "You're the Mastermind. You don't let anyone else establish the narrative. Step up.",
+            feedback: "You surveyed the building. You didn't establish yourself. The Mastermind leads.",
           },
           {
-            text: "Impact Society: two markets, two sets of champions. Remember those words.",
+            text: "Rich $teve. Adam Armstrong. Impact Society. Take note.",
             isCorrect: true,
             crowdReaction: "heat",
-            feedback: "You planted the flag. The crowd doesn't know what Impact Society is yet — but they know it's a threat.",
+            feedback: "Cold. Clipped. The crowd doesn't know what Impact Society is yet — but they know it's not friendly.",
           },
         ],
       },
       {
-        situation: "The SSW crowd is solidly behind the champions. They want the locals to keep the belts. The heat is real.",
+        situation: "An SSW local tells you that outsiders aren't welcome here. The crowd rallies behind them. How do you respond?",
         options: [
           {
-            text: "Those titles you're trying to protect? They look much better on us.",
+            text: "Your territory ends when I step through that curtain.",
             isCorrect: true,
             crowdReaction: "heat",
-            feedback: "Dismissive. Personal. The crowd erupts in boos. You turned the heat up.",
+            feedback: "Immediate territorial escalation. The crowd boos. You've established the conflict perfectly.",
           },
           {
-            text: "We respect this fanbase so much! You're great wrestling fans!",
+            text: "We respect your house. We just want a fair shot.",
             isCorrect: false,
             crowdReaction: "pop",
-            feedback: "You're complimenting the crowd. A heel does not compliment the crowd.",
+            feedback: "You asked for respect instead of taking it. Babyface energy from a heel faction.",
           },
           {
-            text: "You'll come around to Impact Society. Give it time.",
+            text: "Laugh it off. Don't engage.",
             isCorrect: false,
             crowdReaction: "silence",
-            feedback: "Too passive. That's a tryhard babyface line. Rich $teve doesn't ask for acceptance.",
+            feedback: "Dismissing locals with a laugh is an okay heel move, but you left heat on the table.",
           },
           {
-            text: "The titles are leaving with Impact Society. There is nothing you can do about it.",
+            text: "Armstrong, what do we say to people who tell us we're not welcome?",
             isCorrect: true,
             crowdReaction: "heat",
-            feedback: "Declarative. Inevitable. The crowd hates it. That's the reaction you need.",
+            feedback: "You turned it into a bit — pulling Armstrong in. The crowd booed the synchronized arrogance.",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "ch5-awa-loss",
+    era: 5,
+    eraName: "Era 5: Mirai no Sutā",
+    title: "AWA Spring Fever",
+    date: "April 8, 2017",
+    venue: "Appalachian Wrestling Alliance 2nd Annual Spring Fever — Ellamore VFD",
+    city: "Ellamore, WV",
+    opponentId: "high-voltage",
+    stipulation: "Falls Count Anywhere — AWA Tag Team Championship: Impact Society vs High Voltage vs The Rapprochement (Fleck & Slice)",
+    historicalResult: "lose",
+    historicalNote: "April 8, 2017. AWA 2nd Annual Spring Fever. Ellamore VFD, Ellamore, WV. Falls Count Anywhere triple threat for the AWA Tag Team Championship. Impact Society (Rich $teve & Adam Armstrong) vs High Voltage vs The Rapprochement (Fleck & Slice) — Impact Society lost.",
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "April 8, 2017. Appalachian Wrestling Alliance. Ellamore, West Virginia.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "AWA Tag Team Championship. Falls Count Anywhere. Three teams.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Impact Society. High Voltage. The Rapprochement — Fleck and Slice.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "First AWA title shot. Falls Count Anywhere — anywhere in this building, every surface is a pinfall. Armstrong and I have done worse places than this.",
+        isPromo: true,
+      },
+    ],
+    outroCutscene: {
+      win: [
+        {
+          speaker: "NARRATOR",
+          text: "Impact Society wins the AWA Tag Team Championships. First gold outside of Delaware.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Rich $teve and Adam Armstrong are AWA Tag Team Champions. The expansion works.",
+        },
+      ],
+      lose: [
+        {
+          speaker: "NARRATOR",
+          text: "Impact Society loses. The AWA title shot fails.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Two other teams in the match. Falls Count Anywhere. A lot of variables. The Stocking Stuffer Contract is still ahead.",
+        },
+      ],
+    },
+  },
+
+  {
+    id: "ch5-ssw-contract",
+    era: 5,
+    eraName: "Era 5: Mirai no Sutā",
+    title: "The Stocking Stuffer Contract",
+    date: "August 26, 2017",
+    venue: "Super Star Wrestling",
+    city: "SSW Circuit",
+    stipulation: "Triple Threat — Stocking Stuffer Contract Match WIN",
+    historicalResult: "win",
+    historicalNote: "August 26, 2017. Rich $teve won the SSW Stocking Stuffer Contract in a Triple Threat match. The contract gave him a future SSW Tag Title shot to use at any time — and Impact Society would cash it in on November 11.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "August 26, 2017. Super Star Wrestling. Three men. One contract.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "The Stocking Stuffer Contract: a guaranteed SSW Tag Title shot, redeemable at any time.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Rich $teve enters a Triple Threat match for it. One of them walks out holding the contract.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "A briefcase. A contract. An insurance policy. Armstrong and I are Impact Society — and Impact Society cashes in.",
+        isPromo: true,
+      },
+    ],
+    promoGame: [
+      {
+        situation: "SSW crowd doesn't know you yet. You're in a Triple Threat. Before the bell, you take the mic to establish your presence.",
+        options: [
+          {
+            text: "I'm Rich $teve. That contract has my name on it already — you just don't know it yet.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Cool. Declarative. The crowd doesn't know whether to believe you. They should.",
+          },
+          {
+            text: "Good evening SSW! Great to be here!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Friendly babyface energy. In a Triple Threat for a contract. Wrong entirely.",
+          },
+          {
+            text: "Whoever's holding that contract at the end — look out. I'm cashing in.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You telegraphed the whole plan out loud. The Mastermind doesn't broadcast.",
+          },
+          {
+            text: "Impact Society. Remember the name.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Short. Threatening. The crowd doesn't have a reference point yet — which makes it more unsettling.",
           },
         ],
       },
       {
-        situation: "Impact Society wins. You're holding the SSW Tag Team Championships. Deafening boos. What do you do?",
+        situation: "The other two men in the Triple Threat are fighting each other. You stand back and let them wear each other down.",
         options: [
           {
-            text: "Say nothing. Put the belt over your shoulder and walk.",
+            text: "Observe. Watch the pace. Calculate the moment to move.",
             isCorrect: true,
             crowdReaction: "heat",
-            feedback: "The silence says everything. The crowd's boos chase you out. Classic heel exit.",
+            feedback: "The Chicken Shit Mastermind at work. Let them bleed each other out. You pick the bones.",
           },
           {
-            text: "Thank you SSW! We'll be back and we'll keep these belts!",
+            text: "Jump in and show the crowd you're a competitor.",
             isCorrect: false,
             crowdReaction: "pop",
-            feedback: "You're making promises to the crowd like a babyface champion. Wrong energy.",
+            feedback: "You just expended energy to get a pop. That's babyface logic in a contract match.",
+          },
+          {
+            text: "Slide out of the ring and wait for one of them to cover.",
+            isCorrect: false,
+            crowdReaction: "silence",
+            feedback: "You let them decide the match. You're supposed to be the one with the plan.",
+          },
+          {
+            text: "Let both men wear down. Strike when the moment is undeniable.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Patient. Calculated. Clinical. When you move — it ends fast.",
+          },
+        ],
+      },
+      {
+        situation: "You win. The Stocking Stuffer Contract is in your hands. The crowd boos. Armstrong is ringside. What do you say?",
+        options: [
+          {
+            text: "Say nothing. Hand the contract to Armstrong and walk.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The silence is the statement. Impact Society walks out with the contract.",
+          },
+          {
+            text: "Thank you SSW! We'll use this contract for a great match!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're making the crowd like you after winning a heel Triple Threat. Wrong.",
           },
           {
             text: "LOOK AT THESE TITLES! WHO'S THE BEST NOW?",
@@ -1277,33 +1881,33 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   },
 
   {
-    id: "ch4-big-mike",
-    era: 4,
-    eraName: "Era 4: Project Mayhem",
-    title: "Big Mike's Curtain Call",
-    date: "2017",
-    venue: "Rampage Pro Wrestling",
-    city: "Devil's Playpen",
-    opponentId: "rd-cordova",
-    stipulation: "5-on-5 Elimination — If Team Rampage loses, Big Mike retires as announcer",
-    historicalResult: "win",
-    historicalNote: "$teve pinned R.D. Cordova of 410 Massiv to end Big Mike's career as ring announcer. Jay Cortez is revealed as the 4th member and Higher Power of Project Mayhem.",
+    id: "ch5-ssw-titles",
+    era: 5,
+    eraName: "Era 5: Mirai no Sutā",
+    title: "The Cash-In",
+    date: "November 11, 2017",
+    venue: "Super Star Wrestling November Reign — Scotland Community Center",
+    city: "Scotland, PA",
+    opponentId: "big-new-yorker",
+    stipulation: "SSW Tag Team Championship — Stocking Stuffer Contract Cash-In: Impact Society vs The Big New Yorkers",
+    historicalResult: "lose",
+    historicalNote: "November 11, 2017. SSW November Reign. Scotland Community Center, Scotland, PA. Impact Society cashed in the Stocking Stuffer Contract against The Big New Yorkers for the SSW Tag Team Championships — and LOST. The Big New Yorkers' first title victory. The cash-in failed.",
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "Ring announcer Big Mike stepped up when $teve beat down Jay Cortez's son — 16-year-old Mike Sweeney.",
+        text: "November 11, 2017. SSW November Reign. Scotland Community Center. Scotland, PA.",
       },
       {
         speaker: "NARRATOR",
-        text: "Tonight: 5-on-5. If Team Rampage loses, Big Mike retires. $teve has to pin his man.",
+        text: "Impact Society holds the Stocking Stuffer Contract. They've chosen tonight. They've chosen The Big New Yorkers.",
       },
       {
         speaker: "NARRATOR",
-        text: "And then — Jay Cortez walks out. The Higher Power of Project Mayhem. The man whose son started all of this.",
+        text: "Armstrong is ready. $teve is ready. The contract is cashed.",
       },
       {
         speaker: "Rich $teve",
-        text: "Big Mike, I have been in this building doing what I do. You decided to get tough. You put your career on the line. Let me show you what Project Mayhem does to people who get in our way.",
+        text: "We earned this shot in August. Three teams. One contract. We took it. Now — we take the belts.",
         isPromo: true,
       },
     ],
@@ -1311,11 +1915,72 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       win: [
         {
           speaker: "NARRATOR",
-          text: "One. Two. Three. RD Cordova pinned. Team Rampage loses.",
+          text: "Impact Society wins the SSW Tag Team Championships. The cash-in works.",
         },
         {
           speaker: "NARRATOR",
-          text: "Big Mike's microphone goes silent.",
+          text: "Rich $teve and Adam Armstrong hold gold in SSW. The Chicken Shit Mastermind strategy delivers.",
+        },
+      ],
+      lose: [
+        {
+          speaker: "NARRATOR",
+          text: "The Big New Yorkers retain. Impact Society's cash-in fails.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Big New Yorkers win. First title victory. The contract — worthless.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "The SSW chapter of Impact Society closes without a title. $teve will carry this.",
+        },
+      ],
+    },
+  },
+
+  // ══ ERA 4: WELCOME TO #HIJACKED ═════════════════════════════
+
+  {
+    id: "ch4-big-mike",
+    era: 4,
+    eraName: "Era 4: Welcome to #Hijacked",
+    title: "Retribution",
+    date: "November 4, 2017",
+    venue: "Rampage Pro Wrestling",
+    city: "Devil's Playpen",
+    opponentId: "rd-cordova",
+    stipulation: "5-on-5 Elimination — Team Mayhem ($teve, Mac, Vox, Wrex, Grizzly Redwood) vs Team Rampage (Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash)",
+    historicalResult: "win",
+    historicalNote: "November 4, 2017. Team Mayhem vs Team Rampage. If Team Rampage loses, Big Mike retires as ring announcer. Rich $teve pinned R.D. Cordova to seal the win.",
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "November 4, 2017. Rampage Pro Wrestling. The stakes couldn't be higher.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Team Rampage: Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash. If they lose — Big Mike retires as ring announcer.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Team Mayhem: $teve, Mac, Vox, Wrex, Grizzly Redwood. Five against five. Elimination rules.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Big Mike chose to make this personal. Five men can't protect him from what Project Mayhem does tonight.",
+        isPromo: true,
+      },
+    ],
+    outroCutscene: {
+      win: [
+        {
+          speaker: "NARRATOR",
+          text: "One. Two. Three. R.D. Cordova pinned. Team Rampage loses.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Big Mike's microphone goes silent. As ring announcer — he is finished.",
         },
         {
           speaker: "Rich $teve",
@@ -1326,16 +1991,16 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       lose: [
         {
           speaker: "NARRATOR",
-          text: "Mike lives to announce another day. The story isn't finished.",
+          text: "Team Mayhem couldn't finish the job. Big Mike survives — for now.",
         },
       ],
     },
   },
 
   {
-    id: "ch4-gm-loophole",
-    era: 4,
-    eraName: "Era 4: Project Mayhem",
+    id: "ch6-gm-loophole",
+    era: 6,
+    eraName: "Era 6: The Year of Mayhem",
     title: "The GM Loophole",
     date: "2018",
     venue: "Rampage Pro Wrestling",
@@ -1461,40 +2126,35 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch4-bruh-turns",
     era: 4,
-    eraName: "Era 4: Project Mayhem",
-    title: "#BRUH Leaves Mayhem",
-    date: "December 2017",
+    eraName: "Era 4: Welcome to #Hijacked",
+    title: "Big Mike's Curtain Call",
+    date: "December 9, 2017",
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
-    stipulation: "Johnny Xross & Ray Rumble turn face — quit Project Mayhem",
+    stipulation: "Randolph Scot Memorial 25-Man Rumble + #BRUH Departure — Rampage Pro Wrestling 'Big Mike's Curtain Call'",
     historicalResult: "story",
-    historicalNote: "#BRUH (Johnny Xross and Ray Rumble) turn babyface and leave Project Mayhem in December 2017. $teve leads a beatdown. They go on to win the Rampage Tag Team Championships under manager George Burkett.",
+    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Rich $teve entered the Randolph Scot Memorial 25-man rumble and was last eliminated by Big Mike. After the match, Johnny Xross and Ray Rumble (#BRUH) turned face and quit Project Mayhem. Mayhem surrounded the cage and stood tall — but the seeds of the #YearOfMayhem had been planted.",
     matchless: true,
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "December 2017. Johnny Xross and Ray Rumble have had enough.",
+        text: "December 9, 2017. Rampage Pro Wrestling. Big Mike's Curtain Call.",
       },
       {
         speaker: "NARRATOR",
-        text: "#BRUH turns face and quits Project Mayhem.",
+        text: "The Randolph Scot Memorial 25-man battle royal. $teve enters. Every man for himself.",
       },
       {
         speaker: "NARRATOR",
-        text: "$teve's response: a beatdown. Make an example. Remind everyone what happens when you walk away from Project Mayhem.",
+        text: "He's the last one. The final elimination waiting to happen. And the man who throws him out is Big Mike.",
       },
       {
         speaker: "NARRATOR",
-        text: "George Burkett picks up the pieces. Under his management, #BRUH goes on to win the Rampage Tag Team Championships.",
-      },
-      {
-        speaker: "George Burkett",
-        text: "You cannot trust Rich $teve. You never could. Those belts should have been theirs from the start.",
-        isPromo: true,
+        text: "After the match: Johnny Xross and Ray Rumble take the mic. #BRUH is done with Project Mayhem.",
       },
       {
         speaker: "Rich $teve",
-        text: "They left. They had to go. Every group has people who think they can survive without the man running the show. #BRUH will find out what that costs them.",
+        text: "They had their moment. Then Mayhem surrounded the cage. BCW. 1CW. Everyone who wanted a piece of us came out — and we stood tall. #BRUH will regret this.",
         isPromo: true,
       },
     ],
@@ -1589,12 +2249,12 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     ],
   },
 
-  // ══ ERA 5: PROJECT MAYHEM PEAK ══════════════════════════════
+  // ══ ERA 6: THE YEAR OF MAYHEM ═══════════════════════════════
 
   {
     id: "ch5-riot-rumble",
-    era: 5,
-    eraName: "Era 5: Project Mayhem Peak",
+    era: 6,
+    eraName: "Era 6: The Year of Mayhem",
     title: "The Riot Rumble",
     date: "2018",
     venue: "Rampage Pro Wrestling",
@@ -1650,8 +2310,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
 
   {
     id: "ch5-guerrero",
-    era: 5,
-    eraName: "Era 5: Project Mayhem Peak",
+    era: 6,
+    eraName: "Era 6: The Year of Mayhem",
     title: "The Guerrero Special",
     date: "2018",
     venue: "Rampage Pro Wrestling",
@@ -1705,8 +2365,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
 
   {
     id: "ch5-bookstore",
-    era: 5,
-    eraName: "Era 5: Project Mayhem Peak",
+    era: 6,
+    eraName: "Era 6: The Year of Mayhem",
     title: "Big Mike Day",
     date: "2018",
     venue: "Bookstore Signing — Lancaster, PA",
@@ -1868,7 +2528,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-korpse",
     era: 5,
-    eraName: "Era 5: Project Mayhem Peak",
+    eraName: "Era 5: Mirai no Sutā",
     title: "No Turning Back",
     date: "January 20, 2018",
     venue: "Neumann University",
@@ -1942,8 +2602,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
 
   {
     id: "ch5-lethal-lottery",
-    era: 5,
-    eraName: "Era 5: Project Mayhem Peak",
+    era: 6,
+    eraName: "Era 6: The Year of Mayhem",
     title: "The Solo Tag Title Heist",
     date: "October 2018",
     venue: "Rampage Pro Wrestling — Lethal Lottery",
@@ -2008,16 +2668,16 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
 
   {
     id: "ch5-last-shot",
-    era: 5,
-    eraName: "Era 5: Project Mayhem Peak",
-    title: "The Last Shot",
+    era: 6,
+    eraName: "Era 6: The Year of Mayhem",
+    title: "The Final Shot",
     date: "April 27, 2019",
     venue: "Rampage Pro Wrestling — The Final Shot",
     city: "Devil's Playpen",
-    opponentId: "kory-cross",
-    stipulation: "6-Man Tag — Team Mayhem (Rich $teve, Mac Mayhem, Wrex Savage) vs Team Rampage (Kory Cross, Ryan Vox, Yams)",
+    opponentId: "big-mike",
+    stipulation: "6-Man Tag — Jay Cortez + Rich $teve + Wrex Savage vs Yams + Big Mike + Kory Cross (WCH)",
     historicalResult: "story",
-    historicalNote: "The final Rampage Pro Wrestling show. Rich $teve held both Tag Team Championship belts. Team Rampage — Kory Cross managing Ryan Vox and Yams as Working Class Heroes — faced Team Mayhem in the main event. The last chapter of Rampage Pro Wrestling.",
+    historicalNote: "The final Rampage Pro Wrestling show. 6-man tag: Jay Cortez, Rich $teve, and Wrex Savage vs Yams, Big Mike, and Kory Cross (managing Working Class Heroes). Jay Cortez gets pinned. Big Mike becomes GM. Mac Mayhem turned face. The last chapter.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -2025,19 +2685,19 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Rich $teve went to shave Yams' beard. A power play. A public humiliation.",
+        text: "Six men. Jay Cortez, Rich $teve, Wrex Savage versus Yams, Big Mike, Kory Cross.",
       },
       {
         speaker: "NARRATOR",
-        text: "Kory Cross and Ryan Vox attacked him. Turned face. Quit Project Mayhem. The two men who built Mayhem alongside $teve are now on the other side.",
+        text: "Mac Mayhem is gone — turned face. The Project Mayhem inner circle is fractured. Cortez is all that's left alongside $teve.",
       },
       {
         speaker: "NARRATOR",
-        text: "Tonight: Team Rampage — Working Class Heroes, Kory Cross managing — vs Team Mayhem. $teve. Mac. Wrex.",
+        text: "Big Mike wants the GM seat. Kory Cross has the Working Class Heroes in his corner. This is the endgame.",
       },
       {
         speaker: "Rich $teve",
-        text: "Kory Cross managed RCMW before he came with me. Now he thinks he can turn on me and manage against me? He knows exactly how I operate. That's why he's dangerous. And that's why I'm going to end this.",
+        text: "Cortez is my partner tonight. I've had worse. Big Mike wants to be GM — over my dead body. I'll tear every Working Class Hero apart to keep that from happening.",
         isPromo: true,
       },
     ],
@@ -2045,25 +2705,25 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       win: [
         {
           speaker: "NARRATOR",
-          text: "Team Mayhem wins the last Rampage Pro Wrestling match.",
+          text: "Team $teve wins the last Rampage Pro Wrestling match.",
         },
         {
           speaker: "NARRATOR",
-          text: "Rich $teve, Mac Mayhem, Wrex Savage. The last Project Mayhem standing.",
+          text: "But history says Cortez gets pinned. Big Mike gets the GM seat. The story ends the same way.",
         },
       ],
       lose: [
         {
           speaker: "NARRATOR",
-          text: "Team Rampage wins the final match in Rampage Pro Wrestling history.",
+          text: "Jay Cortez is pinned. It's over.",
         },
         {
           speaker: "NARRATOR",
-          text: "Kory Cross. Ryan Vox. Yams. The Working Class Heroes close out the promotion.",
+          text: "Big Mike becomes GM. Rampage Pro Wrestling ends under his control.",
         },
         {
           speaker: "NARRATOR",
-          text: "Rampage Pro Wrestling is over. The Lost Ending was always waiting.",
+          text: "Rampage Pro Wrestling is finished. Rich $teve walks out the same way he walked in — alone.",
         },
       ],
     },
@@ -2073,8 +2733,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
 
   {
     id: "ch6-mac-mayhem",
-    era: 6,
-    eraName: "Era 6: The Lost Ending",
+    era: 7,
+    eraName: "Era 7: The Lost Ending",
     title: "The Ascent — vs. Mac Mayhem",
     date: "The Show That Never Happened",
     venue: "Rampage Pro Wrestling",
@@ -2152,8 +2812,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
 
   {
     id: "ch6-johnny-xross",
-    era: 6,
-    eraName: "Era 6: The Lost Ending",
+    era: 7,
+    eraName: "Era 7: The Lost Ending",
     title: "The Finale — vs. Johnny Xross",
     date: "The Night After It Never Happened",
     venue: "Rampage Pro Wrestling",
@@ -2221,49 +2881,57 @@ export const ERAS = [
   {
     id: 1,
     name: "Era 1",
-    subtitle: "ACPW Origins",
+    subtitle: "The Future",
     years: "2006–2007",
-    description: "Age 16. Black eye makeup. Managing Living Dead 2k6 at ringside before he could compete. Korpse becomes the first Road Dog. Then — finally — they let him wrestle.",
-    chapterIds: ["ch1-managing-debut", "ch1-korpse-manager", "ch1-six-man-debut"],
+    description: "Age 16. Black eye makeup. Managing Living Dead 2k6 at Northeast Community Center. Korpse. Dr. Spider. The Nightmare Before Christmas. Then — finally — they let him wrestle.",
+    chapterIds: ["ch1-managing-debut", "ch1-korpse-manager", "ch1-nightmare-xmas"],
   },
   {
     id: 2,
     name: "Era 2",
-    subtitle: "ACPW Solo Run",
+    subtitle: "Daddy's Money",
     years: "2007–2012",
-    description: "The Grand Championship match that should have been his. A spike that sent him away. A return match years later — the last one before the gap begins.",
-    chapterIds: ["ch2-ortiz", "ch2-spike", "ch2-don-e-allen"],
+    description: "The in-ring debut — first match, first loss. The Grand Championship that should have been his — a Double DQ that robbed him. A spike that sent him home. And the last match before the gap begins.",
+    chapterIds: ["ch1-six-man-debut", "ch2-ortiz", "ch2-spike", "ch2-don-e-allen"],
   },
   {
     id: 3,
     name: "Era 3",
-    subtitle: "OTCW & The Original Coalition",
-    years: "2016",
-    description: "Crazii Shea calls. Nobody in Berkeley Springs knows who Rich $teve is. The suit comes off at Proving Ground. The Coalition invades Rampage — and Matt Wylde becomes Mac Mayhem.",
-    chapterIds: ["ch3-hostile-takeover", "ch3-proving-ground", "ch3-riot-city-rules"],
+    subtitle: "OTCW & The Coalition",
+    years: "2016–2017",
+    description: "Crazii Shea calls. The suit comes off at Proving Ground. The Coalition forms at September to Remember. Winter War. Spring Brawl. Then — Rampage — and Matt Wylde becomes Mac Mayhem.",
+    chapterIds: ["ch3-hostile-takeover", "ch3-proving-ground", "ch3-september-remember", "ch3-winter-war", "ch3-spring-brawl", "ch3-riot-city-rules"],
   },
   {
     id: 4,
     name: "Era 4",
-    subtitle: "Project Mayhem",
+    subtitle: "Welcome to #Hijacked",
     years: "2017",
-    description: "SSW Tag Team gold. Big Mike's career ended. The GM Loophole. #BRUH turns face and leaves. The core locks in: $teve, Mac, Wrex, Kory, Vox.",
-    chapterIds: ["ch4-impact-society", "ch4-big-mike", "ch4-gm-loophole", "ch4-bruh-turns"],
+    description: "Big Mike's career ended at Retribution. The Randolph Scot Memorial 25-man Rumble. #BRUH turns face and quits Project Mayhem. The core locks in: $teve, Mac, Wrex, Kory, Vox.",
+    chapterIds: ["ch4-big-mike", "ch4-bruh-turns"],
   },
   {
     id: 5,
     name: "Era 5",
-    subtitle: "Project Mayhem Peak",
-    years: "2018–2019",
-    description: "The Riot Rumble briefcase. The Guerrero Special. The Bookstore. Korpse. The Solo Tag Heist. And The Last Shot — the final Rampage Pro Wrestling show.",
-    chapterIds: ["ch5-riot-rumble", "ch5-guerrero", "ch5-bookstore", "ch5-korpse", "ch5-lethal-lottery", "ch5-last-shot"],
+    subtitle: "Mirai no Sutā",
+    years: "2017–2018",
+    description: "Impact Society is born. AWA. The Stocking Stuffer Contract. The cash-in that failed. No Turning Back — Rich $teve vs Korpse.",
+    chapterIds: ["ch5-impact-debut", "ch5-awa-loss", "ch5-ssw-contract", "ch5-ssw-titles", "ch5-korpse"],
   },
   {
     id: 6,
     name: "Era 6",
+    subtitle: "The Year of Mayhem",
+    years: "2018–2019",
+    description: "Big Mike returns as GM — the loophole. The Riot Rumble briefcase. The Guerrero Special. The Bookstore. The Solo Tag Heist. And The Final Shot — the last Rampage Pro Wrestling show.",
+    chapterIds: ["ch6-gm-loophole", "ch5-riot-rumble", "ch5-guerrero", "ch5-bookstore", "ch5-lethal-lottery", "ch5-last-shot"],
+  },
+  {
+    id: 7,
+    name: "Era 7",
     subtitle: "The Lost Ending",
     years: "The Night That Never Came",
-    description: "Rampage collapsed before the story finished. The Mayhem Rules Match. The Heavyweight Championship. And the ending that was always supposed to happen.",
+    description: "Rampage collapsed before the story finished. The Mayhem Rules Match against Mac Mayhem. The Heavyweight Championship. And the ending that was always supposed to happen — against Johnny Xross.",
     chapterIds: ["ch6-mac-mayhem", "ch6-johnny-xross"],
   },
 ];

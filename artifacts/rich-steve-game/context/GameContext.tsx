@@ -43,31 +43,39 @@ interface GameContextValue {
 const GameContext = createContext<GameContextValue | null>(null);
 
 const CHAPTER_ORDER = [
-  // Era 1
+  // Era 1 — The Future
   "ch1-managing-debut",
   "ch1-korpse-manager",
+  "ch1-nightmare-xmas",
+  // Era 2 — Daddy's Money
   "ch1-six-man-debut",
-  // Era 2
   "ch2-ortiz",
   "ch2-spike",
   "ch2-don-e-allen",
-  // Era 3
+  // Era 3 — OTCW & The Coalition
   "ch3-hostile-takeover",
   "ch3-proving-ground",
+  "ch3-september-remember",
+  "ch3-winter-war",
+  "ch3-spring-brawl",
   "ch3-riot-city-rules",
-  // Era 4
-  "ch4-impact-society",
+  // Era 4 — Welcome to #Hijacked
   "ch4-big-mike",
-  "ch4-gm-loophole",
   "ch4-bruh-turns",
-  // Era 5
+  // Era 5 — Mirai no Sutā
+  "ch5-impact-debut",
+  "ch5-awa-loss",
+  "ch5-ssw-contract",
+  "ch5-ssw-titles",
+  "ch5-korpse",
+  // Era 6 — The Year of Mayhem
+  "ch6-gm-loophole",
   "ch5-riot-rumble",
   "ch5-guerrero",
   "ch5-bookstore",
-  "ch5-korpse",
   "ch5-lethal-lottery",
   "ch5-last-shot",
-  // Era 6 — The Lost Ending
+  // Era 7 — The Lost Ending
   "ch6-mac-mayhem",
   "ch6-johnny-xross",
 ];
