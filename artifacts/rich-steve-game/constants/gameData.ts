@@ -70,7 +70,7 @@ export const RICH_STEVE: Wrestler = {
   faction: "Project Mayhem",
   role: "Main Event",
   style: "Cerebral",
-  bio: "Steve Coleman. 6'1\", 340 lbs. Philadelphia, PA. The Chicken Shit Mastermind. 13 years on the independent circuit (2006–2019). Started as a manager at 16 due to age restrictions. Rampage Pro Wrestling debut: 'Winter Warfare,' December 9, 2016 — Delaware Agricultural Museum, Dover, DE. Became the most cerebral heel on the East Coast indie scene. Always heel. Always. Founded Project Mayhem. 2017 Match of the Year: Mayhem vs Rampage. 2017 Feud of the Year: Rich $teve vs Big Mike. 2018 Riot Rumble Winner. 2018 Feud of the Year: Mayhem vs Rampage. His entrance theme: 'Jet Black New Year' by Thursday — a personal blessing from Geoff Rickly at a Warped Tour signing. The same song became the exit theme at the Lethal Lottery cash-in, cued to the bridge countdown — the sound of a long game collected. The #Hijacked concept: not just a shirt. A promo style. Taking over opponents' social media accounts and going live. Showing up unannounced at their houses, their signings, their shows. Getting log-ins from people before events. Breaking into Yams' house. The Big Mike bookstore. Blurring what was kayfabe and what was real life. 'Do we have your attention yet?' The answer to every question was always the same: we are three steps ahead.",
+  bio: "Steve Coleman. 6'1\", 340 lbs. Philadelphia, PA. The Chicken Shit Mastermind. 13 years on the independent circuit (2006–2019). Started as a manager at 16 due to age restrictions. First championship: Impact Society at Super Star Wrestling, pinning The Big New Yorkers for the SSW Tag Team titles. Rampage Pro Wrestling debut: 'Winter Warfare,' December 9, 2016 — Delaware Agricultural Museum, Dover, DE. Became the most cerebral heel on the East Coast indie scene. Always heel. Always. Founded Project Mayhem. 2017 Match of the Year: Mayhem vs Rampage. 2017 Feud of the Year: Rich $teve vs Big Mike. 2018 Riot Rumble Winner. 2018 Feud of the Year: Mayhem vs Rampage. His entrance theme: 'Jet Black New Year' by Thursday — a personal blessing from Geoff Rickly at a Warped Tour signing. The same song became the exit theme at the Lethal Lottery cash-in, cued to the bridge countdown — the sound of a long game collected. The #Hijacked concept: not just a shirt. A promo style. Taking over opponents' social media accounts and going live. Showing up unannounced at their houses, their signings, their shows. Getting log-ins from people before events. Breaking into Yams' house. The Big Mike bookstore. Blurring what was kayfabe and what was real life. 'Do we have your attention yet?' The answer to every question was always the same: we are three steps ahead. Confirmed in the Kyngs and Qweens Magazine interview (December 13, 2017): 'I am doing this interview as Rich $teve, I don't need to be doing it from my page for it to still be me. We are one in the same.'",
   stamina: 100,
   moves: ["Shoulder Block", "Headlock", "Body Slam", "Back Elbow", "Nerve Hold"],
   signatureMove: "Market Crash (Side Effect)",
@@ -261,7 +261,7 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Project Mayhem",
     role: "Midcard",
     style: "Brawler",
-    bio: "The Higher Power of Project Mayhem. His son Mike Sweeney was beaten down by $teve, setting off the Big Mike saga. Jay waited — then revealed himself as the 4th member at Big Mike's Curtain Call, cementing the final Project Mayhem lineup.",
+    bio: "The Higher Power of Project Mayhem. The feud origin: on June 24, 2017, Rich $teve was beating the snot out of Jay Cortez when Big Mike ran out with a baseball bat and interfered. Steve posted the next day: 'I want to know who in the hell let Big Michael Scott into Rampage Pro Wrestling last night. You retired. Everyone cried. They chanted for you... You just HAD to get involved when I was finally giving Jay Cortez what he had coming to him. If there's a new sheriff in town, then I guess I'm gonna be fighting the law.' That interference set off the entire 2017 feud. Big Mike became GM afterward. Jay's son Mike Sweeney was beaten down by $teve later, deepening the personal dimension. Jay waited in the background through everything — then revealed himself as the 4th member of Project Mayhem at Big Mike's Curtain Call, cementing the final lineup. At The Final Shot (April 27, 2019), Jay gets pinned — and Big Mike becomes GM as a result.",
     stamina: 83,
     moves: ["Lariat", "Powerbomb", "Corner Splash", "Knee Strike"],
     signatureMove: null,
@@ -674,6 +674,18 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Combo Slam", "Tag Spike", "Neckbreaker", "Double Team Elbow"],
     signatureMove: null,
     ratings: { power: 70, speed: 72, technical: 74, toughness: 70, mic: 64, heat: 63, overall: 69 },
+  },
+  {
+    id: "big-mike",
+    name: "Big Mike Scott",
+    faction: "Team Rampage",
+    role: "Authority Figure",
+    style: "Brawler",
+    bio: "Real name: Michael Scott. The man behind the microphone. OTCW and Rampage Pro Wrestling ring announcer — not a trained wrestler. That was always Steve's point. First crossed paths with Steve at OTCW Uncivil War (July 30, 2016) where he was the ring announcer tasked with interviewing Steve post-match — and Steve grabbed the mic out of his hand and declared himself GM of OTCW. Big Mike was aligned with Sheriff Richard J. White and Crazii Shaii (Erik Shea) in the early OTCW/ACPW era. At Rampage Pro Wrestling he became the beloved ring announcer — running a 'retirement tour' that made Steve sick. 'What have you actually done to warrant this admiration and respect? You're an announcer. You read a card handed to you, and walk around the locker room saying excuse me sir but I need your height, weight and where you're coming from — while the real athletes prepare to fight.' The feud ignited June 24, 2017: Big Mike came out with a baseball bat while Steve was beating Jay Cortez. Mike then took the GM job at Rampage. Steve spent a full year methodically destroying him — taking his wife's support, getting him fired from his job, turning his best friend against him. Managed Team Rampage at Retribution (November 4, 2017). His retirement send-off show, 'Big Mike's Curtain Call' (December 9, 2017), was named in his honor. The main event: a 25-man Randolph Scott Memorial Rumble — named after Big Mike's own father. Big Mike eliminated Steve from that Rumble ('You got lucky Michael Scott, that rumble was mine'). Then exploited the contract loophole — it only banned him as ring announcer, not GM — and returned. Author of the memoir 'The Weird One.' Steve's Kyngs and Qweens Magazine quote about him: 'My biggest nemesis would have to be that scum sucking, low life, barely literate, fat, uneducated, second rate, Dusty Rhodes wanna be Michael Scott.' Big Mike's reply: 'Last time I checked last Saturday night I tossed your ass over the top rope.' Final role: becomes Rampage GM at The Final Shot (April 27, 2019) after Jay Cortez is pinned.",
+    stamina: 72,
+    moves: ["Toss Over Top Rope", "Baseball Bat Shot", "Brawl", "GM Decree"],
+    signatureMove: null,
+    ratings: { power: 68, speed: 52, technical: 55, toughness: 74, mic: 88, heat: 86, overall: 71 },
   },
 ];
 
@@ -2250,26 +2262,47 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     date: "December 9, 2017",
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
-    stipulation: "Randolph Scot Memorial 25-Man Rumble — Rampage Pro Wrestling 'Big Mike's Curtain Call'",
+    stipulation: "Randolph Scott Memorial 25-Man Rumble — Rampage Pro Wrestling 'Big Mike's Curtain Call'",
     historicalResult: "lose",
-    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Rich $teve entered the Randolph Scot Memorial 25-man rumble — and was the last man eliminated. Big Mike threw him out. But after the rumble ended, the night was far from over. Johnny Xross and Ray Rumble announced they were done with Project Mayhem. The crowd cheered. George Burkett walked out with them. When the celebration died down, $teve found Xross near the cage — face to face, no crowd, no performance — and told him: 'I want you to remember one thing, #Bruh. I created you. I made you both who you are. Without me you would be nothing. You betrayed what was supposed to be a real friendship, and for what? For some idiot in a stupid hat? You made the biggest mistake you could when you crossed us.' The clock started that night. October 13, 2018 was the collection date.",
+    historicalNote: "December 9, 2017. Rampage Pro Wrestling 'Big Mike's Curtain Call.' Delaware Agricultural Museum. Dover, DE. Four days before the show, Project Mayhem ran their own event — #Hijacked — with Steve posting: 'My name is Rich $teve, I'm going to be the one who wins the Randolph Scott Memorial Rumble and I represent one thing and one thing only: Project Mayhem.' At 5am on show day, Steve posted: 'I can't sleep. I'm sitting here thinking about how in a few short hours I'll be on my way to Dover to destroy what is left of Michael Scott's legacy. Snow won't stop me, ice won't stop me, nothing is going to stop me. I've taken your wife, I got you fired from your job, I turned your best friend against you. What makes you think tonight is going to go any different? The match named after your dear old daddy is going to be won by the man who has made your life hell for the last year.' Randolph Scott — the Memorial Rumble — was named after Big Mike's FATHER. Steve was competing in a match honoring Mike's dad while actively trying to take everything Mike had left. Rich $teve entered the 25-man rumble and was the last man eliminated — Big Mike threw him out. After the rumble, Steve stormed the cage, beat down Ray Rumble and Shawn Carlson, and threw the Indy Round Up championship in the trash. Then Johnny Xross and Ray Rumble announced they were done with Project Mayhem. The crowd cheered. George Burkett walked out with them. When the celebration died down, $teve found Xross near the cage — face to face, no crowd, no performance — and told him: 'I want you to remember one thing, #Bruh. I created you. I made you both who you are. Without me you would be nothing. You betrayed what was supposed to be a real friendship, and for what? For some idiot in a stupid hat? You made the biggest mistake you could when you crossed us.' Two days later in the Kyngs and Qweens Magazine interview, Steve listed his four most memorable moments: (1) Winning his first championship with Impact Society at Super Star Wrestling vs The Big New Yorkers; (2) Forming Project Mayhem and defeating Riot City's Most Wanted in a Riot City Rules match; (3) Winning the match for Michael Scott's career with Project Mayhem and Grizzly Redwood; (4) Throwing the Indy Round Up championship in the trash after storming the cage and beating down Ray Rumble and Shawn Carlson. Steve also confirmed in that interview: 'Wayne Ray Keehner I am doing this interview as Rich $teve, I don't need to be doing it from my page for it to still be me. We are one in the same, idiot.' The clock started that night. October 13, 2018 was the collection date.",
     matchless: true,
     introCutscene: [
       {
         speaker: "NARRATOR",
-        text: "December 9, 2017. Rampage Pro Wrestling. Big Mike's Curtain Call.",
+        text: "December 9, 2017. Rampage Pro Wrestling. Big Mike's Curtain Call. Delaware Agricultural Museum, Dover, DE.",
       },
       {
         speaker: "NARRATOR",
-        text: "Five weeks after Retribution — Mayhem's biggest team win. $teve and Mac built this from the ground up. #BRUH (Xross and Rumble) have been the tag team spine of Mayhem all year. Kory Cross brought Vox in as their wildcard. Wrex crossed the ring from the face side because he felt cast aside. All of them drawn by the same logic: 'We are your wasted life.'",
+        text: "This feud started June 24, 2017. Steve was beating Jay Cortez — and Big Mike ran out with a baseball bat to interfere. The ring announcer stuck his nose in Steve's business. Steve posted the next day: 'If there's a new sheriff in town, then I guess I'm gonna be fighting the law.'",
       },
       {
         speaker: "NARRATOR",
-        text: "Big Mike's last night as ring announcer. The Randolph Scot Memorial 25-man battle royal. $teve enters. Last man standing wins.",
+        text: "Mike took the GM job afterward. Steve spent the rest of 2017 taking everything Mike had left — his wife's support, his job, his best friend.",
       },
       {
         speaker: "NARRATOR",
-        text: "$teve is the last one. One elimination away from the finish. And the man waiting to throw him out is Big Mike himself.",
+        text: "Four days ago: Project Mayhem ran their own show — #Hijacked. Steve told the world he would win the Randolph Scott Memorial Rumble.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Five AM this morning. Steve posted his final word.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Snow won't stop me. Ice won't stop me. Nothing is going to stop me from taking the only thing you have left, Mike. The match named after your dear old daddy is going to be won by the man who has made your life hell for the last year.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Randolph Scott — the man this Rumble is named after — is Big Mike's father. Steve is competing in a match honoring Mike's dad while actively trying to destroy everything Mike ever built.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Five weeks after Retribution. Big Mike's final night as ring announcer. The 25-man Randolph Scott Memorial Rumble. $teve enters. Last man standing wins.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "$teve is the last one. One elimination away. And the man waiting across the ring is Big Mike himself.",
       },
       {
         speaker: "Rich $teve",
