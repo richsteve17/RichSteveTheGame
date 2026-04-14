@@ -23,11 +23,12 @@ type LogEntry = { text: string; type: "player" | "opponent" | "special" | "syste
 
 const PLAYER_BASE_STAMINA = 100;
 
-const NARRATIVE_LINES: Record<string, string> = {
-  "korpse": "12 years, road dogs — and now this.",
-  "ray-rumble": "George Burkett warned him.",
-  "yams": "The Working Man is running out of road.",
-  "mac-mayhem": "Emphasis on ME — whose name is on that belt?",
+type NarrativeRule = { line: string; chapterId?: string };
+const NARRATIVE_RULES: Record<string, NarrativeRule> = {
+  "korpse":      { line: "12 years, road dogs — and now this." },
+  "ray-rumble":  { line: "George Burkett warned him.",             chapterId: "ch5-lethal-lottery" },
+  "yams":        { line: "The Working Man is running out of road." },
+  "mac-mayhem":  { line: "Emphasis on ME — whose name is on that belt?", chapterId: "ch6-mac-mayhem" },
 };
 
 function buildOpponentMoves(wrestler: { stamina: number; moves: string[]; style: string }) {
@@ -115,6 +116,8 @@ export default function MatchScreen() {
     .filter((w): w is Wrestler => !!w);
   const isTagMatch = resolvedTeam.length > 1 || partnerTeam.length > 0;
 
+  const isWargames = /war.?games/i.test(stipulation);
+
   const characterId = params.characterId ?? "rich-steve";
   const characterWrestler = WRESTLERS.find((w) => w.id === characterId);
   const playerName = characterId === "rich-steve" ? "Rich $teve" : (characterWrestler?.name ?? "Rich $teve");
@@ -124,9 +127,14 @@ export default function MatchScreen() {
 
   const [phase, setPhase] = useState<Phase>("pre-match");
   const [playerStamina, setPlayerStamina] = useState(PLAYER_BASE_STAMINA);
-  const [partnerStamina, setPartnerStamina] = useState(partnerTeam[0]?.stamina ?? PLAYER_BASE_STAMINA);
-  const [opponentStaminas, setOpponentStaminas] = useState<number[]>(() => resolvedTeam.map((w) => w.stamina));
+  const [partnerStaminas, setPartnerStaminas] = useState<number[]>(() => partnerTeam.map((p) => p.stamina));
+  const [activePartnerIdx, setActivePartnerIdx] = useState<number | null>(null);
+  const [opponentStaminas, setOpponentStaminas] = useState<number[]>(() =>
+    isWargames ? [resolvedTeam[0]!.stamina, ...resolvedTeam.slice(1).map(() => -1)] : resolvedTeam.map((w) => w.stamina)
+  );
   const [activeOpponentIdx, setActiveOpponentIdx] = useState(0);
+  const [wgOppEntered, setWgOppEntered] = useState(1);
+  const [wgPartEntered, setWgPartEntered] = useState(0);
   const [log, setLog] = useState<LogEntry[]>([]);
   const [marketCrashCooldown, setMarketCrashCooldown] = useState(0);
   const [distractUsed, setDistractUsed] = useState(false);
@@ -139,11 +147,10 @@ export default function MatchScreen() {
   const [isOpponentTurn, setIsOpponentTurn] = useState(false);
   const [signatureUsed, setSignatureUsed] = useState(false);
   const [tagUsed, setTagUsed] = useState(false);
-  const [partnerIn, setPartnerIn] = useState(false);
   const [climbProgress, setClimbProgress] = useState(0);
   const [climbActive, setClimbActive] = useState(false);
 
-  const narrativeFired = useRef<Set<number>>(new Set());
+  const narrativeFired = useRef(false);
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const flashAnim = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
@@ -152,9 +159,13 @@ export default function MatchScreen() {
   const activeOpponentStamina = opponentStaminas[activeOpponentIdx] ?? 0;
   const opponentPhoto = getWrestlerPhoto(activeOpponent.id);
   const opponentMoves = buildOpponentMoves(activeOpponent);
-  const activePlayerName = (partnerIn && partnerTeam[0]) ? partnerTeam[0].name : playerName;
-  const activePlayerStamina = partnerIn ? partnerStamina : playerStamina;
-  const activePlayerMaxStamina = partnerIn ? (partnerTeam[0]?.stamina ?? PLAYER_BASE_STAMINA) : PLAYER_BASE_STAMINA;
+  const partnerIn = activePartnerIdx !== null;
+  const activePartner = activePartnerIdx !== null ? partnerTeam[activePartnerIdx] ?? null : null;
+  const activePlayerName = activePartner ? activePartner.name : playerName;
+  const activePartnerStamina = activePartnerIdx !== null ? (partnerStaminas[activePartnerIdx] ?? 0) : 0;
+  const activePlayerStamina = partnerIn ? activePartnerStamina : playerStamina;
+  const activePlayerMaxStamina = partnerIn && activePartner ? activePartner.stamina : PLAYER_BASE_STAMINA;
+  const alivePartnerCount = partnerStaminas.filter((s, i) => s > 0 && i < partnerTeam.length).length;
 
   const canFinisher = activeOpponentStamina <= Math.floor(activeOpponent.stamina * 0.25) && !isLadder;
   const canMarketCrash = marketCrashCooldown === 0;
@@ -202,30 +213,65 @@ export default function MatchScreen() {
   }, [isExhibition, params.chapterId, completeChapter]);
 
   const checkNarrative = useCallback((oppId: string, newStam: number, maxStam: number) => {
-    const line = NARRATIVE_LINES[oppId];
-    if (!line) return;
-    const thresholds = [80, 60, 40, 20];
-    for (const t of thresholds) {
-      if ((newStam / maxStam) * 100 <= t && !narrativeFired.current.has(t)) {
-        narrativeFired.current.add(t);
-        setTimeout(() => addLog(`📢 "${line}"`, "special"), 300);
-        break;
-      }
+    if (narrativeFired.current) return;
+    const rule = NARRATIVE_RULES[oppId];
+    if (!rule) return;
+    if (rule.chapterId && rule.chapterId !== params.chapterId) return;
+    const pct = (newStam / maxStam) * 100;
+    if (pct <= 60) {
+      narrativeFired.current = true;
+      setTimeout(() => addLog(`📢 "${rule.line}"`, "special"), 300);
     }
-  }, [addLog]);
+  }, [addLog, params.chapterId]);
 
-  const maybeOpponentTag = useCallback((newTurn: number, staminas: number[]) => {
-    if (!isTagMatch || resolvedTeam.length <= 1) return;
+  const maybeNewEntrant = useCallback((newTurn: number, oppStams: number[]) => {
+    if (!isTagMatch && !isWargames) return;
+
+    if (isWargames) {
+      const oppInterval = 5;
+      const partInterval = 7;
+      const nextOppEntry = wgOppEntered * oppInterval;
+      const nextPartEntry = (wgPartEntered + 1) * partInterval;
+
+      if (newTurn === nextOppEntry && wgOppEntered < resolvedTeam.length) {
+        const nextIdx = wgOppEntered;
+        const entrant = resolvedTeam[nextIdx];
+        if (entrant) {
+          setWgOppEntered((n) => n + 1);
+          setOpponentStaminas((prev) => {
+            const next = [...prev];
+            next[nextIdx] = entrant.stamina;
+            return next;
+          });
+          setActiveOpponentIdx(nextIdx);
+          setTimeout(() => addLog(`⚡ WAR GAMES: ${entrant.name} enters the cage! The numbers shift!`, "special"), 200);
+        }
+      }
+
+      if (newTurn === nextPartEntry && wgPartEntered < partnerTeam.length) {
+        const nextPartIdx = wgPartEntered;
+        const entrant = partnerTeam[nextPartIdx];
+        if (entrant) {
+          setWgPartEntered((n) => n + 1);
+          setActivePartnerIdx(nextPartIdx);
+          setTimeout(() => addLog(`⚡ WAR GAMES: ${entrant.name} enters for your team! Numbers are even!`, "special"), 200);
+        }
+      }
+      return;
+    }
+
+    if (resolvedTeam.length <= 1) return;
     if (newTurn % 5 !== 0) return;
-    const aliveOthers = staminas
-      .map((s, i) => ({ i, s }))
-      .filter(({ i, s }) => i !== activeOpponentIdx && s > 0);
+    const aliveOthers = oppStams.map((s, i) => ({ i, s })).filter(({ i, s }) => i !== activeOpponentIdx && s > 0);
     if (aliveOthers.length === 0) return;
     const next = aliveOthers[Math.floor(Math.random() * aliveOthers.length)]!;
     setActiveOpponentIdx(next.i);
     const incoming = resolvedTeam[next.i]!;
     setTimeout(() => addLog(`🔄 ${activeOpponent.name} tags out — ${incoming.name} steps in!`, "system"), 200);
-  }, [isTagMatch, resolvedTeam, activeOpponentIdx, activeOpponent, addLog]);
+  }, [
+    isTagMatch, isWargames, resolvedTeam, partnerTeam, activeOpponentIdx,
+    activeOpponent, wgOppEntered, wgPartEntered, addLog,
+  ]);
 
   const opponentAttack = useCallback((pStam: number) => {
     if (refManipActive) {
@@ -263,21 +309,45 @@ export default function MatchScreen() {
       if (climbLoss > 0) addLog(`${activeOpponent.name} drags you down! Climb progress lost.`, "system");
     }
 
-    const newStam = Math.max(0, (partnerIn ? partnerStamina : pStam) - dmg);
-
-    if (partnerIn) {
-      setPartnerStamina(newStam);
-      if (newStam === 0) {
-        addLog(`${partnerTeam[0]?.name ?? "Your partner"} has been eliminated! You're on your own!`, "special");
-        setPartnerIn(false);
+    if (partnerIn && activePartnerIdx !== null) {
+      const curPartnerStam = partnerStaminas[activePartnerIdx] ?? 0;
+      const newPartStam = Math.max(0, curPartnerStam - dmg);
+      setPartnerStaminas((prev) => {
+        const next = [...prev];
+        next[activePartnerIdx] = newPartStam;
+        return next;
+      });
+      if (newPartStam === 0) {
+        const eliminatedName = activePartner?.name ?? "Your partner";
+        addLog(`${eliminatedName} has been eliminated!`, "special");
+        const nextAlive = partnerStaminas.findIndex((s, i) => i !== activePartnerIdx && i < partnerTeam.length && s > 0);
+        if (nextAlive >= 0) {
+          setActivePartnerIdx(nextAlive);
+          addLog(`${partnerTeam[nextAlive]!.name} steps in to replace them!`, "system");
+        } else {
+          setActivePartnerIdx(null);
+          addLog(`No partners left — ${playerName} is on their own!`, "special");
+        }
         setIsOpponentTurn(false);
         setTurn((t) => t + 1);
         setMarketCrashCooldown((c) => Math.max(0, c - 1));
         return;
       }
     } else {
+      const newStam = Math.max(0, pStam - dmg);
       setPlayerStamina(newStam);
       if (newStam === 0) {
+        if (isWargames && alivePartnerCount > 0) {
+          const nextPartner = partnerStaminas.findIndex((s, i) => s > 0 && i < partnerTeam.length);
+          if (nextPartner >= 0) {
+            setActivePartnerIdx(nextPartner);
+            addLog(`${playerName} is down! ${partnerTeam[nextPartner]!.name} steps up!`, "special");
+            setIsOpponentTurn(false);
+            setTurn((t) => t + 1);
+            setMarketCrashCooldown((c) => Math.max(0, c - 1));
+            return;
+          }
+        }
         endMatch("opponent", `${activeOpponent.name} wins.`);
         return;
       }
@@ -287,7 +357,7 @@ export default function MatchScreen() {
     setTurn((t) => {
       const next = t + 1;
       setOpponentStaminas((prev) => {
-        maybeOpponentTag(next, prev);
+        maybeNewEntrant(next, prev);
         return prev;
       });
       return next;
@@ -296,7 +366,8 @@ export default function MatchScreen() {
   }, [
     activeOpponent, refManipActive, signatureUsed, opponentMoves,
     addLog, endMatch, flash, shake, climbActive, isLadder, isCage,
-    climbProgress, partnerIn, partnerStamina, partnerTeam, maybeOpponentTag,
+    climbProgress, partnerIn, activePartnerIdx, activePartner, partnerStaminas,
+    partnerTeam, playerName, isWargames, alivePartnerCount, maybeNewEntrant,
   ]);
 
   useEffect(() => {
@@ -307,17 +378,25 @@ export default function MatchScreen() {
   }, [isOpponentTurn, phase, playerStamina, opponentAttack]);
 
   const handleHotTag = () => {
-    if (tagUsed || !partnerTeam[0] || isOpponentTurn || phase !== "fighting") return;
+    if (tagUsed || partnerTeam.length === 0 || isOpponentTurn || phase !== "fighting") return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     setTagUsed(true);
-    const partner = partnerTeam[0];
-    if (partnerIn) {
-      setPartnerIn(false);
-      addLog(`🔥 HOT TAG — ${partner.name} tags back in ${playerName}!`, "special");
+
+    if (partnerIn && activePartnerIdx !== null) {
+      const partnerName = activePartner?.name ?? "Your partner";
+      setActivePartnerIdx(null);
+      addLog(`🔥 HOT TAG — ${partnerName} tags back in ${playerName}!`, "special");
     } else {
-      setPartnerIn(true);
-      addLog(`🔥 HOT TAG — ${playerName} tags in ${partner.name}!`, "special");
+      const nextAlive = partnerStaminas.findIndex((s, i) => s > 0 && i < partnerTeam.length);
+      if (nextAlive < 0) {
+        addLog("No available partners — fight on!", "system");
+        return;
+      }
+      setActivePartnerIdx(nextAlive);
+      const incoming = partnerTeam[nextAlive]!;
+      addLog(`🔥 HOT TAG — ${playerName} tags in ${incoming.name}!`, "special");
     }
+
     if (resolvedTeam.length > 1) {
       setOpponentStaminas((prev) => {
         const nextIdx = (activeOpponentIdx + 1) % resolvedTeam.length;
@@ -429,20 +508,31 @@ export default function MatchScreen() {
       if (isLadder) {
         addLog(`${activeOpponent.name} is DOWN! Now ${activePlayerName} has to climb the ladder!`, "special");
       } else if (isCage) {
-        addLog(`${activeOpponent.name} is weakened — the cage wall is right there!`, "special");
+        addLog(`${activeOpponent.name} is weakened — the cage wall is there!`, "special");
         setIsOpponentTurn(true);
         setMarketCrashCooldown((c) => Math.max(0, c - 1));
       } else {
-        const nextAliveIdx = opponentStaminas.findIndex((s, i) => i !== activeOpponentIdx && s > 0);
-        if (isTagMatch && nextAliveIdx >= 0) {
-          addLog(`${activeOpponent.name} eliminated! The next opponent steps in!`, "special");
+        const updatedStaminas = opponentStaminas.map((s, i) => i === activeOpponentIdx ? 0 : s);
+        const allEnteredEliminated = updatedStaminas.every((s) => s === 0 || s === -1);
+        const anyEnteredAlive = updatedStaminas.some((s) => s > 0);
+        const nextAliveIdx = updatedStaminas.findIndex((s, i) => i !== activeOpponentIdx && s > 0);
+
+        if (isWargames && allEnteredEliminated && !anyEnteredAlive) {
+          addLog(`${activeOpponent.name} is down! ALL enemies eliminated — ${activePlayerName}'s team wins WAR GAMES!`, "special");
+          flash();
+          endMatch("player", "Win — Last Team Standing (War Games)");
+        } else if ((isTagMatch || isWargames) && nextAliveIdx >= 0) {
+          addLog(`${activeOpponent.name} ELIMINATED! The next opponent steps in!`, "special");
           setActiveOpponentIdx(nextAliveIdx);
           setSignatureUsed(false);
           setIsOpponentTurn(true);
           setMarketCrashCooldown((c) => Math.max(0, c - 1));
-        } else {
+        } else if (!isWargames || (isWargames && allEnteredEliminated)) {
           addLog(`${activeOpponent.name} is out cold! ${activePlayerName} covers!`, "player");
-          endMatch("player", isTagMatch ? "Win by Pinfall (Tag Match Elimination)" : "Win by Pinfall");
+          endMatch("player", isTagMatch ? "Win by Pinfall (Tag Elimination)" : "Win by Pinfall");
+        } else {
+          setIsOpponentTurn(true);
+          setMarketCrashCooldown((c) => Math.max(0, c - 1));
         }
       }
     } else {
@@ -513,8 +603,10 @@ export default function MatchScreen() {
 
           <View style={[styles.preNote, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.preNoteText, { color: colors.mutedForeground }]}>
-              {isTagMatch
-                ? "Tag match — use the Hot Tag once per match to bring in your partner. Heel tactics remain available."
+              {isWargames
+                ? "WAR GAMES — Two rings, one massive cage. Teams enter one at a time every 5 turns. Eliminate every opponent to win. Last team standing."
+                : isTagMatch
+                ? "Tag match — use the Hot Tag once per match to bring in your partner. Heel tactics remain one-time-use."
                 : "Turn-based match. Use moves, signature, and finisher strategically. Heel tactics are one-time-use per match."}
             </Text>
           </View>
