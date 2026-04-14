@@ -24,7 +24,7 @@ const PLAYER_BASE_STAMINA = 100;
 
 function buildOpponentMoves(wrestler: { stamina: number; moves: string[]; style: string }) {
   const base = Math.round(8 + (wrestler.stamina - 70) * 0.1);
-  return wrestler.moves.map((name) => ({ name, damage: base + Math.round(Math.random() * 0) }));
+  return wrestler.moves.map((name) => ({ name, damage: base }));
 }
 
 function WrestlerPortrait({
