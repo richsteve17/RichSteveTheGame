@@ -1,0 +1,65 @@
+This is good. Not just good, it's a bible. You've got 13 years of continuity modeled as typed data, with promo trees, era transitions, and the long-game payoff baked into the structure. Most people write lore in a Google Doc. You wrote it as a game engine.
+
+If you're going to ship this, here are the top 5 things I'd tighten before you build more on top of it.
+
+## 1. Fix duplicate IDs — they'll break lookups
+
+Right now your `WRESTLERS` array has collisions that TypeScript won't catch but your game will:
+
+- `id: "siccend"` appears twice (once as RCMW leader, once in ERA 3 ADDITIONS with different bio)
+- `id: "vic-ramone"` vs `id: "vic-ramon"` — same person, two keys
+- `id: "jt-funk"` appears twice with different bios
+- `id: "little-monster-binky"` appears as both Original Coalition midcarder and Talent Agency Women's Division
+
+When you do `WRESTLERS.find(w => w.id === opponentId)` in a chapter, you'll get the first match randomly. Pick one canonical ID per person and merge the bios. For Binky, make her one wrestler with `factionHistory: ["The Original Coalition", "The Talent Agency"]` instead of two separate entries.
+
+## 2. Lock your vocab with real enums
+
+You have string unions for `role` and `style`, which is good, but you're already stretching them:
+
+- `style: "Manager"` for Kory Cross while the type only allows "Technical" | "Power" | "Brawler" | "High-Flyer" | "Cerebral"
+- `role: "Authority Figure"` for Jay Cortez and Big Mike, which isn't in the union
+
+That means TypeScript is lying to you right now. Make these proper enums and add the missing values:
+You'll catch typos like "Women's Division" vs "Womens" before runtime.
+
+## 3. Split lore from gameplay data
+
+Your `bio` fields are 400+ word historical essays. That's perfect for a wiki page, but terrible for a character select screen. Add two fields:
+
+- `bioShort: string` — one sentence for UI tooltips ("The Chicken Shit Mastermind. 13 years, always heel.")
+- `bioLong: string` — keep your current text
+- `debutDate?: string`, `retirementDate?: string`
+
+Same for chapters. `historicalNote` is doing triple duty as design doc, commentary track, and source of truth. Pull out `realWorldResult` vs `gameResult` so you can track what actually happened vs what the player does.
+
+## 4. Compute overall, don't hand-type it
+
+Your ratings are manually set and they drift. Rich $teve: 71+65+79+78+97+96 = 486 / 6 = 81, but you have `overall: 91`. That's fine if overall is "star power," but then call it that.
+
+Better: 
+Then add `starPower: 91` separately. Right now you're maintaining two truths, which means every balance pass will break something.
+
+## 5. Add a timeline validator
+
+This is where your storytelling shines, but the data doesn't enforce it. You have:
+
+- `ch5-riot-rumble` is `era: 6` (naming mismatch)
+- `opponentId: "eb-cohen"` works, but nothing stops you from referencing a wrestler who hasn't debuted yet
+- Faction membership changes over time but `faction: string | null` is static
+
+Add a small validation script:
+
+- Check every `opponentId` exists in WRESTLERS
+- Check `date` ordering within each era
+- Build `factionHistory: {faction, startDate, endDate}[]` per wrestler instead of a single string
+
+That last one matters for your core story. #BRUH isn't "Project Mayhem" forever, they're Original Coalition → Project Mayhem → face turn. Right now you have to overwrite the field and lose history.
+
+---
+
+You've already done the hard part: the causality is airtight. December 9, 2017 cage speech → October 13, 2018 cash-in, with Burkett as the only witness who called it. That's not just lore, that's game design.
+
+If you clean the keys and split the data layers, this becomes portable. You could generate the entire timeline as a graph, auto-build the promo trees, or feed it to an AI booker without rewriting anything.
+
+Want me to write the validator script that finds all the duplicate IDs and missing opponent links? It'll take about 20 lines.

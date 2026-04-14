@@ -1,0 +1,324 @@
+Yeah. It’s good.
+
+Not “good for a draft.” Actually good.
+
+The strongest thing here is that it has a point of view. It does not read like generic wrestling game data. It reads like a coherent canon bible that also happens to be code. The schema is mostly readable, the content has internal intent, and the promoGame structure is a genuinely smart mechanic because it turns character voice into gameplay instead of just lore storage.
+
+The weak spots are not talent problems. They’re data-integrity problems.
+
+Top 5 things I’d fix or add:
+	1.	Fix the type mismatches that will break strict TypeScript
+As written, this does not fully match its own interfaces.
+Wrestler.role only allows:
+
+"Main Event" | "Midcard" | "Women's Division" | "Legend" | "Manager"
+
+But you use:
+
+role: "Authority Figure"
+
+for Jay Cortez and Big Mike.
+Wrestler.style only allows:
+
+"Technical" | "Power" | "Brawler" | "High-Flyer" | "Cerebral"
+
+But you use:
+
+style: "Manager"
+
+for Kory Cross and George Burkett.
+So first fix is either the quick patch:
+
+export type WrestlerRole =
+  | "Main Event"
+  | "Midcard"
+  | "Women's Division"
+  | "Legend"
+  | "Manager"
+  | "Authority Figure";
+
+export type WrestlerStyle =
+  | "Technical"
+  | "Power"
+  | "Brawler"
+  | "High-Flyer"
+  | "Cerebral"
+  | "Manager";
+
+Or the better version: split actual in-ring wrestlers from non-wrestling characters with a discriminated union.
+Example:
+
+type CharacterRole =
+  | "Main Event"
+  | "Midcard"
+  | "Women's Division"
+  | "Legend"
+  | "Manager"
+  | "Authority Figure";
+
+interface BaseCharacter {
+  id: string;
+  name: string;
+  factionId: FactionId | null;
+  role: CharacterRole;
+  bio: string;
+  hometown?: string;
+}
+
+interface InRingCharacter extends BaseCharacter {
+  kind: "in-ring";
+  style: "Technical" | "Power" | "Brawler" | "High-Flyer" | "Cerebral";
+  stamina: number;
+  moves: string[];
+  signatureMove: string | null;
+  height?: string;
+  weight?: string;
+  ratings: WrestlerRatings;
+}
+
+interface NonWrestlingCharacter extends BaseCharacter {
+  kind: "non-wrestling";
+  style?: "Manager";
+  stamina?: number;
+  moves?: string[];
+  signatureMove?: string | null;
+  ratings?: WrestlerRatings;
+}
+
+export type Wrestler = InRingCharacter | NonWrestlingCharacter;
+
+That would cleanly reflect what your data actually is instead of forcing everyone into the same mold.
+
+	2.	Fix duplicate IDs immediately
+This is the biggest structural problem in the file.
+You have duplicate id values, which will absolutely screw you later in lookups, saves, UI keys, filters, and chapter references.
+Off the page:
+	•	little-monster-binky appears twice
+	•	siccend appears twice
+	•	jt-funk appears twice
+And you also have a naming inconsistency that is almost certainly a bug waiting to happen:
+	•	vic-ramone
+	•	vic-ramon
+That kind of drift is how references silently break.
+If this data gets indexed like this:
+
+const wrestlerById = Object.fromEntries(WRESTLERS.map(w => [w.id, w]));
+
+then the last duplicate wins and the earlier one is effectively erased.
+You need one of these approaches:
+	•	One canonical record per person, with era-specific metadata elsewhere
+	•	Versioned IDs per era, like:
+	•	little-monster-binky-otcw
+	•	little-monster-binky-rpw
+	•	A variants or appearances model
+Example:
+
+interface WrestlerAppearance {
+  wrestlerId: string;
+  era: number;
+  factionId: FactionId | null;
+  role: WrestlerRole;
+  ratings?: WrestlerRatings;
+  bioOverride?: string;
+}
+
+Right now the content is rich, but the IDs are not trustworthy enough.
+
+	3.	Stop using freeform strings for fields that are really relationships
+faction, eraName, and parts of your chapter linkage are too loose.
+Right now you’ve got stuff like:
+
+faction: "Project Mayhem"
+
+but your faction table has:
+
+name: "PROJECT MAYHEM"
+
+Same problem with:
+	•	"The Original Coalition" vs "THE ORIGINAL COALITION"
+	•	"Working Class Heroes" vs "WORKING CLASS HEROES"
+	•	"Riot City's Most Wanted" vs "RIOT CITY'S MOST WANTED"
+That is going to bite the second you do:
+	•	roster filtering by faction
+	•	faction pages
+	•	stat aggregation
+	•	coloring by faction
+	•	storyline unlocks keyed to faction membership
+Use IDs, not display names.
+Example:
+
+export type FactionId =
+  | "project-mayhem"
+  | "bruh"
+  | "working-class-heroes"
+  | "riot-citys-most-wanted"
+  | "original-coalition"
+  | "impact-society"
+  | "410-massiv"
+  | "talent-agency"
+  | "ruffnecks";
+
+interface Wrestler {
+  id: string;
+  name: string;
+  factionId: FactionId | null;
+  // ...
+}
+
+interface Faction {
+  id: FactionId;
+  name: string;
+  color: string;
+  members: string[];
+  manager: string | null;
+  higherPower: string | null;
+  description: string;
+}
+
+Then your display text can still be whatever you want, but the relationships stop being fragile.
+
+	4.	Split machine data from display data
+You’ve got fields doing two jobs at once.
+date is the best example. Sometimes it’s a real date:
+
+"October 13, 2018"
+
+Sometimes it’s vague:
+
+"2017"
+
+Sometimes it’s fictional/display-only:
+
+"The Night That Never Came"
+"The Show That Never Happened"
+
+That’s fine narratively, but it’s bad if you ever want to sort chapters, generate timelines, or calculate progression.
+I’d split that immediately into something like:
+
+export interface CareerChapter {
+  id: string;
+  era: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  eraName: string;
+  title: string;
+
+  sortDate?: string;     // ISO date or sortable token
+  displayDate: string;   // user-facing text
+
+  venue: string;
+  city: string;
+  opponentId?: string;
+  stipulation: string;
+
+  historicalResult: "win" | "lose" | "dq" | "screwjob" | "story";
+  historicalNote: string;
+
+  isWhatIf?: boolean;
+  isHistorical?: boolean;
+  // ...
+}
+
+Example usage:
+
+{
+  id: "ch6-wargames",
+  era: 7,
+  eraName: "Era 7: The Lost Ending",
+  title: "War Games — The Match That Never Happened",
+  sortDate: "9999-01-01",
+  displayDate: "The Night That Was Supposed To Be",
+  isWhatIf: true,
+  isHistorical: false,
+  // ...
+}
+
+That makes your “Lost Ending” stuff way safer and way easier to render cleanly.
+
+	5.	Add a validation layer so this file can defend itself
+This is too much canon to trust to eyeballing.
+You want one script that runs and catches:
+	•	duplicate wrestler IDs
+	•	duplicate chapter IDs
+	•	bad opponentId references
+	•	bad chapterIds in ERAS
+	•	faction member names that don’t map cleanly
+	•	rating values outside expected bounds
+	•	overall not matching formula, if you keep it manual
+	•	mismatched enum values
+Something like:
+
+function validateData() {
+  const wrestlerIds = new Set<string>();
+  for (const wrestler of WRESTLERS) {
+    if (wrestlerIds.has(wrestler.id)) {
+      throw new Error(`Duplicate wrestler id: ${wrestler.id}`);
+    }
+    wrestlerIds.add(wrestler.id);
+
+    if (wrestler.ratings) {
+      for (const [key, value] of Object.entries(wrestler.ratings)) {
+        if (typeof value !== "number" || value < 0 || value > 100) {
+          throw new Error(`Invalid rating ${key} for ${wrestler.id}: ${value}`);
+        }
+      }
+    }
+  }
+
+  const chapterIds = new Set(CAREER_CHAPTERS.map(c => c.id));
+  for (const era of ERAS) {
+    for (const chapterId of era.chapterIds) {
+      if (!chapterIds.has(chapterId)) {
+        throw new Error(`Era ${era.id} references missing chapter: ${chapterId}`);
+      }
+    }
+  }
+
+  for (const chapter of CAREER_CHAPTERS) {
+    if (chapter.opponentId && !wrestlerIds.has(chapter.opponentId)) {
+      throw new Error(`Chapter ${chapter.id} references missing opponent: ${chapter.opponentId}`);
+    }
+  }
+}
+
+This is the kind of dataset where one typo can quietly corrupt a whole mode. Validation is not optional.
+
+A few bonus notes that are not top 5, but matter:
+
+Your overall rating should probably be derived, not handwritten.
+If it stays manual, it will drift. If it’s supposed to be authored for feel rather than math, that’s fine, but then I’d rename it to something like tierOverall or bookedOverall so it’s clear it is editorial, not computed.
+
+Tag teams stored as single wrestlers is okay for now, but it limits you later.
+KTB, The Big New Yorkers, Detroit’s Finest, The Rapprochement as one unit is practical for content entry, but if you ever want:
+	•	individual entrances
+	•	partner damage
+	•	substitution logic
+	•	commentary targeting
+	•	feud tracking by member
+
+then you’re eventually going to want a TagTeam entity.
+
+This wants to be split into files soon.
+Not because it’s bad. Because it’s important.
+
+I’d separate it into:
+	•	types.ts
+	•	wrestlers.ts
+	•	chapters.ts
+	•	eras.ts
+	•	factions.ts
+	•	promos.ts
+	•	constants.ts
+
+That will make diffs cleaner and stop this from becoming one sacred megafile nobody wants to touch.
+
+What’s already strong:
+	•	The schema is readable.
+	•	The lore is not generic.
+	•	The chapter structure is clear.
+	•	The promo minigame is legit clever.
+	•	The tone is consistent.
+	•	The canon discipline is obvious.
+	•	The whole thing feels authored, not auto-filled.
+
+So yeah — you should be proud of it.
+
+My blunt verdict: creatively strong, structurally close, not production-safe yet. The content is there. The next step is making the data model worthy of the content.

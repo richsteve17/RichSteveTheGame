@@ -1,0 +1,65 @@
+Here are the top 5 technical and architectural fixes to bulletproof this schema, ranging from a critical data bug to structural design patterns.
+### 1. Duplicate IDs in the WRESTLERS Array (Critical Bug)
+You have several duplicate IDs in your WRESTLERS array. If you ever refactor this from an array into a keyed dictionary (which you should for performance), or map over them to find an opponent, the later entries will silently overwrite the earlier ones or cause rendering bugs.
+ * siccend is listed twice (once under RCMW, once under Era 3 Additions).
+ * little-monster-binky is listed twice (Original Coalition and Talent Agency).
+ * jt-funk is listed twice.
+ * Vic Ramone has two entries with slightly different IDs (vic-ramone and vic-ramon).
+**Fix:** Consolidate these into single objects, which leads directly to the next architectural point.
+### 2. Temporal State Management (Eras vs. Static Profiles)
+Right now, Rich $teve has a mic: 97 and overall: 91, but Chapter 1 features a 16-year-old Steve Coleman. Having static stats and static factions (faction: "Project Mayhem") breaks the historical reality of the game. Kory Cross can't statically belong to Mayhem when you are playing Era 3 where he manages RCMW.
+**Fix:** Add an eraOverrides object to your Wrestler interface. This allows a single character ID to evolve chronologically without needing duplicate objects.
+```typescript
+export interface Wrestler {
+  id: string;
+  // Base/Final stats...
+  eraOverrides?: {
+    [era: number]: {
+      faction?: string | null;
+      role?: string;
+      ratings?: WrestlerRatings;
+    }
+  }
+}
+
+```
+### 3. Arrays vs. Record Dictionaries for O(1) Lookups
+WRESTLERS and CAREER_CHAPTERS are exported as Arrays. When you build the actual game engine, searching WRESTLERS.find(w => w.id === opponentId) every time you load a chapter or render a cutscene is inefficient.
+**Fix:** Export them as a Record<string, Wrestler> (a dictionary).
+```typescript
+export const WRESTLERS: Record<string, Wrestler> = {
+  "rich-steve": { id: "rich-steve", name: "Rich $teve", ... },
+  "onslaught": { id: "onslaught", name: "Onslaught", ... }
+};
+
+```
+This forces ID uniqueness (solving point 1 instantly) and allows instant lookups: WRESTLERS[chapter.opponentId].
+### 4. Relational Integrity for Tag and Multi-Man Matches
+In CareerChapter, you use opponentId?: string;. However, many of your chapters are 6-man tags, triple threats, or stable wars (like the 5-on-5 Retribution match or War Games). A single string cannot handle the data relationships required to load the correct character models or stats for those matches.
+**Fix:** Convert opponentId to an array of IDs, and add an array for partners to cleanly separate who is in the ring.
+```typescript
+export interface CareerChapter {
+  // ...
+  opponentIds: string[];
+  partnerIds?: string[];
+  managerId?: string;
+  opponentManagerId?: string;
+}
+
+```
+### 5. Match Mechanics Schema
+Your PromoChallenge interface is incredibly well thought out, but the actual wrestling match data is currently limited to historicalResult and a stipulation string. If this is going to be playable, the game engine needs to know what the player is actually trying to accomplish in the ring before the outro cutscene triggers.
+**Fix:** Add a MatchObjectives array to the CareerChapter interface. This bridges the gap between narrative design and gameplay loop.
+```typescript
+export interface MatchObjective {
+  description: string;
+  condition: "survive_time" | "hit_signature" | "take_damage" | "trigger_dq" | "pin_specific_target";
+  targetId?: string;
+  requiredValue?: number; // e.g., survive for 300 seconds
+}
+
+// Inside CareerChapter:
+matchObjectives?: MatchObjective[];
+
+```
+This allows you to program specific historical beats. For the Guerrero Special, the objective isn't "deplete opponent health"—it's trigger_dq with the lockbox item. For the Lethal Lottery, the objective is pin_specific_target aimed at your own partner.
