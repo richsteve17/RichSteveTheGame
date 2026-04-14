@@ -213,7 +213,7 @@ export default function MatchScreen() {
   }, [isExhibition, params.chapterId, completeChapter]);
 
   const checkNarrative = useCallback((oppId: string, newStam: number, maxStam: number) => {
-    if (narrativeFired.current.size > 0) return;
+    if (narrativeFired.current.size >= 2) return;
     const rule = NARRATIVE_RULES[oppId];
     if (!rule) return;
     if (rule.chapterId && rule.chapterId !== params.chapterId) return;
@@ -702,7 +702,7 @@ export default function MatchScreen() {
           <View style={styles.hudInner}>
             <View style={styles.hudFighter}>
               <SmallPortrait
-                photo={partnerIn && partnerTeam[0] ? getWrestlerPhoto(partnerTeam[0].id) : stevePhoto}
+                photo={partnerIn && activePartner ? getWrestlerPhoto(activePartner.id) : stevePhoto}
                 size={44}
                 borderColor={colors.primary}
               />
@@ -719,7 +719,7 @@ export default function MatchScreen() {
                   />
                 </View>
                 <Text style={[styles.hudName, { color: colors.primary }]}>
-                  {partnerIn && partnerTeam[0] ? partnerTeam[0].name.split(" ")[0]!.toUpperCase() : "$TEVE"}
+                  {partnerIn && activePartner ? activePartner.name.split(" ")[0]!.toUpperCase() : "$TEVE"}
                 </Text>
               </View>
             </View>
