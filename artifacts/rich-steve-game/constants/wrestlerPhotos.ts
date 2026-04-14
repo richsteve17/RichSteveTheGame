@@ -24,6 +24,7 @@ const WRESTLER_PHOTOS: Record<string, any> = {
   "jesse-skelton":       require("@/assets/images/wrestlers/steve-suit-jesse-skelton.jpeg"),
   "big-mike":            require("@/assets/images/wrestlers/big-mike.jpeg"),
   "mac-mayhem":          require("@/assets/images/wrestlers/mac-mayhem-turn.jpeg"),
+  "mac-mayhem-alt":      require("@/assets/images/wrestlers/mac-mayhem.jpeg"),
   "mac-mayhem-promo":    require("@/assets/images/wrestlers/mac-mayhem-promo.jpeg"),
   "ryan-vox":            require("@/assets/images/wrestlers/ryan-vox.jpeg"),
   "wrex-savage":         require("@/assets/images/wrestlers/wrex-savage.jpeg"),
