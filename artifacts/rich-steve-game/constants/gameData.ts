@@ -33,6 +33,8 @@ export interface CareerChapter {
   venue: string;
   city: string;
   opponentId?: string;
+  opponentIds?: string[];
+  partnerIds?: string[];
   stipulation: string;
   introCutscene: CutsceneSlide[];
   outroCutscene?: {
@@ -1705,6 +1707,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
     opponentId: "siccend",
+    opponentIds: ["siccend", "vic-ramon"],
+    partnerIds: ["johnny-xross", "ray-rumble"],
     stipulation: "Riot City Rules — Coalition vs Riot City's Most Wanted",
     historicalResult: "win",
     historicalNote: "During the payoff match, Matt Wylde betrayed Riot City to join $teve. He renamed himself Mac Mayhem. Project Mayhem was born.",
@@ -2103,6 +2107,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
     opponentId: "rd-cordova",
+    opponentIds: ["rd-cordova", "big-mike", "yams"],
+    partnerIds: ["mac-mayhem", "ryan-vox"],
     stipulation: "5-on-5 Elimination — Team Mayhem ($teve, Mac, Vox, Wrex, Grizzly Redwood) vs Team Rampage (Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash)",
     historicalResult: "win",
     historicalNote: "November 4, 2017. Rampage Pro Wrestling 'Retribution.' Team Mayhem: Rich $teve, Mac Mayhem, Ryan Vox, Wrex Savage, Grizzly Redwood. Team Rampage: Big Mike, Yams, JT Funk, R.D. Cordova, Andre Cash. If Team Rampage loses, Big Mike retires as ring announcer — permanently. Rich $teve pinned R.D. Cordova to seal the win. Mayhem's largest team triumph. But the card Steve built contained the seed of the next crisis — and he planted it himself. #BRUH — Johnny Xross and Ray Rumble — were not on this team. Steve's OTCW day ones. The men he brought through the Coalition, kept through the Project Mayhem formation, fought beside through every rebuild after Conrad and Bronson were cut. Left off the card entirely. Steve named himself the 4th man — asserting his arrival as the in-ring lead of Mayhem, the culmination of a year-long transition from Coalition manager to active competitor — and brought in ROH star Grizzly Redwood as a hired mercenary for the fifth spot. Not a Mayhem member. An outside name. Steve went outside the faction entirely rather than use the men who had been with him from day one. Five weeks later at Big Mike's Curtain Call (December 9, 2017), #BRUH turned face and quit Project Mayhem. The Retribution snub was the cause. Steve's first major act of hubris costing him allies. The second would come ten months later at Cosplayers Unite — when the picture desecration and beard shave cost him Kory Cross and Ryan Vox. The pattern: Steve's ego burns the people who served him.",
@@ -3068,6 +3074,8 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     venue: "Rampage Pro Wrestling",
     city: "Devil's Playpen",
     opponentId: "yams",
+    opponentIds: ["yams", "greywolf", "kory-cross"],
+    partnerIds: ["mac-mayhem", "ryan-vox"],
     stipulation: "War Games — Project Mayhem vs Team Rampage",
     historicalResult: "win",
     historicalNote: "The Wargames match was the planned conclusion to the Mayhem vs Rampage feud — two rings inside one giant cage, teams entering one at a time, the format that matches the scope of what they built. A week before the show, everything fell apart. Greywolf dropped. Vox dropped. Killian dropped. The company threw together The Final Shot in Camden instead. In real life, the story ended there. In the game — it ends here, the right way.",

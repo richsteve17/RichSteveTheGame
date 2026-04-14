@@ -14,40 +14,53 @@ import {
 } from "react-native";
 import { useGame } from "@/context/GameContext";
 import { useColors } from "@/hooks/useColors";
-import { CAREER_CHAPTERS, WRESTLERS } from "@/constants/gameData";
+import { CAREER_CHAPTERS, WRESTLERS, type Wrestler } from "@/constants/gameData";
 import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
 
 type Phase = "pre-match" | "fighting" | "post-match";
+type MoveType = "normal" | "signature" | "finisher" | "distract" | "refmanip" | "guerrero" | "weapon";
 type LogEntry = { text: string; type: "player" | "opponent" | "special" | "system" };
 
 const PLAYER_BASE_STAMINA = 100;
+
+const NARRATIVE_LINES: Record<string, string> = {
+  "korpse": "12 years, road dogs — and now this.",
+  "ray-rumble": "George Burkett warned him.",
+  "yams": "The Working Man is running out of road.",
+  "mac-mayhem": "Emphasis on ME — whose name is on that belt?",
+};
 
 function buildOpponentMoves(wrestler: { stamina: number; moves: string[]; style: string }) {
   const base = Math.round(8 + (wrestler.stamina - 70) * 0.1);
   return wrestler.moves.map((name) => ({ name, damage: base }));
 }
 
+function getWeaponMoves(stipulation: string): { name: string; damage: number }[] {
+  const s = stipulation.toLowerCase();
+  if (/ladder/.test(s)) return [
+    { name: "Throw into Ladder", damage: 16 },
+    { name: "Use Ladder as Weapon", damage: 14 },
+  ];
+  if (/cage/.test(s)) return [
+    { name: "Ram into Cage Wall", damage: 14 },
+  ];
+  if (/no.dq|no disqualification|hardcore|riot city rules/.test(s)) return [
+    { name: "Chair Shot", damage: 18 },
+    { name: "Table Spot", damage: 22 },
+    { name: "Belt Shot", damage: 15 },
+  ];
+  return [];
+}
+
 function WrestlerPortrait({
-  photo,
-  name,
-  isPlayer,
-  size = 140,
-  borderColor,
-}: {
-  photo: any | null;
-  name: string;
-  isPlayer: boolean;
-  size?: number;
-  borderColor: string;
-}) {
+  photo, name, isPlayer, size = 120, borderColor,
+}: { photo: any; name: string; isPlayer: boolean; size?: number; borderColor: string }) {
   if (photo) {
     return (
       <View style={[styles.portraitBox, { width: size, height: size, borderColor, borderWidth: 2, borderRadius: 8 }]}>
         <Image source={photo} style={styles.portraitImg} resizeMode="cover" />
         <View style={[styles.portraitNameBar, { backgroundColor: isPlayer ? borderColor + "EE" : "#000000CC" }]}>
-          <Text style={styles.portraitNameText} numberOfLines={1}>
-            {name.toUpperCase()}
-          </Text>
+          <Text style={styles.portraitNameText} numberOfLines={1}>{name.toUpperCase()}</Text>
         </View>
       </View>
     );
@@ -55,22 +68,12 @@ function WrestlerPortrait({
   return (
     <View style={[styles.portraitBox, styles.portraitPlaceholder, { width: size, height: size, borderColor, borderWidth: 2, borderRadius: 8 }]}>
       <MaterialCommunityIcons name="account-outline" size={size * 0.45} color={borderColor + "66"} />
-      <Text style={[styles.portraitNameText, { color: borderColor }]} numberOfLines={1}>
-        {name.toUpperCase()}
-      </Text>
+      <Text style={[styles.portraitNameText, { color: borderColor }]} numberOfLines={1}>{name.toUpperCase()}</Text>
     </View>
   );
 }
 
-function SmallPortrait({
-  photo,
-  size = 44,
-  borderColor,
-}: {
-  photo: any | null;
-  size?: number;
-  borderColor: string;
-}) {
+function SmallPortrait({ photo, size = 44, borderColor }: { photo: any; size?: number; borderColor: string }) {
   if (photo) {
     return (
       <View style={{ width: size, height: size, borderRadius: 6, overflow: "hidden", borderWidth: 1.5, borderColor }}>
@@ -91,23 +94,39 @@ export default function MatchScreen() {
   const params = useLocalSearchParams<{ opponentId: string; chapterId: string; mode: string; characterId?: string }>();
   const { completeChapter } = useGame();
 
-  const opponent = WRESTLERS.find((w) => w.id === params.opponentId) ?? WRESTLERS[0]!;
   const chapter = CAREER_CHAPTERS.find((c) => c.id === params.chapterId);
   const isExhibition = params.mode === "exhibition";
   const stipulation = chapter?.stipulation ?? "";
   const isNoDQ = /no.dq|no disqualification|hardcore|riot city rules/i.test(stipulation);
   const isCage = /cage/i.test(stipulation);
-  const opponentMoves = buildOpponentMoves(opponent);
+  const isLadder = /ladder/i.test(stipulation);
+
+  const rawOpponentIds: string[] = chapter?.opponentIds ??
+    (chapter?.opponentId ? [chapter.opponentId] :
+      (params.opponentId ? [params.opponentId] : []));
+  const opponentTeam: Wrestler[] = rawOpponentIds
+    .map((id) => WRESTLERS.find((w) => w.id === id))
+    .filter((w): w is Wrestler => !!w);
+  const resolvedTeam: Wrestler[] = opponentTeam.length > 0 ? opponentTeam : [WRESTLERS[0]!];
+
+  const rawPartnerIds: string[] = chapter?.partnerIds ?? [];
+  const partnerTeam: Wrestler[] = rawPartnerIds
+    .map((id) => WRESTLERS.find((w) => w.id === id))
+    .filter((w): w is Wrestler => !!w);
+  const isTagMatch = resolvedTeam.length > 1 || partnerTeam.length > 0;
+
   const characterId = params.characterId ?? "rich-steve";
   const characterWrestler = WRESTLERS.find((w) => w.id === characterId);
   const playerName = characterId === "rich-steve" ? "Rich $teve" : (characterWrestler?.name ?? "Rich $teve");
-
   const stevePhoto = (chapter?.playerPhotoKey ? getWrestlerPhoto(chapter.playerPhotoKey) : null) ?? getWrestlerPhoto(characterId);
-  const opponentPhoto = getWrestlerPhoto(opponent.id);
+
+  const weaponMoves = getWeaponMoves(stipulation);
 
   const [phase, setPhase] = useState<Phase>("pre-match");
   const [playerStamina, setPlayerStamina] = useState(PLAYER_BASE_STAMINA);
-  const [opponentStamina, setOpponentStamina] = useState(opponent.stamina);
+  const [partnerStamina, setPartnerStamina] = useState(partnerTeam[0]?.stamina ?? PLAYER_BASE_STAMINA);
+  const [opponentStaminas, setOpponentStaminas] = useState<number[]>(() => resolvedTeam.map((w) => w.stamina));
+  const [activeOpponentIdx, setActiveOpponentIdx] = useState(0);
   const [log, setLog] = useState<LogEntry[]>([]);
   const [marketCrashCooldown, setMarketCrashCooldown] = useState(0);
   const [distractUsed, setDistractUsed] = useState(false);
@@ -119,97 +138,166 @@ export default function MatchScreen() {
   const [turn, setTurn] = useState(1);
   const [isOpponentTurn, setIsOpponentTurn] = useState(false);
   const [signatureUsed, setSignatureUsed] = useState(false);
+  const [tagUsed, setTagUsed] = useState(false);
+  const [partnerIn, setPartnerIn] = useState(false);
+  const [climbProgress, setClimbProgress] = useState(0);
+  const [climbActive, setClimbActive] = useState(false);
 
+  const narrativeFired = useRef<Set<number>>(new Set());
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const flashAnim = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
 
-  const shake = () => {
+  const activeOpponent = resolvedTeam[activeOpponentIdx] ?? resolvedTeam[0]!;
+  const activeOpponentStamina = opponentStaminas[activeOpponentIdx] ?? 0;
+  const opponentPhoto = getWrestlerPhoto(activeOpponent.id);
+  const opponentMoves = buildOpponentMoves(activeOpponent);
+  const activePlayerName = (partnerIn && partnerTeam[0]) ? partnerTeam[0].name : playerName;
+  const activePlayerStamina = partnerIn ? partnerStamina : playerStamina;
+  const activePlayerMaxStamina = partnerIn ? (partnerTeam[0]?.stamina ?? PLAYER_BASE_STAMINA) : PLAYER_BASE_STAMINA;
+
+  const canFinisher = activeOpponentStamina <= Math.floor(activeOpponent.stamina * 0.25) && !isLadder;
+  const canMarketCrash = marketCrashCooldown === 0;
+  const canClimb = isLadder && activeOpponentStamina === 0;
+  const canCageEscape = isCage && activeOpponentStamina <= Math.floor(activeOpponent.stamina * 0.30);
+  const showClimbButton = canClimb || canCageEscape;
+
+  const staminaPct = (val: number, max: number) => Math.max(0, Math.min(1, val / max));
+  const getStaminaColor = (pct: number) => pct > 0.5 ? "#22c55e" : pct > 0.25 ? "#f59e0b" : "#ef4444";
+
+  const shake = useCallback(() => {
     Animated.sequence([
       Animated.timing(shakeAnim, { toValue: 8, duration: 60, useNativeDriver: true }),
       Animated.timing(shakeAnim, { toValue: -8, duration: 60, useNativeDriver: true }),
       Animated.timing(shakeAnim, { toValue: 4, duration: 60, useNativeDriver: true }),
       Animated.timing(shakeAnim, { toValue: 0, duration: 60, useNativeDriver: true }),
     ]).start();
-  };
+  }, [shakeAnim]);
 
-  const flash = () => {
+  const flash = useCallback(() => {
     Animated.sequence([
       Animated.timing(flashAnim, { toValue: 1, duration: 80, useNativeDriver: true }),
       Animated.timing(flashAnim, { toValue: 0, duration: 200, useNativeDriver: true }),
     ]).start();
-  };
+  }, [flashAnim]);
 
   const addLog = useCallback((text: string, type: LogEntry["type"]) => {
     setLog((prev) => [...prev, { text, type }]);
     setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
   }, []);
 
-  const endMatch = useCallback(
-    async (w: "player" | "opponent", reason: string) => {
-      setWinner(w);
-      setWinReason(reason);
-      setPhase("post-match");
-      const won = w === "player";
-      if (!isExhibition && params.chapterId) {
-        await completeChapter(params.chapterId, won, {
-          isTagTitle: params.chapterId === "ch5-lethal-lottery",
-          isHeavyweight: params.chapterId === "ch6-mac-mayhem",
-          isRiotRumble: params.chapterId === "ch5-lethal-lottery",
-        });
-      }
-      Haptics.notificationAsync(
-        won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error
-      );
-    },
-    [isExhibition, params.chapterId, completeChapter]
-  );
+  const endMatch = useCallback(async (w: "player" | "opponent", reason: string) => {
+    setWinner(w);
+    setWinReason(reason);
+    setPhase("post-match");
+    const won = w === "player";
+    if (!isExhibition && params.chapterId) {
+      await completeChapter(params.chapterId, won, {
+        isTagTitle: params.chapterId === "ch5-lethal-lottery",
+        isHeavyweight: params.chapterId === "ch6-mac-mayhem",
+        isRiotRumble: params.chapterId === "ch5-lethal-lottery",
+      });
+    }
+    Haptics.notificationAsync(won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error);
+  }, [isExhibition, params.chapterId, completeChapter]);
 
-  const opponentAttack = useCallback(
-    (pStam: number) => {
-      if (refManipActive) {
-        addLog(`${opponent.name}'s move is NEGATED by Referee Manipulation!`, "special");
-        setRefManipActive(false);
+  const checkNarrative = useCallback((oppId: string, newStam: number, maxStam: number) => {
+    const line = NARRATIVE_LINES[oppId];
+    if (!line) return;
+    const thresholds = [80, 60, 40, 20];
+    for (const t of thresholds) {
+      if ((newStam / maxStam) * 100 <= t && !narrativeFired.current.has(t)) {
+        narrativeFired.current.add(t);
+        setTimeout(() => addLog(`📢 "${line}"`, "special"), 300);
+        break;
+      }
+    }
+  }, [addLog]);
+
+  const maybeOpponentTag = useCallback((newTurn: number, staminas: number[]) => {
+    if (!isTagMatch || resolvedTeam.length <= 1) return;
+    if (newTurn % 5 !== 0) return;
+    const aliveOthers = staminas
+      .map((s, i) => ({ i, s }))
+      .filter(({ i, s }) => i !== activeOpponentIdx && s > 0);
+    if (aliveOthers.length === 0) return;
+    const next = aliveOthers[Math.floor(Math.random() * aliveOthers.length)]!;
+    setActiveOpponentIdx(next.i);
+    const incoming = resolvedTeam[next.i]!;
+    setTimeout(() => addLog(`🔄 ${activeOpponent.name} tags out — ${incoming.name} steps in!`, "system"), 200);
+  }, [isTagMatch, resolvedTeam, activeOpponentIdx, activeOpponent, addLog]);
+
+  const opponentAttack = useCallback((pStam: number) => {
+    if (refManipActive) {
+      addLog(`${activeOpponent.name}'s move is NEGATED by Referee Manipulation!`, "special");
+      setRefManipActive(false);
+      setIsOpponentTurn(false);
+      setTurn((t) => t + 1);
+      setMarketCrashCooldown((c) => Math.max(0, c - 1));
+      return;
+    }
+
+    const hasSig = !signatureUsed && Math.random() < 0.2;
+    let dmg: number;
+    let moveName: string;
+
+    if (hasSig) {
+      moveName = activeOpponent.signatureMove ?? "Signature Move";
+      dmg = 20 + Math.floor(Math.random() * 8);
+      setSignatureUsed(true);
+      addLog(`${activeOpponent.name} hits the ${moveName} for ${dmg} damage!`, "opponent");
+      flash();
+      shake();
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    } else {
+      const move = opponentMoves[Math.floor(Math.random() * opponentMoves.length)]!;
+      moveName = move.name;
+      dmg = Math.max(3, move.damage + Math.floor(Math.random() * 5) - 2);
+      addLog(`${activeOpponent.name} hits ${moveName} for ${dmg} damage.`, "opponent");
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
+
+    if (climbActive && (isLadder || isCage)) {
+      const climbLoss = Math.min(climbProgress, 25);
+      setClimbProgress((p) => Math.max(0, p - climbLoss));
+      if (climbLoss > 0) addLog(`${activeOpponent.name} drags you down! Climb progress lost.`, "system");
+    }
+
+    const newStam = Math.max(0, (partnerIn ? partnerStamina : pStam) - dmg);
+
+    if (partnerIn) {
+      setPartnerStamina(newStam);
+      if (newStam === 0) {
+        addLog(`${partnerTeam[0]?.name ?? "Your partner"} has been eliminated! You're on your own!`, "special");
+        setPartnerIn(false);
         setIsOpponentTurn(false);
         setTurn((t) => t + 1);
         setMarketCrashCooldown((c) => Math.max(0, c - 1));
         return;
       }
-
-      const hasSig = !signatureUsed && Math.random() < 0.2;
-      let dmg: number;
-      let moveName: string;
-
-      if (hasSig) {
-        moveName = opponent.signatureMove ?? "Signature Move";
-        dmg = 20 + Math.floor(Math.random() * 8);
-        setSignatureUsed(true);
-        addLog(`${opponent.name} hits the ${moveName} for ${dmg} damage!`, "opponent");
-        flash();
-        shake();
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-      } else {
-        const move = opponentMoves[Math.floor(Math.random() * opponentMoves.length)]!;
-        moveName = move.name;
-        dmg = move.damage + Math.floor(Math.random() * 5) - 2;
-        dmg = Math.max(3, dmg);
-        addLog(`${opponent.name} hits ${moveName} for ${dmg} damage.`, "opponent");
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      }
-
-      const newStam = Math.max(0, pStam - dmg);
+    } else {
       setPlayerStamina(newStam);
-
       if (newStam === 0) {
-        endMatch("opponent", `${opponent.name} wins by pinfall.`);
-      } else {
-        setIsOpponentTurn(false);
-        setTurn((t) => t + 1);
-        setMarketCrashCooldown((c) => Math.max(0, c - 1));
+        endMatch("opponent", `${activeOpponent.name} wins.`);
+        return;
       }
-    },
-    [opponent, refManipActive, signatureUsed, addLog, endMatch]
-  );
+    }
+
+    setIsOpponentTurn(false);
+    setTurn((t) => {
+      const next = t + 1;
+      setOpponentStaminas((prev) => {
+        maybeOpponentTag(next, prev);
+        return prev;
+      });
+      return next;
+    });
+    setMarketCrashCooldown((c) => Math.max(0, c - 1));
+  }, [
+    activeOpponent, refManipActive, signatureUsed, opponentMoves,
+    addLog, endMatch, flash, shake, climbActive, isLadder, isCage,
+    climbProgress, partnerIn, partnerStamina, partnerTeam, maybeOpponentTag,
+  ]);
 
   useEffect(() => {
     if (isOpponentTurn && phase === "fighting") {
@@ -218,13 +306,61 @@ export default function MatchScreen() {
     }
   }, [isOpponentTurn, phase, playerStamina, opponentAttack]);
 
-  const playerMove = (
-    moveName: string,
-    damage: number,
-    type: "normal" | "signature" | "finisher" | "distract" | "refmanip" | "guerrero"
-  ) => {
-    if (isOpponentTurn || phase !== "fighting") return;
+  const handleHotTag = () => {
+    if (tagUsed || !partnerTeam[0] || isOpponentTurn || phase !== "fighting") return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    setTagUsed(true);
+    const partner = partnerTeam[0];
+    if (partnerIn) {
+      setPartnerIn(false);
+      addLog(`🔥 HOT TAG — ${partner.name} tags back in ${playerName}!`, "special");
+    } else {
+      setPartnerIn(true);
+      addLog(`🔥 HOT TAG — ${playerName} tags in ${partner.name}!`, "special");
+    }
+    if (resolvedTeam.length > 1) {
+      setOpponentStaminas((prev) => {
+        const nextIdx = (activeOpponentIdx + 1) % resolvedTeam.length;
+        if ((prev[nextIdx] ?? 0) > 0) {
+          setActiveOpponentIdx(nextIdx);
+          const incoming = resolvedTeam[nextIdx]!;
+          addLog(`${incoming.name} rushes in to meet them!`, "system");
+        }
+        return prev;
+      });
+    }
+    setIsOpponentTurn(true);
+  };
 
+  const handleClimb = () => {
+    if (isOpponentTurn || phase !== "fighting") return;
+    if (!showClimbButton) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (!climbActive) setClimbActive(true);
+    const gain = 22 + Math.floor(Math.random() * 16);
+    const newProgress = Math.min(100, climbProgress + gain);
+    if (newProgress >= 100) {
+      setClimbProgress(100);
+      flash();
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      if (isLadder) {
+        addLog(`${activePlayerName} GRABS the contract from the top of the ladder!`, "special");
+        endMatch("player", "Win — Retrieved the Contract (Ladder Match)");
+      } else {
+        addLog(`${activePlayerName} ESCAPES over the top of the cage!`, "special");
+        endMatch("player", "Win — Cage Escape");
+      }
+    } else {
+      setClimbProgress(newProgress);
+      const label = isLadder ? "ladder" : "cage wall";
+      addLog(`${activePlayerName} climbs the ${label}... ${newProgress}% there.`, "player");
+      setIsOpponentTurn(true);
+      setMarketCrashCooldown((c) => Math.max(0, c - 1));
+    }
+  };
+
+  const playerMove = (moveName: string, damage: number, type: MoveType) => {
+    if (isOpponentTurn || phase !== "fighting") return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (type === "distract") {
@@ -237,10 +373,7 @@ export default function MatchScreen() {
     }
 
     if (type === "refmanip") {
-      if (isCage) {
-        addLog("No referee to manipulate — you're inside a steel cage.", "system");
-        return;
-      }
+      if (isCage) { addLog("No referee to manipulate — you're inside a steel cage.", "system"); return; }
       setRefManipUsed(true);
       setRefManipActive(true);
       addLog("Referee Manipulation activated — opponent's next move is negated.", "special");
@@ -250,13 +383,10 @@ export default function MatchScreen() {
     }
 
     if (type === "guerrero") {
-      if (isNoDQ) {
-        addLog("There are no disqualifications in this match — the Guerrero Special doesn't work here.", "system");
-        return;
-      }
+      if (isNoDQ) { addLog("There are no disqualifications — the Guerrero Special doesn't work here.", "system"); return; }
       setGuerreroUsed(true);
-      addLog(`${playerName} tosses the Riot Rumble Lockbox to the opponent and drops!`, "special");
-      addLog(`The referee sees the weapon — DISQUALIFICATION! ${playerName} wins by DQ!`, "special");
+      addLog(`${activePlayerName} tosses the Riot Rumble Lockbox to the opponent and drops!`, "special");
+      addLog(`The referee sees the weapon — DISQUALIFICATION! ${activePlayerName} wins by DQ!`, "special");
       flash();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       endMatch("player", "Win by Disqualification (The Guerrero Special)");
@@ -264,6 +394,7 @@ export default function MatchScreen() {
     }
 
     if (type === "finisher") {
+      if (isLadder || isCage) { addLog("No pin here — you need to climb!", "system"); return; }
       addLog("THE MONEY DROP! Big Splash connects! ONE — TWO — THREE!", "special");
       flash();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -271,41 +402,61 @@ export default function MatchScreen() {
       return;
     }
 
-    const actualDmg = damage + Math.floor(Math.random() * 5) - 2;
-    const finalDmg = Math.max(3, actualDmg);
-    const newOppStam = Math.max(0, opponentStamina - finalDmg);
-    setOpponentStamina(newOppStam);
+    const finalDmg = Math.max(3, damage + Math.floor(Math.random() * 5) - 2);
+    const newOppStam = Math.max(0, activeOpponentStamina - finalDmg);
+
+    setOpponentStaminas((prev) => {
+      const next = [...prev];
+      next[activeOpponentIdx] = newOppStam;
+      return next;
+    });
 
     if (type === "signature") {
-      addLog(`MARKET CRASH connects! ${finalDmg} damage — ${opponent.name} is rocked!`, "special");
+      addLog(`MARKET CRASH connects! ${finalDmg} damage — ${activeOpponent.name} is rocked!`, "special");
       setMarketCrashCooldown(3);
       flash();
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    } else if (type === "weapon") {
+      addLog(`${activePlayerName} hits ${moveName} for ${finalDmg} damage! BRUTAL!`, "special");
+      flash();
     } else {
-      addLog(`${playerName} hits ${moveName} for ${finalDmg} damage.`, "player");
+      addLog(`${activePlayerName} hits ${moveName} for ${finalDmg} damage.`, "player");
     }
 
+    checkNarrative(activeOpponent.id, newOppStam, activeOpponent.stamina);
+
     if (newOppStam === 0) {
-      addLog(`${opponent.name} is out cold! ${playerName} covers!`, "player");
-      endMatch("player", "Win by Pinfall");
+      if (isLadder) {
+        addLog(`${activeOpponent.name} is DOWN! Now ${activePlayerName} has to climb the ladder!`, "special");
+      } else if (isCage) {
+        addLog(`${activeOpponent.name} is weakened — the cage wall is right there!`, "special");
+        setIsOpponentTurn(true);
+        setMarketCrashCooldown((c) => Math.max(0, c - 1));
+      } else {
+        const nextAliveIdx = opponentStaminas.findIndex((s, i) => i !== activeOpponentIdx && s > 0);
+        if (isTagMatch && nextAliveIdx >= 0) {
+          addLog(`${activeOpponent.name} eliminated! The next opponent steps in!`, "special");
+          setActiveOpponentIdx(nextAliveIdx);
+          setSignatureUsed(false);
+          setIsOpponentTurn(true);
+          setMarketCrashCooldown((c) => Math.max(0, c - 1));
+        } else {
+          addLog(`${activeOpponent.name} is out cold! ${activePlayerName} covers!`, "player");
+          endMatch("player", isTagMatch ? "Win by Pinfall (Tag Match Elimination)" : "Win by Pinfall");
+        }
+      }
     } else {
       setIsOpponentTurn(true);
       setMarketCrashCooldown((c) => Math.max(0, c - 1));
     }
   };
 
-  const canFinisher = opponentStamina <= Math.floor(opponent.stamina * 0.25);
-  const canMarketCrash = marketCrashCooldown === 0;
-
-  const staminaPct = (val: number, max: number) => Math.max(0, Math.min(1, val / max));
-
-  const getStaminaColor = (pct: number) => {
-    if (pct > 0.5) return "#22c55e";
-    if (pct > 0.25) return "#f59e0b";
-    return "#ef4444";
-  };
-
   if (phase === "pre-match") {
+    const playerTeamPhotos = [stevePhoto, ...partnerTeam.map((p) => getWrestlerPhoto(p.id))];
+    const playerTeamNames = [playerName, ...partnerTeam.map((p) => p.name)];
+    const oppTeamPhotos = resolvedTeam.map((o) => getWrestlerPhoto(o.id));
+    const oppTeamNames = resolvedTeam.map((o) => o.name);
+
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.preMatch}>
@@ -313,19 +464,27 @@ export default function MatchScreen() {
             {chapter?.venue ? `${chapter.venue} · ${chapter.city}` : "EXHIBITION MATCH"}
           </Text>
           {chapter?.stipulation && (
-            <Text style={[styles.preStip, { color: colors.primary }]}>
-              {chapter.stipulation}
-            </Text>
+            <Text style={[styles.preStip, { color: colors.primary }]}>{chapter.stipulation}</Text>
           )}
 
           <View style={styles.faceoffRow}>
             <View style={styles.faceoffSide}>
-              <WrestlerPortrait
-                photo={stevePhoto}
-                name={playerName}
-                isPlayer
-                borderColor={colors.primary}
-              />
+              {isTagMatch && playerTeamPhotos.length > 1 ? (
+                <View style={styles.teamStack}>
+                  {playerTeamPhotos.map((photo, i) => (
+                    <WrestlerPortrait
+                      key={i}
+                      photo={photo}
+                      name={playerTeamNames[i] ?? ""}
+                      isPlayer
+                      size={i === 0 ? 100 : 70}
+                      borderColor={colors.primary}
+                    />
+                  ))}
+                </View>
+              ) : (
+                <WrestlerPortrait photo={stevePhoto} name={playerName} isPlayer size={120} borderColor={colors.primary} />
+              )}
             </View>
 
             <View style={styles.vsCircle}>
@@ -333,31 +492,42 @@ export default function MatchScreen() {
             </View>
 
             <View style={styles.faceoffSide}>
-              <WrestlerPortrait
-                photo={opponentPhoto}
-                name={opponent.name}
-                isPlayer={false}
-                borderColor={colors.destructive}
-              />
+              {isTagMatch && oppTeamPhotos.length > 1 ? (
+                <View style={styles.teamStack}>
+                  {oppTeamPhotos.map((photo, i) => (
+                    <WrestlerPortrait
+                      key={i}
+                      photo={photo}
+                      name={oppTeamNames[i] ?? ""}
+                      isPlayer={false}
+                      size={i === 0 ? 100 : 70}
+                      borderColor={colors.destructive}
+                    />
+                  ))}
+                </View>
+              ) : (
+                <WrestlerPortrait photo={oppTeamPhotos[0]!} name={oppTeamNames[0]!} isPlayer={false} size={120} borderColor={colors.destructive} />
+              )}
             </View>
           </View>
 
           <View style={[styles.preNote, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.preNoteText, { color: colors.mutedForeground }]}>
-              Turn-based match. Use moves, signature, and finisher strategically. Heel tactics are one-time-use per match.
+              {isTagMatch
+                ? "Tag match — use the Hot Tag once per match to bring in your partner. Heel tactics remain available."
+                : "Turn-based match. Use moves, signature, and finisher strategically. Heel tactics are one-time-use per match."}
             </Text>
           </View>
+
           <Pressable
             style={[styles.startBtn, { backgroundColor: colors.primary }]}
             onPress={() => {
               setPhase("fighting");
-              addLog(`The bell rings. ${playerName} vs. ${opponent.name}.`, "system");
-              addLog(`${playerName} is dressed for war. The gear is on.`, "system");
+              addLog(`The bell rings. ${isTagMatch ? "Tag match is underway!" : `${playerName} vs. ${activeOpponent.name}.`}`, "system");
+              addLog(`${playerName} steps in first. The gear is on.`, "system");
             }}
           >
-            <Text style={[styles.startBtnText, { color: colors.primaryForeground }]}>
-              RING THE BELL
-            </Text>
+            <Text style={[styles.startBtnText, { color: colors.primaryForeground }]}>RING THE BELL</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -371,11 +541,7 @@ export default function MatchScreen() {
         <View style={styles.postMatch}>
           <View style={styles.postPortraitRow}>
             <SmallPortrait photo={stevePhoto} size={64} borderColor={won ? colors.primary : colors.mutedForeground} />
-            <MaterialCommunityIcons
-              name={won ? "trophy" : "emoticon-sad"}
-              size={44}
-              color={won ? colors.primary : colors.mutedForeground}
-            />
+            <MaterialCommunityIcons name={won ? "trophy" : "emoticon-sad"} size={44} color={won ? colors.primary : colors.mutedForeground} />
             <SmallPortrait photo={opponentPhoto} size={64} borderColor={won ? colors.mutedForeground : colors.destructive} />
           </View>
           <Text style={[styles.postResult, { color: won ? colors.primary : colors.destructive }]}>
@@ -383,22 +549,18 @@ export default function MatchScreen() {
           </Text>
           <Text style={[styles.postReason, { color: colors.foreground }]}>{winReason}</Text>
           <Text style={[styles.postTurns, { color: colors.mutedForeground }]}>
-            Turn {turn} · {opponent.name} ended at {opponentStamina}% stamina
+            Turn {turn} · {activeOpponent.name} ended at {activeOpponentStamina}% stamina
           </Text>
           <View style={styles.postButtons}>
             {!isExhibition && chapter && (
               <Pressable
                 style={[styles.postBtn, { backgroundColor: colors.primary }]}
-                onPress={() =>
-                  router.replace({
-                    pathname: "/cutscene",
-                    params: { chapterId: chapter.id, showOutro: "true", playerWon: won ? "true" : "false" },
-                  })
-                }
+                onPress={() => router.replace({
+                  pathname: "/cutscene",
+                  params: { chapterId: chapter.id, showOutro: "true", playerWon: won ? "true" : "false" },
+                })}
               >
-                <Text style={[styles.postBtnText, { color: colors.primaryForeground }]}>
-                  CONTINUE STORY
-                </Text>
+                <Text style={[styles.postBtnText, { color: colors.primaryForeground }]}>CONTINUE STORY</Text>
               </Pressable>
             )}
             <Pressable
@@ -417,10 +579,7 @@ export default function MatchScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <Animated.View style={[{ flex: 1 }, { transform: [{ translateX: shakeAnim }] }]}>
         <Animated.View
-          style={[
-            styles.flashOverlay,
-            { opacity: flashAnim, backgroundColor: colors.primary },
-          ]}
+          style={[styles.flashOverlay, { opacity: flashAnim, backgroundColor: colors.primary }]}
           pointerEvents="none"
         />
 
@@ -431,20 +590,26 @@ export default function MatchScreen() {
 
           <View style={styles.hudInner}>
             <View style={styles.hudFighter}>
-              <SmallPortrait photo={stevePhoto} size={44} borderColor={colors.primary} />
+              <SmallPortrait
+                photo={partnerIn && partnerTeam[0] ? getWrestlerPhoto(partnerTeam[0].id) : stevePhoto}
+                size={44}
+                borderColor={colors.primary}
+              />
               <View style={styles.hudStaminaCol}>
                 <View style={[styles.hudBar, { backgroundColor: colors.secondary }]}>
-                  <Animated.View
+                  <View
                     style={[
                       styles.hudBarFill,
                       {
-                        width: `${staminaPct(playerStamina, PLAYER_BASE_STAMINA) * 100}%`,
-                        backgroundColor: getStaminaColor(staminaPct(playerStamina, PLAYER_BASE_STAMINA)),
+                        width: `${staminaPct(activePlayerStamina, activePlayerMaxStamina) * 100}%`,
+                        backgroundColor: getStaminaColor(staminaPct(activePlayerStamina, activePlayerMaxStamina)),
                       },
                     ]}
                   />
                 </View>
-                <Text style={[styles.hudName, { color: colors.primary }]}>$TEVE</Text>
+                <Text style={[styles.hudName, { color: colors.primary }]}>
+                  {partnerIn && partnerTeam[0] ? partnerTeam[0].name.split(" ")[0]!.toUpperCase() : "$TEVE"}
+                </Text>
               </View>
             </View>
 
@@ -454,19 +619,20 @@ export default function MatchScreen() {
               <SmallPortrait photo={opponentPhoto} size={44} borderColor={colors.destructive} />
               <View style={[styles.hudStaminaCol, { alignItems: "flex-end" }]}>
                 <View style={[styles.hudBar, { backgroundColor: colors.secondary }]}>
-                  <Animated.View
+                  <View
                     style={[
                       styles.hudBarFill,
                       {
-                        width: `${staminaPct(opponentStamina, opponent.stamina) * 100}%`,
-                        backgroundColor: getStaminaColor(staminaPct(opponentStamina, opponent.stamina)),
+                        width: `${staminaPct(activeOpponentStamina, activeOpponent.stamina) * 100}%`,
+                        backgroundColor: getStaminaColor(staminaPct(activeOpponentStamina, activeOpponent.stamina)),
                         alignSelf: "flex-end",
                       },
                     ]}
                   />
                 </View>
                 <Text style={[styles.hudName, { color: colors.destructive }]} numberOfLines={1}>
-                  {opponent.name.split(" ")[0]!.toUpperCase()}
+                  {activeOpponent.name.split(" ")[0]!.toUpperCase()}
+                  {isTagMatch && resolvedTeam.length > 1 ? ` (${activeOpponentIdx + 1}/${resolvedTeam.length})` : ""}
                 </Text>
               </View>
             </View>
@@ -474,6 +640,17 @@ export default function MatchScreen() {
 
           <View style={{ width: 40 }} />
         </View>
+
+        {(isLadder || isCage) && showClimbButton && (
+          <View style={[styles.climbBar, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={[styles.climbTrack, { backgroundColor: colors.secondary }]}>
+              <View style={[styles.climbFill, { width: `${climbProgress}%`, backgroundColor: colors.primary }]} />
+            </View>
+            <Text style={[styles.climbLabel, { color: colors.primary }]}>
+              {isLadder ? "LADDER CLIMB" : "CAGE ESCAPE"} — {climbProgress}%
+            </Text>
+          </View>
+        )}
 
         <ScrollView
           ref={scrollRef}
@@ -487,14 +664,10 @@ export default function MatchScreen() {
               style={[
                 styles.logEntry,
                 {
-                  color:
-                    entry.type === "special"
-                      ? colors.primary
-                      : entry.type === "player"
-                      ? colors.foreground
-                      : entry.type === "opponent"
-                      ? colors.destructive
-                      : colors.mutedForeground,
+                  color: entry.type === "special" ? colors.primary
+                    : entry.type === "player" ? colors.foreground
+                    : entry.type === "opponent" ? colors.destructive
+                    : colors.mutedForeground,
                   fontFamily: entry.type === "special" ? "Inter_600SemiBold" : "Inter_400Regular",
                 },
               ]}
@@ -504,12 +677,35 @@ export default function MatchScreen() {
           ))}
           {isOpponentTurn && (
             <Text style={[styles.logEntry, { color: colors.mutedForeground, fontStyle: "italic" }]}>
-              {opponent.name} is moving...
+              {activeOpponent.name} is moving...
             </Text>
           )}
         </ScrollView>
 
         <View style={[styles.moves, { backgroundColor: colors.background }]}>
+          {weaponMoves.length > 0 && (
+            <View style={styles.movesRow}>
+              {weaponMoves.map((wm) => (
+                <Pressable
+                  key={wm.name}
+                  style={({ pressed }) => [
+                    styles.moveBtn,
+                    styles.weaponBtn,
+                    {
+                      borderColor: colors.destructive,
+                      opacity: isOpponentTurn ? 0.4 : pressed ? 0.7 : 1,
+                    },
+                  ]}
+                  disabled={isOpponentTurn}
+                  onPress={() => playerMove(wm.name, wm.damage, "weapon")}
+                >
+                  <Text style={[styles.moveBtnText, { color: colors.destructive }]}>{wm.name}</Text>
+                  <Text style={[styles.moveDmg, { color: colors.destructive }]}>{wm.damage}</Text>
+                </Pressable>
+              ))}
+            </View>
+          )}
+
           <View style={styles.movesRow}>
             {["Shoulder Block", "Body Slam", "Back Elbow", "Nerve Hold"].map((move, idx) => {
               const damages = [8, 10, 8, 7];
@@ -555,27 +751,47 @@ export default function MatchScreen() {
               </Text>
             </Pressable>
 
-            <Pressable
-              style={({ pressed }) => [
-                styles.finBtn,
-                {
-                  backgroundColor: canFinisher && !isOpponentTurn ? colors.primary : colors.secondary,
-                  borderColor: colors.border,
-                  opacity: !canFinisher || isOpponentTurn ? 0.3 : pressed ? 0.85 : 1,
-                },
-              ]}
-              disabled={!canFinisher || isOpponentTurn}
-              onPress={() => playerMove("Money Drop", 0, "finisher")}
-            >
-              <MaterialCommunityIcons
-                name="lightning-bolt"
-                size={16}
-                color={canFinisher ? colors.primaryForeground : colors.mutedForeground}
-              />
-              <Text style={[styles.finBtnText, { color: canFinisher ? colors.primaryForeground : colors.mutedForeground }]}>
-                MONEY DROP
-              </Text>
-            </Pressable>
+            {showClimbButton ? (
+              <Pressable
+                style={({ pressed }) => [
+                  styles.finBtn,
+                  {
+                    backgroundColor: !isOpponentTurn ? colors.primary : colors.secondary,
+                    borderColor: colors.border,
+                    opacity: isOpponentTurn ? 0.4 : pressed ? 0.85 : 1,
+                  },
+                ]}
+                disabled={isOpponentTurn}
+                onPress={handleClimb}
+              >
+                <MaterialCommunityIcons name="ladder" size={16} color={!isOpponentTurn ? colors.primaryForeground : colors.mutedForeground} />
+                <Text style={[styles.finBtnText, { color: !isOpponentTurn ? colors.primaryForeground : colors.mutedForeground }]}>
+                  {isLadder ? "CLIMB" : "ESCAPE"}
+                </Text>
+              </Pressable>
+            ) : (
+              <Pressable
+                style={({ pressed }) => [
+                  styles.finBtn,
+                  {
+                    backgroundColor: canFinisher && !isOpponentTurn ? colors.primary : colors.secondary,
+                    borderColor: colors.border,
+                    opacity: !canFinisher || isOpponentTurn ? 0.3 : pressed ? 0.85 : 1,
+                  },
+                ]}
+                disabled={!canFinisher || isOpponentTurn}
+                onPress={() => playerMove("Money Drop", 0, "finisher")}
+              >
+                <MaterialCommunityIcons
+                  name="lightning-bolt"
+                  size={16}
+                  color={canFinisher ? colors.primaryForeground : colors.mutedForeground}
+                />
+                <Text style={[styles.finBtnText, { color: canFinisher ? colors.primaryForeground : colors.mutedForeground }]}>
+                  MONEY DROP
+                </Text>
+              </Pressable>
+            )}
           </View>
 
           <View style={styles.heelRow}>
@@ -588,6 +804,7 @@ export default function MatchScreen() {
               >
                 <Text style={[styles.heelBtnText, { color: colors.foreground }]}>DISTRACT</Text>
               </Pressable>
+
               <Pressable
                 style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.border, opacity: refManipUsed || isOpponentTurn || isCage ? 0.35 : 1 }]}
                 disabled={refManipUsed || isOpponentTurn || isCage}
@@ -595,6 +812,7 @@ export default function MatchScreen() {
               >
                 <Text style={[styles.heelBtnText, { color: colors.foreground }]}>{isCage ? "NO REF" : "REF MANIP"}</Text>
               </Pressable>
+
               <Pressable
                 style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.border, opacity: guerreroUsed || isOpponentTurn || isNoDQ ? 0.35 : 1 }]}
                 disabled={guerreroUsed || isOpponentTurn || isNoDQ}
@@ -602,6 +820,18 @@ export default function MatchScreen() {
               >
                 <Text style={[styles.heelBtnText, { color: colors.foreground }]}>{isNoDQ ? "NO DQ" : "GUERRERO"}</Text>
               </Pressable>
+
+              {isTagMatch && partnerTeam.length > 0 && (
+                <Pressable
+                  style={[styles.heelBtn, { backgroundColor: tagUsed ? colors.card : colors.accent, borderColor: colors.border, opacity: tagUsed || isOpponentTurn ? 0.35 : 1 }]}
+                  disabled={tagUsed || isOpponentTurn}
+                  onPress={handleHotTag}
+                >
+                  <Text style={[styles.heelBtnText, { color: tagUsed ? colors.foreground : "#fff" }]}>
+                    {tagUsed ? "TAGGED" : "HOT TAG"}
+                  </Text>
+                </Pressable>
+              )}
             </View>
           </View>
         </View>
@@ -620,38 +850,19 @@ const styles = StyleSheet.create({
 
   preMatch: { flex: 1, alignItems: "center", justifyContent: "center", padding: 20, gap: 12 },
   preEra: { fontSize: 10, letterSpacing: 3, fontFamily: "Inter_500Medium", textAlign: "center" },
-  preStip: { fontSize: 13, fontFamily: "Inter_700Bold", letterSpacing: 1, textAlign: "center" },
+  preStip: { fontSize: 12, fontFamily: "Inter_700Bold", letterSpacing: 1, textAlign: "center" },
 
-  faceoffRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 12,
-    marginVertical: 8,
-    width: "100%",
-  },
+  faceoffRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 12, marginVertical: 8, width: "100%" },
   faceoffSide: { flex: 1, alignItems: "center" },
+  teamStack: { gap: 6, alignItems: "center" },
   vsCircle: { alignItems: "center", justifyContent: "center" },
   vsText: { fontSize: 22, fontFamily: "Inter_700Bold" },
 
   portraitBox: { overflow: "hidden", position: "relative" },
   portraitImg: { width: "100%", height: "100%" },
   portraitPlaceholder: { alignItems: "center", justifyContent: "center", gap: 4 },
-  portraitNameBar: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    paddingVertical: 4,
-    paddingHorizontal: 6,
-    alignItems: "center",
-  },
-  portraitNameText: {
-    fontSize: 9,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1,
-    color: "#FFFFFF",
-  },
+  portraitNameBar: { position: "absolute", bottom: 0, left: 0, right: 0, paddingVertical: 4, paddingHorizontal: 6, alignItems: "center" },
+  portraitNameText: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 1, color: "#FFFFFF" },
 
   preNote: { borderWidth: 1, borderRadius: 6, padding: 12, width: "100%" },
   preNoteText: { fontSize: 11, fontFamily: "Inter_400Regular", lineHeight: 16, textAlign: "center" },
@@ -670,14 +881,7 @@ const styles = StyleSheet.create({
   postBtn: { borderRadius: 6, paddingVertical: 14, alignItems: "center" },
   postBtnText: { fontSize: 13, fontFamily: "Inter_600SemiBold", letterSpacing: 1 },
 
-  matchHUD: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    gap: 4,
-  },
+  matchHUD: { flexDirection: "row", alignItems: "center", paddingHorizontal: 8, paddingVertical: 10, borderBottomWidth: 1, gap: 4 },
   backBtn: { width: 40, height: 44, alignItems: "center", justifyContent: "center" },
   hudInner: { flex: 1, flexDirection: "row", alignItems: "center", gap: 8 },
   hudFighter: { flex: 1, flexDirection: "row", alignItems: "center", gap: 8 },
@@ -687,59 +891,31 @@ const styles = StyleSheet.create({
   hudName: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 1 },
   hudTurn: { fontSize: 11, fontFamily: "Inter_600SemiBold", letterSpacing: 1, textAlign: "center", minWidth: 28 },
 
-  logArea: {
-    flex: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    marginHorizontal: 0,
-  },
+  climbBar: { paddingHorizontal: 12, paddingVertical: 6, borderBottomWidth: 1, gap: 4 },
+  climbTrack: { height: 6, borderRadius: 3, overflow: "hidden" },
+  climbFill: { height: "100%", borderRadius: 3 },
+  climbLabel: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 2, textAlign: "center" },
+
+  logArea: { flex: 1, borderTopWidth: 1, borderBottomWidth: 1 },
   logEntry: { fontSize: 13, lineHeight: 20 },
 
   moves: { paddingTop: 8, paddingBottom: 4 },
   movesRow: { flexDirection: "row", paddingHorizontal: 8, gap: 6, marginBottom: 8 },
-  moveBtn: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingVertical: 10,
-    alignItems: "center",
-    gap: 2,
-  },
+  moveBtn: { flex: 1, borderWidth: 1, borderRadius: 6, paddingVertical: 10, alignItems: "center", gap: 2 },
+  weaponBtn: { backgroundColor: "transparent" },
   moveBtnText: { fontSize: 9, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5, textAlign: "center" },
   moveDmg: { fontSize: 9, fontFamily: "Inter_700Bold" },
 
   specialRow: { flexDirection: "row", paddingHorizontal: 8, gap: 8, marginBottom: 8 },
-  sigBtn: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    alignItems: "center",
-  },
+  sigBtn: { flex: 1, borderWidth: 1, borderRadius: 6, paddingVertical: 10, paddingHorizontal: 12, alignItems: "center" },
   sigBtnText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 1 },
   sigSub: { fontSize: 9, fontFamily: "Inter_400Regular", marginTop: 2 },
-  finBtn: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-  },
+  finBtn: { flex: 1, borderWidth: 1, borderRadius: 6, paddingVertical: 10, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
   finBtnText: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 1 },
 
   heelRow: { paddingHorizontal: 8, paddingBottom: 8 },
   heelLabel: { fontSize: 9, fontFamily: "Inter_700Bold", letterSpacing: 2, marginBottom: 6 },
-  heelBtns: { flexDirection: "row", gap: 8 },
-  heelBtn: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingVertical: 8,
-    alignItems: "center",
-  },
-  heelBtnText: { fontSize: 9, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5 },
+  heelBtns: { flexDirection: "row", gap: 8, flexWrap: "wrap" },
+  heelBtn: { flex: 1, minWidth: 70, borderWidth: 1, borderRadius: 6, paddingVertical: 8, alignItems: "center" },
+  heelBtnText: { fontSize: 10, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5 },
 });
