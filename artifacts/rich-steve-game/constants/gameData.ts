@@ -22,6 +22,7 @@ export interface Wrestler {
   weight?: string;
   hometown?: string;
   ratings?: WrestlerRatings;
+  peakRatings?: Partial<WrestlerRatings>;
 }
 
 export interface CareerChapter {
@@ -47,6 +48,7 @@ export interface CareerChapter {
   matchless?: boolean;
   promoGame?: PromoChallenge[];
   playerPhotoKey?: string;
+  ratingOverrides?: { [wrestlerId: string]: Partial<WrestlerRatings> };
 }
 
 export interface CutsceneSlide {
@@ -232,6 +234,7 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Running Shoulder Block", "Corner Splash", "Blue Collar Bomb", "Gutwrench Slam"],
     signatureMove: "Blue Collar Bomb",
     ratings: { power: 87, speed: 69, technical: 74, toughness: 85, mic: 82, heat: 80, overall: 84 },
+    peakRatings: { power: 93, mic: 90, heat: 90 },
   },
   {
     id: "ryan-vox",
@@ -247,6 +250,7 @@ export const WRESTLERS: Wrestler[] = [
     weight: "170 lbs",
     hometown: "Philadelphia, PA",
     ratings: { power: 67, speed: 89, technical: 77, toughness: 68, mic: 74, heat: 72, overall: 78 },
+    peakRatings: { speed: 94, heat: 80 },
   },
   {
     id: "wrex-savage",
@@ -259,6 +263,7 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Lariat", "Powerbomb", "Spear", "Overhead Belly-to-Belly"],
     signatureMove: null,
     ratings: { power: 88, speed: 63, technical: 70, toughness: 84, mic: 66, heat: 74, overall: 77 },
+    peakRatings: { power: 93, toughness: 89, heat: 80 },
   },
   {
     id: "kory-cross",
@@ -309,6 +314,7 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Crossbody", "Armbar", "Neckbreaker", "Spinning Elbow", "Running Dropkick"],
     signatureMove: null,
     ratings: { power: 84, speed: 64, technical: 72, toughness: 83, mic: 68, heat: 77, overall: 76 },
+    peakRatings: { power: 89, speed: 68, technical: 76, toughness: 88, heat: 85 },
   },
   {
     id: "ray-rumble",
@@ -383,6 +389,7 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Lariat", "German Suplex", "Running Powerslam", "Headbutt", "Corner Splash"],
     signatureMove: null,
     ratings: { power: 84, speed: 70, technical: 74, toughness: 83, mic: 75, heat: 73, overall: 79 },
+    peakRatings: { toughness: 92, heat: 82 },
   },
   // ─── ERA 5: THE GUERRERO TARGET ──────────────────────────────
   {
@@ -3006,6 +3013,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "big-mike",
     stipulation: "6-Man Tag — Team Big Mike (Yams + Big Mike + Working Class Heroes) vs Project Mayhem — Camden Moose Lodge, Camden, Delaware",
     historicalResult: "story",
+    ratingOverrides: { "yams": { toughness: 91 } },
     historicalNote: "April 27, 2019. The Final Shot. Camden Moose Lodge, Camden, Delaware — not the usual Delaware Agricultural Museum in Dover. This show was an audible. The plan had been 'Wargames' — a war games match to close out the Mayhem vs Rampage feud in the format it deserved. A week before that show, the world fell apart. Greywolf dropped. Ryan Vox dropped. Killian McMurphy dropped. The company threw together what they could with who was still available and moved the show to the Camden Moose Lodge. The result is still real — it happened, everyone did their time — but the conclusion they had built toward never came. Big Mike becomes GM. Jay Cortez gets pinned — the stipulation's fulcrum. The company went dormant after. A few one-off shows followed, none involving Rich $teve. The ending the story deserved only happens now — in the game.",
     introCutscene: [
       {
@@ -3078,6 +3086,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     partnerIds: ["mac-mayhem", "ryan-vox"],
     stipulation: "War Games — Project Mayhem vs Team Rampage",
     historicalResult: "win",
+    ratingOverrides: { "yams": { toughness: 93 } },
     historicalNote: "The Wargames match was the planned conclusion to the Mayhem vs Rampage feud — two rings inside one giant cage, teams entering one at a time, the format that matches the scope of what they built. A week before the show, everything fell apart. Greywolf dropped. Vox dropped. Killian dropped. The company threw together The Final Shot in Camden instead. In real life, the story ended there. In the game — it ends here, the right way.",
     introCutscene: [
       {
@@ -3146,6 +3155,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "mac-mayhem",
     stipulation: "Rampage Heavyweight Championship — Mayhem Rules Match",
     historicalResult: "win",
+    ratingOverrides: { "mac-mayhem": { power: 93, mic: 90, heat: 90 } },
     historicalNote: "This match was planned but never happened. Rampage collapsed before the story could finish. Here — you finish it. You must win to advance.",
     introCutscene: [
       {
@@ -3225,6 +3235,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "johnny-xross",
     stipulation: "Rampage Heavyweight Championship",
     historicalResult: "lose",
+    ratingOverrides: { "johnny-xross": { power: 89, speed: 68, technical: 76, toughness: 88, heat: 85 } },
     historicalNote: "The planned true ending. Xross had been sending signals for weeks — promos of him at a sporting goods store, asking the clerk: 'What hurts more? The wood bat or the aluminum?' Callbacks to June 2016 at OTCW. The check was being written for a long time. #BRUH went face for a reason that had nothing to do with storyline: after a show, a little Black kid in the crowd asked Steve where 'the army man' was — Xross and Ray Rumble in their BRUH camouflage gear. Steve never broke character. He didn't give that kid a high five. But he walked backstage and said: '#BRUH can't be heels anymore. They're too important for representation.' The turn wasn't a booking decision. It was that kid asking for the army man. Xross returning means every wrong across OTCW, Rampage, and three years of being used by Mayhem gets answered. In one match. This is the retribution.",
     introCutscene: [
       {

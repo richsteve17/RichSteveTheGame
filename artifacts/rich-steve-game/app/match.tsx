@@ -16,6 +16,7 @@ import { useGame } from "@/context/GameContext";
 import { useColors } from "@/hooks/useColors";
 import { CAREER_CHAPTERS, WRESTLERS, type Wrestler } from "@/constants/gameData";
 import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
+import { resolveRatings, getEffectiveRatings } from "@/utils/resolveRatings";
 
 type Phase = "pre-match" | "fighting" | "post-match";
 type MoveType = "normal" | "signature" | "finisher" | "distract" | "refmanip" | "guerrero" | "weapon";
@@ -104,7 +105,8 @@ export default function MatchScreen() {
     partnerId?: string;
     isTitleMatch?: string;
   }>();
-  const { completeChapter, recordFreePlayMatch } = useGame();
+  const { completeChapter, recordFreePlayMatch, gameState } = useGame();
+  const heatTier = gameState.freePlayStats.heatTier;
 
   const chapter = CAREER_CHAPTERS.find((c) => c.id === params.chapterId);
   const isExhibition = params.mode === "exhibition";
@@ -121,7 +123,16 @@ export default function MatchScreen() {
   const opponentTeam: Wrestler[] = rawOpponentIds
     .map((id) => WRESTLERS.find((w) => w.id === id))
     .filter((w): w is Wrestler => !!w);
-  const resolvedTeam: Wrestler[] = opponentTeam.length > 0 ? opponentTeam : [WRESTLERS[0]!];
+  const baseTeam: Wrestler[] = opponentTeam.length > 0 ? opponentTeam : [WRESTLERS[0]!];
+  const resolvedTeam: Wrestler[] = baseTeam.map((w) => {
+    if (isFreePlay) {
+      const effectiveRatings = getEffectiveRatings(w, heatTier);
+      return { ...w, ratings: effectiveRatings };
+    }
+    const override = chapter?.ratingOverrides?.[w.id];
+    if (!override) return w;
+    return { ...w, ratings: resolveRatings(w, override) };
+  });
 
   const rawPartnerIds: string[] = chapter?.partnerIds ??
     (params.partnerId ? [params.partnerId] : []);

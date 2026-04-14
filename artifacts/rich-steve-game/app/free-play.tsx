@@ -16,6 +16,7 @@ import { useGame } from "@/context/GameContext";
 import { useColors } from "@/hooks/useColors";
 import { WRESTLERS, RICH_STEVE } from "@/constants/gameData";
 import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
+import { getEffectiveRatings } from "@/utils/resolveRatings";
 
 type MCIName = ComponentProps<typeof MaterialCommunityIcons>["name"];
 type HeatTier = "unknown" | "local" | "regional" | "national" | "main-event";
@@ -62,15 +63,17 @@ export default function FreePlayScreen() {
   const ovrCap = TIER_OVR_CAP[tier];
 
   const allFighters = WRESTLERS.filter((w) => w.role !== "Manager" && w.ratings);
-  const bossWrestler = allFighters.sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0))[0] ?? null;
+  const effectiveOvr = (w: typeof allFighters[0]) => getEffectiveRatings(w, tier).overall;
+  const bossWrestler = allFighters.slice().sort((a, b) => effectiveOvr(b) - effectiveOvr(a))[0] ?? null;
 
   const availableOpponents = allFighters
-    .filter((w) => w.ratings && w.ratings.overall <= ovrCap)
-    .sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0));
+    .filter((w) => effectiveOvr(w) <= ovrCap)
+    .sort((a, b) => effectiveOvr(b) - effectiveOvr(a));
 
   const availableStips = STIPULATIONS.filter((s) => fp.heat >= s.heatRequired);
   const lockedStips = STIPULATIONS.filter((s) => fp.heat < s.heatRequired);
-  const availablePartners = allFighters.sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0));
+  const baseOvr = (w: typeof allFighters[0]) => w.ratings?.overall ?? 0;
+  const availablePartners = allFighters.slice().sort((a, b) => baseOvr(b) - baseOvr(a));
 
   const [opponentId, setOpponentId] = useState<string | null>(null);
   const [stipulation, setStipulation] = useState(STIPULATIONS[0]!.value);
@@ -91,6 +94,7 @@ export default function FreePlayScreen() {
 
   const startMatch = () => {
     if (!opponentId || !selectedOpponent) return;
+    const effectiveOpp = getEffectiveRatings(selectedOpponent, tier);
     router.push({
       pathname: "/match",
       params: {
@@ -98,7 +102,7 @@ export default function FreePlayScreen() {
         chapterId: "",
         mode: "freePlay",
         stipulationParam: stipulation,
-        freePlayOpponentOvr: String(selectedOpponent.ratings?.overall ?? 70),
+        freePlayOpponentOvr: String(effectiveOpp.overall),
         partnerId: partnerId ?? "",
         isTitleMatch: isTitleMatch ? "true" : "false",
       },
@@ -183,7 +187,7 @@ export default function FreePlayScreen() {
                 </View>
               </View>
               <Text style={[styles.rosterOvr, { color: "#D4AF37" }]}>
-                OVR {bossWrestler.ratings?.overall}
+                OVR {effectiveOvr(bossWrestler)}
               </Text>
             </Pressable>
           </View>
@@ -317,7 +321,7 @@ export default function FreePlayScreen() {
                         {w.name}
                       </Text>
                       <Text style={[styles.rosterOvr, { color: sel ? colors.primary : colors.mutedForeground }]}>
-                        OVR {w.ratings?.overall}
+                        OVR {baseOvr(w)}
                       </Text>
                     </Pressable>
                   );
@@ -375,7 +379,7 @@ export default function FreePlayScreen() {
                     </View>
                   )}
                   <Text style={[styles.rosterOvr, { color: sel ? colors.primary : colors.mutedForeground }]}>
-                    OVR {w.ratings?.overall}
+                    OVR {effectiveOvr(w)}
                   </Text>
                 </Pressable>
               );
