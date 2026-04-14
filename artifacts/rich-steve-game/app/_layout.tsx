@@ -26,6 +26,8 @@ function RootLayoutNav() {
       <Stack.Screen name="match" options={{ headerShown: false }} />
       <Stack.Screen name="cutscene" options={{ headerShown: false }} />
       <Stack.Screen name="promo" options={{ headerShown: false }} />
+      <Stack.Screen name="legacy" options={{ headerShown: false }} />
+      <Stack.Screen name="free-play" options={{ headerShown: false }} />
     </Stack>
   );
 }

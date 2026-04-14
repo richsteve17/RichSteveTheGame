@@ -4,7 +4,6 @@ import React from "react";
 import {
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -12,184 +11,112 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGame } from "@/context/GameContext";
 import { useColors } from "@/hooks/useColors";
-import { CAREER_CHAPTERS, ERAS } from "@/constants/gameData";
+import { CAREER_CHAPTERS } from "@/constants/gameData";
 
 export default function CareerScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { isChapterUnlocked, isChapterCompleted, gameState } = useGame();
+  const { gameState, isChapterCompleted } = useGame();
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
-  const getEraProgress = (eraId: number) => {
-    const era = ERAS.find((e) => e.id === eraId);
-    if (!era) return { done: 0, total: 0 };
-    const done = era.chapterIds.filter((id) => isChapterCompleted(id)).length;
-    return { done, total: era.chapterIds.length };
+  const completedCount = CAREER_CHAPTERS.filter((c) => isChapterCompleted(c.id)).length;
+  const totalCount = CAREER_CHAPTERS.length;
+  const fp = gameState.freePlayStats;
+
+  const tierColor = (tier: string) => {
+    switch (tier) {
+      case "main-event": return "#D4AF37";
+      case "national": return "#22c55e";
+      case "regional": return "#3b82f6";
+      case "local": return "#f97316";
+      default: return colors.mutedForeground;
+    }
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingTop: topPad + 8, paddingBottom: insets.bottom + 100 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.pageHeader}>
-        <Text style={[styles.pageTitle, { color: colors.primary }]}>CAREER MODE</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.header, { paddingTop: topPad + 12 }]}>
+        <Text style={[styles.pageTitle, { color: colors.primary }]}>CAREER</Text>
         <Text style={[styles.pageSubtitle, { color: colors.mutedForeground }]}>
-          13 YEARS · 7 ERAS · 29 CHAPTERS
+          SELECT YOUR PATH
         </Text>
       </View>
 
-      {gameState.tagTitlesWon && (
-        <View style={[styles.titleBelt, { backgroundColor: colors.primary }]}>
-          <MaterialCommunityIcons name="trophy" size={16} color={colors.primaryForeground} />
-          <Text style={[styles.titleBeltText, { color: colors.primaryForeground }]}>
-            RAMPAGE TAG TEAM CHAMPIONSHIPS — HELD SOLO
-          </Text>
-        </View>
-      )}
-      {gameState.heavyweightTitleWon && (
-        <View style={[styles.titleBelt, { backgroundColor: colors.primary }]}>
-          <MaterialCommunityIcons name="crown" size={16} color={colors.primaryForeground} />
-          <Text style={[styles.titleBeltText, { color: colors.primaryForeground }]}>
-            RAMPAGE HEAVYWEIGHT CHAMPIONSHIP
-          </Text>
-        </View>
-      )}
-
-      {ERAS.map((era) => {
-        const progress = getEraProgress(era.id);
-        const eraChapters = CAREER_CHAPTERS.filter((c) => c.era === era.id);
-        const eraUnlocked = isChapterUnlocked(era.chapterIds[0]!);
-
-        return (
-          <View key={era.id} style={[styles.eraBlock, { borderColor: colors.border }]}>
-            <View style={styles.eraHeader}>
-              <View style={styles.eraHeaderLeft}>
-                <Text style={[styles.eraName, { color: colors.primary }]}>
-                  {era.name}
-                </Text>
-                <Text style={[styles.eraSubtitle, { color: colors.foreground }]}>
-                  {era.subtitle}
-                </Text>
-                <Text style={[styles.eraYears, { color: colors.mutedForeground }]}>
-                  {era.years}
-                </Text>
-              </View>
-              <View style={[styles.eraProgress, { backgroundColor: colors.card }]}>
-                <Text style={[styles.eraProgressNum, { color: eraUnlocked ? colors.primary : colors.mutedForeground }]}>
-                  {progress.done}/{progress.total}
-                </Text>
-              </View>
-            </View>
-
-            <Text style={[styles.eraDesc, { color: colors.mutedForeground }]}>
-              {era.description}
-            </Text>
-
-            <View style={styles.chapters}>
-              {eraChapters.map((chapter, idx) => {
-                const unlocked = isChapterUnlocked(chapter.id);
-                const completed = isChapterCompleted(chapter.id);
-
-                return (
-                  <Pressable
-                    key={chapter.id}
-                    style={({ pressed }) => [
-                      styles.chapter,
-                      {
-                        backgroundColor: completed
-                          ? colors.card
-                          : unlocked
-                          ? colors.secondary
-                          : colors.card,
-                        borderColor: completed ? colors.primary : colors.border,
-                        opacity: pressed ? 0.8 : 1,
-                      },
-                    ]}
-                    disabled={!unlocked}
-                    onPress={() =>
-                      router.push({
-                        pathname: chapter.matchless ? "/promo" : "/cutscene",
-                        params: { chapterId: chapter.id },
-                      })
-                    }
-                  >
-                    <View style={styles.chapterLeft}>
-                      {completed ? (
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                      ) : unlocked ? (
-                        chapter.matchless ? (
-                          <Ionicons name="book" size={20} color={colors.foreground} />
-                        ) : (
-                          <MaterialCommunityIcons name="sword-cross" size={22} color={colors.foreground} />
-                        )
-                      ) : (
-                        <Ionicons name="lock-closed" size={18} color={colors.mutedForeground} />
-                      )}
-                    </View>
-                    <View style={styles.chapterContent}>
-                      <Text
-                        style={[
-                          styles.chapterTitle,
-                          { color: unlocked ? colors.foreground : colors.mutedForeground },
-                        ]}
-                      >
-                        {chapter.title}
-                      </Text>
-                      <Text style={[styles.chapterMeta, { color: colors.mutedForeground }]}>
-                        {chapter.date} · {chapter.venue}
-                      </Text>
-                      <Text style={[styles.chapterStip, { color: colors.mutedForeground }]}>
-                        {chapter.stipulation}
-                      </Text>
-                      {chapter.riotRumbleChapter && !gameState.riotRumbleContractUsed && (
-                        <View style={[styles.contractTag, { backgroundColor: colors.primary }]}>
-                          <Text style={[styles.contractTagText, { color: colors.primaryForeground }]}>
-                            RIOT RUMBLE CONTRACT
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                    <View style={styles.chapterRight}>
-                      {unlocked && (
-                        <Ionicons
-                          name="chevron-forward"
-                          size={18}
-                          color={completed ? colors.primary : colors.mutedForeground}
-                        />
-                      )}
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </View>
+      <View style={styles.cards}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.modeCard,
+            styles.legacyCard,
+            { borderColor: colors.primary, backgroundColor: colors.card, opacity: pressed ? 0.85 : 1 },
+          ]}
+          onPress={() => router.push("/legacy")}
+        >
+          <View style={[styles.modeBadge, { backgroundColor: colors.primary }]}>
+            <Text style={[styles.modeBadgeText, { color: colors.primaryForeground }]}>LEGACY MODE</Text>
           </View>
-        );
-      })}
+          <MaterialCommunityIcons name="book-open-variant" size={40} color={colors.primary} style={styles.modeIcon} />
+          <Text style={[styles.modeTitle, { color: colors.foreground }]}>Follow the Exact Path</Text>
+          <Text style={[styles.modeDesc, { color: colors.mutedForeground }]}>
+            13 years. 7 eras. 29 chapters. Play it exactly as it happened — or get written out of the history books.
+          </Text>
+          <View style={styles.modeStats}>
+            <Text style={[styles.modeStatLine, { color: colors.primary }]}>
+              {completedCount} / {totalCount} chapters complete
+            </Text>
+          </View>
+          <View style={styles.modeArrow}>
+            <Ionicons name="chevron-forward" size={20} color={colors.primary} />
+          </View>
+        </Pressable>
 
-      <View style={[styles.archiveNote, { borderColor: colors.border }]}>
-        <Text style={[styles.archiveTitle, { color: colors.primary }]}>BOOKSTORE INCIDENT</Text>
-        <Text style={[styles.archiveText, { color: colors.mutedForeground }]}>
-          "Are people actually paying money to meet this guy? How many people have actually come to see this fat piece of crap today? Zero. That is hilarious, Mike."
+        <Pressable
+          style={({ pressed }) => [
+            styles.modeCard,
+            { borderColor: colors.border, backgroundColor: colors.card, opacity: pressed ? 0.85 : 1 },
+          ]}
+          onPress={() => router.push("/free-play")}
+        >
+          <View style={[styles.modeBadge, { backgroundColor: colors.secondary }]}>
+            <Text style={[styles.modeBadgeText, { color: colors.foreground }]}>FREE PLAY</Text>
+          </View>
+          <MaterialCommunityIcons name="fire" size={40} color={tierColor(fp.heatTier)} style={styles.modeIcon} />
+          <Text style={[styles.modeTitle, { color: colors.foreground }]}>Your Career, Your Rules</Text>
+          <Text style={[styles.modeDesc, { color: colors.mutedForeground }]}>
+            Full roster. Any stipulation. Any outcome. Heat is the currency — book your own path to the main event.
+          </Text>
+          <View style={styles.modeStats}>
+            <Text style={[styles.modeStatLine, { color: tierColor(fp.heatTier) }]}>
+              {fp.heat} HEAT — {fp.heatTier.toUpperCase().replace("-", " ")}
+            </Text>
+            <Text style={[styles.modeStatSub, { color: colors.mutedForeground }]}>
+              {fp.wins}W · {fp.losses}L · {fp.totalMatches} matches
+            </Text>
+          </View>
+          <View style={styles.modeArrow}>
+            <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
+          </View>
+        </Pressable>
+      </View>
+
+      <View style={[styles.quote, { borderColor: colors.border }]}>
+        <Text style={[styles.quoteText, { color: colors.mutedForeground }]}>
+          "Are people actually paying money to meet this guy?"
         </Text>
-        <Text style={[styles.archiveAttrib, { color: colors.mutedForeground }]}>
+        <Text style={[styles.quoteAttrib, { color: colors.mutedForeground }]}>
           — Rich $teve, Big Mike Day, Lancaster, PA
         </Text>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  pageHeader: {
+  container: { flex: 1 },
+  header: {
     paddingHorizontal: 24,
-    paddingBottom: 16,
+    paddingBottom: 20,
   },
   pageTitle: {
     fontSize: 28,
@@ -202,136 +129,78 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     marginTop: 4,
   },
-  titleBelt: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 24,
-    marginBottom: 16,
-    borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    gap: 8,
+  cards: {
+    paddingHorizontal: 16,
+    gap: 12,
   },
-  titleBeltText: {
-    fontSize: 10,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1.5,
-  },
-  eraBlock: {
-    marginHorizontal: 16,
-    marginBottom: 16,
+  modeCard: {
     borderWidth: 1,
-    borderRadius: 8,
-    padding: 16,
+    borderRadius: 10,
+    padding: 20,
+    position: "relative",
   },
-  eraHeader: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    marginBottom: 8,
+  legacyCard: {
+    borderWidth: 2,
   },
-  eraHeaderLeft: {
-    flex: 1,
+  modeBadge: {
+    alignSelf: "flex-start",
+    borderRadius: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    marginBottom: 12,
   },
-  eraName: {
-    fontSize: 13,
+  modeBadgeText: {
+    fontSize: 9,
     fontFamily: "Inter_700Bold",
     letterSpacing: 2,
   },
-  eraSubtitle: {
-    fontSize: 16,
-    fontFamily: "Inter_600SemiBold",
-    marginTop: 2,
+  modeIcon: {
+    marginBottom: 10,
   },
-  eraYears: {
-    fontSize: 11,
-    fontFamily: "Inter_400Regular",
-    marginTop: 2,
-  },
-  eraProgress: {
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  eraProgressNum: {
-    fontSize: 13,
+  modeTitle: {
+    fontSize: 20,
     fontFamily: "Inter_700Bold",
+    marginBottom: 8,
   },
-  eraDesc: {
-    fontSize: 12,
+  modeDesc: {
+    fontSize: 13,
     fontFamily: "Inter_400Regular",
-    lineHeight: 18,
+    lineHeight: 20,
     marginBottom: 14,
   },
-  chapters: {
-    gap: 8,
-  },
-  chapter: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 6,
-    borderWidth: 1,
-    padding: 12,
-    gap: 10,
-  },
-  chapterLeft: {
-    width: 28,
-    alignItems: "center",
-  },
-  chapterContent: {
-    flex: 1,
+  modeStats: {
     gap: 2,
   },
-  chapterTitle: {
-    fontSize: 14,
-    fontFamily: "Inter_600SemiBold",
-  },
-  chapterMeta: {
-    fontSize: 11,
-    fontFamily: "Inter_400Regular",
-  },
-  chapterStip: {
-    fontSize: 10,
-    fontFamily: "Inter_500Medium",
-    letterSpacing: 0.5,
-  },
-  contractTag: {
-    alignSelf: "flex-start",
-    marginTop: 4,
-    borderRadius: 3,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-  },
-  contractTagText: {
-    fontSize: 9,
+  modeStatLine: {
+    fontSize: 12,
     fontFamily: "Inter_700Bold",
     letterSpacing: 1,
   },
-  chapterRight: {
-    width: 20,
-    alignItems: "center",
+  modeStatSub: {
+    fontSize: 11,
+    fontFamily: "Inter_400Regular",
   },
-  archiveNote: {
+  modeArrow: {
+    position: "absolute",
+    top: 20,
+    right: 16,
+  },
+  quote: {
     margin: 16,
+    marginTop: 20,
     borderWidth: 1,
     borderRadius: 8,
     padding: 16,
   },
-  archiveTitle: {
-    fontSize: 11,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 3,
-    marginBottom: 8,
-  },
-  archiveText: {
+  quoteText: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
     fontStyle: "italic",
     lineHeight: 20,
   },
-  archiveAttrib: {
+  quoteAttrib: {
     fontSize: 11,
     fontFamily: "Inter_500Medium",
-    marginTop: 8,
+    marginTop: 6,
   },
 });

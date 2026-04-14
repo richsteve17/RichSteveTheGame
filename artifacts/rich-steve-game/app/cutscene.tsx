@@ -73,6 +73,8 @@ export default function CutsceneScreen() {
             opponentId: chapter.opponentId ?? "",
             chapterId: chapter.id,
             mode: "career",
+            historicalResult: chapter.historicalResult ?? "win",
+            legacyMode: "true",
           },
         });
       } else {

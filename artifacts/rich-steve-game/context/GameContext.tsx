@@ -4,6 +4,16 @@ import { CAREER_CHAPTERS } from "@/constants/gameData";
 
 const STORAGE_KEY = "@richsteve_game_state_v2";
 
+export interface FreePlayStats {
+  totalMatches: number;
+  wins: number;
+  losses: number;
+  heat: number;
+  heatTier: "unknown" | "local" | "regional" | "national" | "main-event";
+  opponentsBeaten: string[];
+  consecutiveNonWins: number;
+}
+
 export interface GameState {
   completedChapters: string[];
   wonChapters: string[];
@@ -14,7 +24,18 @@ export interface GameState {
   riotRumbleContractUsed: boolean;
   totalMatchesPlayed: number;
   totalMatchesWon: number;
+  freePlayStats: FreePlayStats;
 }
+
+const DEFAULT_FREE_PLAY_STATS: FreePlayStats = {
+  totalMatches: 0,
+  wins: 0,
+  losses: 0,
+  heat: 0,
+  heatTier: "unknown",
+  opponentsBeaten: [],
+  consecutiveNonWins: 0,
+};
 
 const DEFAULT_STATE: GameState = {
   completedChapters: [],
@@ -26,7 +47,16 @@ const DEFAULT_STATE: GameState = {
   riotRumbleContractUsed: false,
   totalMatchesPlayed: 0,
   totalMatchesWon: 0,
+  freePlayStats: DEFAULT_FREE_PLAY_STATS,
 };
+
+function computeHeatTier(heat: number): FreePlayStats["heatTier"] {
+  if (heat >= 100) return "main-event";
+  if (heat >= 50) return "national";
+  if (heat >= 25) return "regional";
+  if (heat >= 10) return "local";
+  return "unknown";
+}
 
 interface GameContextValue {
   gameState: GameState;
@@ -35,6 +65,14 @@ interface GameContextValue {
     won: boolean,
     options?: { isTagTitle?: boolean; isHeavyweight?: boolean; isRiotRumble?: boolean }
   ) => Promise<void>;
+  recordFreePlayMatch: (args: {
+    won: boolean;
+    method: string;
+    isStipulation: boolean;
+    opponentId: string;
+    opponentOvr: number;
+    heelUsed: boolean;
+  }) => Promise<{ heatDelta: number }>;
   resetGame: () => Promise<void>;
   isChapterUnlocked: (chapterId: string) => boolean;
   isChapterCompleted: (chapterId: string) => boolean;
@@ -44,45 +82,36 @@ interface GameContextValue {
 const GameContext = createContext<GameContextValue | null>(null);
 
 const CHAPTER_ORDER = [
-  // Era 1 — The Future
   "ch1-managing-debut",
   "ch1-korpse-manager",
   "ch1-nightmare-xmas",
-  // Era 2 — Daddy's Money
   "ch1-six-man-debut",
   "ch2-ortiz",
   "ch2-spike",
   "ch2-don-e-allen",
-  // Era 3 — OTCW & The Coalition
   "ch3-hostile-takeover",
   "ch3-proving-ground",
   "ch3-september-remember",
   "ch3-winter-war",
   "ch3-spring-brawl",
   "ch3-riot-city-rules",
-  // Era 4 — Welcome to #Hijacked
   "ch4-big-mike",
   "ch4-bruh-turns",
-  // Era 5 — Mirai no Sutā
   "ch5-impact-debut",
   "ch5-awa-loss",
   "ch5-ssw-contract",
   "ch5-ssw-titles",
   "ch5-korpse",
-  // Era 6 — The Year of Mayhem
   "ch6-gm-loophole",
   "ch5-riot-rumble",
   "ch5-guerrero",
   "ch5-bookstore",
   "ch5-lethal-lottery",
   "ch5-last-shot",
-  // Era 7 — The Lost Ending
   "ch6-mac-mayhem",
   "ch6-johnny-xross",
 ];
 
-// Chapters where a WIN is required to unlock the next chapter.
-// The Lost Ending Part 1 requires you to actually beat Mac — no participation trophy.
 const REQUIRES_WIN_TO_ADVANCE = new Set(["ch6-mac-mayhem"]);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
@@ -94,7 +123,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (raw) {
         try {
           const saved = JSON.parse(raw) as GameState;
-          setGameState({ ...DEFAULT_STATE, ...saved });
+          setGameState({
+            ...DEFAULT_STATE,
+            ...saved,
+            freePlayStats: { ...DEFAULT_FREE_PLAY_STATS, ...(saved.freePlayStats ?? {}) },
+          });
         } catch {
           setGameState(DEFAULT_STATE);
         }
@@ -144,6 +177,49 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     await save(next);
   };
 
+  const recordFreePlayMatch = async (args: {
+    won: boolean;
+    method: string;
+    isStipulation: boolean;
+    opponentId: string;
+    opponentOvr: number;
+    heelUsed: boolean;
+  }): Promise<{ heatDelta: number }> => {
+    const prev = gameState.freePlayStats;
+    const RICH_STEVE_OVR = 91;
+
+    let delta = 0;
+    if (args.won) {
+      if (args.method === "submission") delta = 2;
+      else delta = 1;
+      if (args.isStipulation) delta += 2;
+      if (args.opponentOvr > RICH_STEVE_OVR) delta += 2;
+    }
+    if (args.heelUsed) delta += 1;
+    if (!args.won && !args.heelUsed && prev.consecutiveNonWins >= 3) delta -= 1;
+
+    const newHeat = Math.max(0, prev.heat + delta);
+    const newConsecutive = args.won ? 0 : prev.consecutiveNonWins + 1;
+    const newOpponentsBeaten =
+      args.won && !prev.opponentsBeaten.includes(args.opponentId)
+        ? [...prev.opponentsBeaten, args.opponentId]
+        : prev.opponentsBeaten;
+
+    const nextFP: FreePlayStats = {
+      totalMatches: prev.totalMatches + 1,
+      wins: prev.wins + (args.won ? 1 : 0),
+      losses: prev.losses + (args.won ? 0 : 1),
+      heat: newHeat,
+      heatTier: computeHeatTier(newHeat),
+      opponentsBeaten: newOpponentsBeaten,
+      consecutiveNonWins: newConsecutive,
+    };
+
+    const next: GameState = { ...gameState, freePlayStats: nextFP };
+    await save(next);
+    return { heatDelta: delta };
+  };
+
   const resetGame = async () => {
     await save(DEFAULT_STATE);
   };
@@ -172,6 +248,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       value={{
         gameState,
         completeChapter,
+        recordFreePlayMatch,
         resetGame,
         isChapterUnlocked,
         isChapterCompleted,

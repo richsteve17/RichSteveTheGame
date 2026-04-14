@@ -92,12 +92,24 @@ function SmallPortrait({ photo, size = 44, borderColor }: { photo: any; size?: n
 export default function MatchScreen() {
   const colors = useColors();
   const router = useRouter();
-  const params = useLocalSearchParams<{ opponentId: string; chapterId: string; mode: string; characterId?: string }>();
-  const { completeChapter } = useGame();
+  const params = useLocalSearchParams<{
+    opponentId: string;
+    chapterId: string;
+    mode: string;
+    characterId?: string;
+    historicalResult?: string;
+    legacyMode?: string;
+    stipulationParam?: string;
+    freePlayOpponentOvr?: string;
+    partnerId?: string;
+  }>();
+  const { completeChapter, recordFreePlayMatch } = useGame();
 
   const chapter = CAREER_CHAPTERS.find((c) => c.id === params.chapterId);
   const isExhibition = params.mode === "exhibition";
-  const stipulation = chapter?.stipulation ?? "";
+  const isFreePlay = params.mode === "freePlay";
+  const isLegacy = params.legacyMode === "true";
+  const stipulation = chapter?.stipulation ?? params.stipulationParam ?? "";
   const isNoDQ = /no.dq|no disqualification|hardcore|riot city rules/i.test(stipulation);
   const isCage = /cage/i.test(stipulation);
   const isLadder = /ladder/i.test(stipulation);
@@ -110,7 +122,8 @@ export default function MatchScreen() {
     .filter((w): w is Wrestler => !!w);
   const resolvedTeam: Wrestler[] = opponentTeam.length > 0 ? opponentTeam : [WRESTLERS[0]!];
 
-  const rawPartnerIds: string[] = chapter?.partnerIds ?? [];
+  const rawPartnerIds: string[] = chapter?.partnerIds ??
+    (params.partnerId ? [params.partnerId] : []);
   const partnerTeam: Wrestler[] = rawPartnerIds
     .map((id) => WRESTLERS.find((w) => w.id === id))
     .filter((w): w is Wrestler => !!w);
@@ -149,8 +162,11 @@ export default function MatchScreen() {
   const [tagUsed, setTagUsed] = useState(false);
   const [climbProgress, setClimbProgress] = useState(0);
   const [climbActive, setClimbActive] = useState(false);
+  const [heatDelta, setHeatDelta] = useState<number | null>(null);
+  const [matchFailed, setMatchFailed] = useState(false);
 
   const narrativeFired = useRef<Set<number>>(new Set());
+  const heelUsedRef = useRef(false);
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const flashAnim = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
@@ -198,19 +214,49 @@ export default function MatchScreen() {
   }, []);
 
   const endMatch = useCallback(async (w: "player" | "opponent", reason: string) => {
+    const won = w === "player";
     setWinner(w);
     setWinReason(reason);
-    setPhase("post-match");
-    const won = w === "player";
-    if (!isExhibition && params.chapterId) {
+
+    if (isFreePlay) {
+      const isStip = !/standard/i.test(params.stipulationParam ?? "Standard Match");
+      const method = /submission/i.test(reason) ? "submission"
+        : /guerrero/i.test(reason) ? "guerrero"
+        : "pin";
+      const oppOvr = parseInt(params.freePlayOpponentOvr ?? "70", 10);
+      const { heatDelta: delta } = await recordFreePlayMatch({
+        won,
+        method,
+        isStipulation: isStip,
+        opponentId: params.opponentId ?? "",
+        opponentOvr: oppOvr,
+        heelUsed: heelUsedRef.current,
+      });
+      setHeatDelta(delta);
+      setPhase("post-match");
+      Haptics.notificationAsync(won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error);
+    } else if (!isExhibition && params.chapterId) {
+      const histResult = params.historicalResult ?? "win";
+      if (isLegacy && !won && histResult === "win") {
+        setMatchFailed(true);
+        setPhase("post-match");
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        return;
+      }
       await completeChapter(params.chapterId, won, {
         isTagTitle: params.chapterId === "ch5-lethal-lottery",
         isHeavyweight: params.chapterId === "ch6-mac-mayhem",
         isRiotRumble: params.chapterId === "ch5-lethal-lottery",
       });
+      setPhase("post-match");
+      Haptics.notificationAsync(won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error);
+    } else {
+      setPhase("post-match");
+      Haptics.notificationAsync(won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error);
     }
-    Haptics.notificationAsync(won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error);
-  }, [isExhibition, params.chapterId, completeChapter]);
+  }, [isExhibition, isFreePlay, isLegacy, params.chapterId, params.historicalResult,
+      params.freePlayOpponentOvr, params.opponentId, params.stipulationParam,
+      completeChapter, recordFreePlayMatch]);
 
   const checkNarrative = useCallback((oppId: string, newStam: number, maxStam: number) => {
     if (narrativeFired.current.size >= 2) return;
@@ -481,6 +527,7 @@ export default function MatchScreen() {
     if (type === "guerrero") {
       if (isNoDQ) { addLog("There are no disqualifications — the Guerrero Special doesn't work here.", "system"); return; }
       setGuerreroUsed(true);
+      heelUsedRef.current = true;
       addLog(`${activePlayerName} tosses the Riot Rumble Lockbox to the opponent and drops!`, "special");
       addLog(`The referee sees the weapon — DISQUALIFICATION! ${activePlayerName} wins by DQ!`, "special");
       flash();
@@ -513,6 +560,7 @@ export default function MatchScreen() {
       flash();
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     } else if (type === "weapon") {
+      heelUsedRef.current = true;
       addLog(`${activePlayerName} hits ${moveName} for ${finalDmg} damage! BRUTAL!`, "special");
       flash();
     } else {
@@ -646,6 +694,39 @@ export default function MatchScreen() {
   }
 
   if (phase === "post-match") {
+    if (matchFailed) {
+      return (
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+          <View style={styles.postMatch}>
+            <MaterialCommunityIcons name="book-cancel" size={52} color={colors.destructive} />
+            <Text style={[styles.postResult, { color: colors.destructive }]}>CHAPTER FAILED</Text>
+            <Text style={[styles.postReason, { color: colors.foreground }]}>
+              The history books don't lie.{"\n"}Rich $teve won this one.
+            </Text>
+            <Text style={[styles.postTurns, { color: colors.mutedForeground }]}>
+              Return to the chapter intro and try again.
+            </Text>
+            <View style={styles.postButtons}>
+              {params.chapterId ? (
+                <Pressable
+                  style={[styles.postBtn, { backgroundColor: colors.primary }]}
+                  onPress={() => router.replace({ pathname: "/cutscene", params: { chapterId: params.chapterId } })}
+                >
+                  <Text style={[styles.postBtnText, { color: colors.primaryForeground }]}>TRY AGAIN</Text>
+                </Pressable>
+              ) : null}
+              <Pressable
+                style={[styles.postBtn, { borderColor: colors.border, borderWidth: 1 }]}
+                onPress={() => router.replace("/legacy")}
+              >
+                <Text style={[styles.postBtnText, { color: colors.foreground }]}>BACK TO LEGACY</Text>
+              </Pressable>
+            </View>
+          </View>
+        </SafeAreaView>
+      );
+    }
+
     const won = winner === "player";
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -662,8 +743,22 @@ export default function MatchScreen() {
           <Text style={[styles.postTurns, { color: colors.mutedForeground }]}>
             Turn {turn} · {activeOpponent.name} ended at {activeOpponentStamina}% stamina
           </Text>
+          {isFreePlay && heatDelta !== null && (
+            <View style={[
+              styles.heatDeltaBadge,
+              {
+                borderColor: heatDelta >= 0 ? colors.primary : colors.destructive,
+                backgroundColor: heatDelta >= 0 ? colors.primary + "22" : colors.destructive + "22",
+              },
+            ]}>
+              <MaterialCommunityIcons name="fire" size={16} color={heatDelta >= 0 ? colors.primary : colors.destructive} />
+              <Text style={[styles.heatDeltaText, { color: heatDelta >= 0 ? colors.primary : colors.destructive }]}>
+                {heatDelta >= 0 ? `+${heatDelta}` : `${heatDelta}`} HEAT
+              </Text>
+            </View>
+          )}
           <View style={styles.postButtons}>
-            {!isExhibition && chapter && (
+            {!isExhibition && !isFreePlay && chapter && (
               <Pressable
                 style={[styles.postBtn, { backgroundColor: colors.primary }]}
                 onPress={() => router.replace({
@@ -676,9 +771,11 @@ export default function MatchScreen() {
             )}
             <Pressable
               style={[styles.postBtn, { borderColor: colors.border, borderWidth: 1 }]}
-              onPress={() => router.back()}
+              onPress={() => isFreePlay ? router.replace("/free-play") : router.back()}
             >
-              <Text style={[styles.postBtnText, { color: colors.foreground }]}>BACK</Text>
+              <Text style={[styles.postBtnText, { color: colors.foreground }]}>
+                {isFreePlay ? "BACK TO FREE PLAY" : "BACK"}
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -1029,4 +1126,15 @@ const styles = StyleSheet.create({
   heelBtns: { flexDirection: "row", gap: 8, flexWrap: "wrap" },
   heelBtn: { flex: 1, minWidth: 70, borderWidth: 1, borderRadius: 6, paddingVertical: 8, alignItems: "center" },
   heelBtnText: { fontSize: 10, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5 },
+
+  heatDeltaBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+  },
+  heatDeltaText: { fontSize: 20, fontFamily: "Inter_700Bold", letterSpacing: 2 },
 });
