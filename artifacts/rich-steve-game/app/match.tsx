@@ -168,6 +168,7 @@ export default function MatchScreen() {
 
   const narrativeFired = useRef<Set<number>>(new Set());
   const heelUsedRef = useRef(false);
+  const intentionalLossRef = useRef(false);
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const flashAnim = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
@@ -233,6 +234,7 @@ export default function MatchScreen() {
         opponentOvr: oppOvr,
         heelUsed: heelUsedRef.current,
         isTitleMatch: params.isTitleMatch === "true",
+        intentionalLoss: intentionalLossRef.current,
       });
       setHeatDelta(delta);
       setPhase("post-match");
@@ -509,6 +511,7 @@ export default function MatchScreen() {
 
     if (type === "distract") {
       setDistractUsed(true);
+      heelUsedRef.current = true;
       addLog("Crowd Distraction! The referee is occupied — opponent loses their next turn.", "special");
       setRefManipActive(true);
       setIsOpponentTurn(true);
@@ -519,6 +522,7 @@ export default function MatchScreen() {
     if (type === "refmanip") {
       if (isCage) { addLog("No referee to manipulate — you're inside a steel cage.", "system"); return; }
       setRefManipUsed(true);
+      heelUsedRef.current = true;
       setRefManipActive(true);
       addLog("Referee Manipulation activated — opponent's next move is negated.", "special");
       setIsOpponentTurn(true);
@@ -1040,6 +1044,21 @@ export default function MatchScreen() {
                   <Text style={[styles.heelBtnText, { color: tagUsed ? colors.foreground : "#fff" }]}>
                     {tagUsed ? "TAGGED" : "HOT TAG"}
                   </Text>
+                </Pressable>
+              )}
+
+              {isFreePlay && (
+                <Pressable
+                  style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.destructive, opacity: isOpponentTurn ? 0.35 : 1 }]}
+                  disabled={isOpponentTurn}
+                  onPress={() => {
+                    intentionalLossRef.current = true;
+                    addLog(`${activePlayerName} lays down... the crowd boos. Rich $teve JOBS OUT.`, "special");
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+                    endMatch("opponent", "Intentional Loss — Rich $teve Jobs Out");
+                  }}
+                >
+                  <Text style={[styles.heelBtnText, { color: colors.destructive }]}>JOB OUT</Text>
                 </Pressable>
               )}
             </View>
