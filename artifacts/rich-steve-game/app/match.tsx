@@ -150,7 +150,7 @@ export default function MatchScreen() {
   const [climbProgress, setClimbProgress] = useState(0);
   const [climbActive, setClimbActive] = useState(false);
 
-  const narrativeFired = useRef(false);
+  const narrativeFired = useRef<Set<number>>(new Set());
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const flashAnim = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
@@ -213,14 +213,18 @@ export default function MatchScreen() {
   }, [isExhibition, params.chapterId, completeChapter]);
 
   const checkNarrative = useCallback((oppId: string, newStam: number, maxStam: number) => {
-    if (narrativeFired.current) return;
+    if (narrativeFired.current.size > 0) return;
     const rule = NARRATIVE_RULES[oppId];
     if (!rule) return;
     if (rule.chapterId && rule.chapterId !== params.chapterId) return;
     const pct = (newStam / maxStam) * 100;
-    if (pct <= 60) {
-      narrativeFired.current = true;
-      setTimeout(() => addLog(`📢 "${rule.line}"`, "special"), 300);
+    const thresholds = [80, 60, 40, 20] as const;
+    for (const t of thresholds) {
+      if (pct <= t && !narrativeFired.current.has(t)) {
+        narrativeFired.current.add(t);
+        setTimeout(() => addLog(`📢 "${rule.line}"`, "special"), 300);
+        break;
+      }
     }
   }, [addLog, params.chapterId]);
 
@@ -274,6 +278,19 @@ export default function MatchScreen() {
   ]);
 
   const opponentAttack = useCallback((pStam: number) => {
+    if (activeOpponentStamina === 0 && isWargames) {
+      setIsOpponentTurn(false);
+      setTurn((t) => {
+        const next = t + 1;
+        setOpponentStaminas((prev) => {
+          maybeNewEntrant(next, prev);
+          return prev;
+        });
+        return next;
+      });
+      return;
+    }
+
     if (refManipActive) {
       addLog(`${activeOpponent.name}'s move is NEGATED by Referee Manipulation!`, "special");
       setRefManipActive(false);
@@ -364,7 +381,7 @@ export default function MatchScreen() {
     });
     setMarketCrashCooldown((c) => Math.max(0, c - 1));
   }, [
-    activeOpponent, refManipActive, signatureUsed, opponentMoves,
+    activeOpponent, activeOpponentStamina, refManipActive, signatureUsed, opponentMoves,
     addLog, endMatch, flash, shake, climbActive, isLadder, isCage,
     climbProgress, partnerIn, activePartnerIdx, activePartner, partnerStaminas,
     partnerTeam, playerName, isWargames, alivePartnerCount, maybeNewEntrant,
@@ -513,11 +530,12 @@ export default function MatchScreen() {
         setMarketCrashCooldown((c) => Math.max(0, c - 1));
       } else {
         const updatedStaminas = opponentStaminas.map((s, i) => i === activeOpponentIdx ? 0 : s);
-        const allEnteredEliminated = updatedStaminas.every((s) => s === 0 || s === -1);
-        const anyEnteredAlive = updatedStaminas.some((s) => s > 0);
         const nextAliveIdx = updatedStaminas.findIndex((s, i) => i !== activeOpponentIdx && s > 0);
+        const allOppsEntered = wgOppEntered >= resolvedTeam.length;
+        const allEnteredEliminated = allOppsEntered && updatedStaminas.every((s) => s === 0);
+        const isWargamesWin = isWargames && allEnteredEliminated;
 
-        if (isWargames && allEnteredEliminated && !anyEnteredAlive) {
+        if (isWargamesWin) {
           addLog(`${activeOpponent.name} is down! ALL enemies eliminated — ${activePlayerName}'s team wins WAR GAMES!`, "special");
           flash();
           endMatch("player", "Win — Last Team Standing (War Games)");
@@ -527,10 +545,11 @@ export default function MatchScreen() {
           setSignatureUsed(false);
           setIsOpponentTurn(true);
           setMarketCrashCooldown((c) => Math.max(0, c - 1));
-        } else if (!isWargames || (isWargames && allEnteredEliminated)) {
+        } else if (!isWargames) {
           addLog(`${activeOpponent.name} is out cold! ${activePlayerName} covers!`, "player");
           endMatch("player", isTagMatch ? "Win by Pinfall (Tag Elimination)" : "Win by Pinfall");
         } else {
+          addLog("⏳ Ring is momentarily clear... the next entrant is inbound.", "system");
           setIsOpponentTurn(true);
           setMarketCrashCooldown((c) => Math.max(0, c - 1));
         }
