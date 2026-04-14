@@ -102,6 +102,7 @@ export default function MatchScreen() {
     stipulationParam?: string;
     freePlayOpponentOvr?: string;
     partnerId?: string;
+    isTitleMatch?: string;
   }>();
   const { completeChapter, recordFreePlayMatch } = useGame();
 
@@ -231,6 +232,7 @@ export default function MatchScreen() {
         opponentId: params.opponentId ?? "",
         opponentOvr: oppOvr,
         heelUsed: heelUsedRef.current,
+        isTitleMatch: params.isTitleMatch === "true",
       });
       setHeatDelta(delta);
       setPhase("post-match");

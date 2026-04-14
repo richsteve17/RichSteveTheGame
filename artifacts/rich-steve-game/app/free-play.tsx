@@ -1,7 +1,8 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { ComponentProps, useState } from "react";
 import {
+  DimensionValue,
   Image,
   Platform,
   Pressable,
@@ -16,13 +17,14 @@ import { useColors } from "@/hooks/useColors";
 import { WRESTLERS, RICH_STEVE } from "@/constants/gameData";
 import { getWrestlerPhoto } from "@/constants/wrestlerPhotos";
 
+type MCIName = ComponentProps<typeof MaterialCommunityIcons>["name"];
 type HeatTier = "unknown" | "local" | "regional" | "national" | "main-event";
 
-const STIPULATIONS: { label: string; value: string; heatRequired: number; icon: string }[] = [
-  { label: "Standard Match",       value: "Standard Match",          heatRequired: 0,  icon: "sword-cross" },
-  { label: "No-DQ / Hardcore",     value: "No Disqualification",     heatRequired: 10, icon: "fire" },
-  { label: "Ladder Match",         value: "Ladder Match",            heatRequired: 25, icon: "sort-ascending" },
-  { label: "Steel Cage Match",     value: "Steel Cage Match",        heatRequired: 40, icon: "gate" },
+const STIPULATIONS: { label: string; value: string; heatRequired: number; icon: MCIName }[] = [
+  { label: "Standard Match",    value: "Standard Match",      heatRequired: 0,  icon: "sword-cross"    },
+  { label: "No-DQ / Hardcore",  value: "No Disqualification", heatRequired: 10, icon: "fire"           },
+  { label: "Ladder Match",      value: "Ladder Match",        heatRequired: 25, icon: "sort-ascending" },
+  { label: "Steel Cage Match",  value: "Steel Cage Match",    heatRequired: 40, icon: "gate"           },
 ];
 
 const TIER_OVR_CAP: Record<HeatTier, number> = {
@@ -56,26 +58,35 @@ export default function FreePlayScreen() {
   const tColor = TIER_COLOR[tier];
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
+  const isMainEvent = tier === "main-event";
   const ovrCap = TIER_OVR_CAP[tier];
-  const availableOpponents = WRESTLERS.filter(
-    (w) => w.role !== "Manager" && w.ratings && (w.ratings.overall <= ovrCap)
-  ).sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0));
+
+  const allFighters = WRESTLERS.filter((w) => w.role !== "Manager" && w.ratings);
+  const bossWrestler = allFighters.sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0))[0] ?? null;
+
+  const availableOpponents = allFighters
+    .filter((w) => w.ratings && w.ratings.overall <= ovrCap)
+    .sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0));
 
   const availableStips = STIPULATIONS.filter((s) => fp.heat >= s.heatRequired);
   const lockedStips = STIPULATIONS.filter((s) => fp.heat < s.heatRequired);
-  const availablePartners = WRESTLERS.filter(
-    (w) => w.role !== "Manager" && w.ratings
-  ).sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0));
+  const availablePartners = allFighters.sort((a, b) => (b.ratings?.overall ?? 0) - (a.ratings?.overall ?? 0));
 
   const [opponentId, setOpponentId] = useState<string | null>(null);
   const [stipulation, setStipulation] = useState(STIPULATIONS[0]!.value);
   const [partnerId, setPartnerId] = useState<string | null>(null);
   const [pickingPartner, setPickingPartner] = useState(false);
+  const [isTitleMatch, setIsTitleMatch] = useState(false);
 
-  const selectedOpponent = opponentId ? availableOpponents.find((w) => w.id === opponentId) ?? null : null;
-  const selectedPartner = partnerId ? availablePartners.find((w) => w.id === partnerId) ?? null : null;
-  const heatBarPct = Math.min(100, fp.heat);
-  const selectedOpponentPhoto = selectedOpponent ? getWrestlerPhoto(selectedOpponent.id) : null;
+  const isBossSelected = bossWrestler && opponentId === bossWrestler.id;
+  const selectedOpponent = opponentId
+    ? (allFighters.find((w) => w.id === opponentId) ?? null)
+    : null;
+  const selectedPartner = partnerId
+    ? (availablePartners.find((w) => w.id === partnerId) ?? null)
+    : null;
+
+  const heatBarWidth: DimensionValue = `${Math.min(100, fp.heat)}%`;
   const selectedPartnerPhoto = selectedPartner ? getWrestlerPhoto(selectedPartner.id) : null;
 
   const startMatch = () => {
@@ -89,6 +100,7 @@ export default function FreePlayScreen() {
         stipulationParam: stipulation,
         freePlayOpponentOvr: String(selectedOpponent.ratings?.overall ?? 70),
         partnerId: partnerId ?? "",
+        isTitleMatch: isTitleMatch ? "true" : "false",
       },
     });
   };
@@ -119,13 +131,63 @@ export default function FreePlayScreen() {
             </View>
           </View>
           <View style={[styles.heatBarBg, { backgroundColor: colors.border }]}>
-            <View style={[styles.heatBarFill, { width: `${heatBarPct}%` as any, backgroundColor: tColor }]} />
+            <View style={[styles.heatBarFill, { width: heatBarWidth, backgroundColor: tColor }]} />
           </View>
           <View style={styles.statsRow}>
-            <Text style={[styles.statItem, { color: colors.mutedForeground }]}>{fp.wins}W · {fp.losses}L · {fp.totalMatches} matches</Text>
-            <Text style={[styles.statItem, { color: colors.mutedForeground }]}>{fp.opponentsBeaten.length} unique beaten</Text>
+            <Text style={[styles.statItem, { color: colors.mutedForeground }]}>
+              {fp.wins}W · {fp.losses}L · {fp.totalMatches} matches
+            </Text>
+            <Text style={[styles.statItem, { color: colors.mutedForeground }]}>
+              {fp.opponentsBeaten.length} unique beaten
+            </Text>
           </View>
         </View>
+
+        {isMainEvent && bossWrestler && (
+          <View style={[styles.bossSection, { borderColor: "#D4AF37", backgroundColor: "#D4AF3711" }]}>
+            <View style={styles.bossTitleRow}>
+              <MaterialCommunityIcons name="crown" size={18} color="#D4AF37" />
+              <Text style={[styles.bossSectionTitle, { color: "#D4AF37" }]}>MAIN EVENT UNLOCKED</Text>
+            </View>
+            <Text style={[styles.bossDesc, { color: colors.mutedForeground }]}>
+              You've reached maximum heat. The final boss is available. Win this and you've made it.
+            </Text>
+            <Pressable
+              style={[
+                styles.bossCard,
+                {
+                  borderColor: opponentId === bossWrestler.id ? "#D4AF37" : "#D4AF3766",
+                  backgroundColor: opponentId === bossWrestler.id ? "#D4AF3733" : colors.card,
+                },
+              ]}
+              onPress={() => setOpponentId(bossWrestler.id === opponentId ? null : bossWrestler.id)}
+            >
+              {(() => {
+                const bossPhoto = getWrestlerPhoto(bossWrestler.id);
+                return bossPhoto ? (
+                  <View style={[styles.miniPhoto, { borderColor: "#D4AF37" }]}>
+                    <Image source={bossPhoto} style={styles.miniPhotoImg} resizeMode="cover" />
+                  </View>
+                ) : (
+                  <View style={[styles.miniPhoto, styles.miniPhotoPlaceholder, { borderColor: "#D4AF37" }]}>
+                    <MaterialCommunityIcons name="account" size={16} color="#D4AF37" />
+                  </View>
+                );
+              })()}
+              <View style={styles.bossInfo}>
+                <Text style={[styles.rosterName, { color: opponentId === bossWrestler.id ? "#D4AF37" : colors.foreground }]}>
+                  {bossWrestler.name}
+                </Text>
+                <View style={[styles.beatenBadge, { backgroundColor: "#D4AF3722" }]}>
+                  <Text style={[styles.beatenText, { color: "#D4AF37" }]}>FINAL BOSS</Text>
+                </View>
+              </View>
+              <Text style={[styles.rosterOvr, { color: "#D4AF37" }]}>
+                OVR {bossWrestler.ratings?.overall}
+              </Text>
+            </Pressable>
+          </View>
+        )}
 
         <View style={[styles.section, { borderColor: colors.border }]}>
           <Text style={[styles.sectionTitle, { color: colors.primary }]}>STIPULATION</Text>
@@ -134,13 +196,15 @@ export default function FreePlayScreen() {
               key={s.value}
               style={[
                 styles.stipRow,
-                { borderColor: stipulation === s.value ? colors.primary : colors.border,
-                  backgroundColor: stipulation === s.value ? colors.primary + "22" : colors.card },
+                {
+                  borderColor: stipulation === s.value ? colors.primary : colors.border,
+                  backgroundColor: stipulation === s.value ? colors.primary + "22" : colors.card,
+                },
               ]}
               onPress={() => setStipulation(s.value)}
             >
               <MaterialCommunityIcons
-                name={s.icon as any}
+                name={s.icon}
                 size={18}
                 color={stipulation === s.value ? colors.primary : colors.foreground}
               />
@@ -153,12 +217,36 @@ export default function FreePlayScreen() {
             </Pressable>
           ))}
           {lockedStips.map((s) => (
-            <View key={s.value} style={[styles.stipRow, { borderColor: colors.border, backgroundColor: colors.card, opacity: 0.4 }]}>
+            <View
+              key={s.value}
+              style={[styles.stipRow, { borderColor: colors.border, backgroundColor: colors.card, opacity: 0.4 }]}
+            >
               <Ionicons name="lock-closed" size={16} color={colors.mutedForeground} />
               <Text style={[styles.stipLabel, { color: colors.mutedForeground }]}>{s.label}</Text>
               <Text style={[styles.stipLock, { color: colors.mutedForeground }]}>{s.heatRequired} heat</Text>
             </View>
           ))}
+        </View>
+
+        <View style={[styles.section, { borderColor: isTitleMatch ? colors.primary : colors.border }]}>
+          <Pressable style={styles.toggleRow} onPress={() => setIsTitleMatch((v) => !v)}>
+            <MaterialCommunityIcons
+              name={isTitleMatch ? "checkbox-marked" : "checkbox-blank-outline"}
+              size={22}
+              color={isTitleMatch ? colors.primary : colors.mutedForeground}
+            />
+            <View style={styles.toggleInfo}>
+              <Text style={[styles.toggleLabel, { color: isTitleMatch ? colors.primary : colors.foreground }]}>
+                CHAMPIONSHIP MATCH
+              </Text>
+              <Text style={[styles.toggleHint, { color: colors.mutedForeground }]}>
+                Win a title match: +4 heat bonus
+              </Text>
+            </View>
+            {isTitleMatch && (
+              <MaterialCommunityIcons name="crown" size={18} color={colors.primary} />
+            )}
+          </Pressable>
         </View>
 
         <View style={[styles.section, { borderColor: colors.border }]}>
@@ -196,31 +284,44 @@ export default function FreePlayScreen() {
           )}
           {pickingPartner && (
             <View style={styles.partnerList}>
-              {availablePartners.filter((w) => w.id !== opponentId).map((w) => {
-                const photo = getWrestlerPhoto(w.id);
-                const sel = w.id === partnerId;
-                return (
-                  <Pressable
-                    key={w.id}
-                    style={[styles.rosterRow, { borderColor: sel ? colors.primary : colors.border, backgroundColor: sel ? colors.primary + "22" : colors.card }]}
-                    onPress={() => { setPartnerId(w.id); setPickingPartner(false); }}
-                  >
-                    {photo ? (
-                      <View style={[styles.miniPhoto, { borderColor: sel ? colors.primary : colors.border }]}>
-                        <Image source={photo} style={styles.miniPhotoImg} resizeMode="cover" />
-                      </View>
-                    ) : (
-                      <View style={[styles.miniPhoto, styles.miniPhotoPlaceholder, { borderColor: colors.border }]}>
-                        <MaterialCommunityIcons name="account" size={16} color={colors.mutedForeground} />
-                      </View>
-                    )}
-                    <Text style={[styles.rosterName, { color: sel ? colors.primary : colors.foreground }]} numberOfLines={1}>{w.name}</Text>
-                    <Text style={[styles.rosterOvr, { color: sel ? colors.primary : colors.mutedForeground }]}>
-                      OVR {w.ratings?.overall}
-                    </Text>
-                  </Pressable>
-                );
-              })}
+              {availablePartners
+                .filter((w) => w.id !== opponentId && w.id !== RICH_STEVE.id)
+                .map((w) => {
+                  const photo = getWrestlerPhoto(w.id);
+                  const sel = w.id === partnerId;
+                  return (
+                    <Pressable
+                      key={w.id}
+                      style={[
+                        styles.rosterRow,
+                        {
+                          borderColor: sel ? colors.primary : colors.border,
+                          backgroundColor: sel ? colors.primary + "22" : colors.card,
+                        },
+                      ]}
+                      onPress={() => { setPartnerId(w.id); setPickingPartner(false); }}
+                    >
+                      {photo ? (
+                        <View style={[styles.miniPhoto, { borderColor: sel ? colors.primary : colors.border }]}>
+                          <Image source={photo} style={styles.miniPhotoImg} resizeMode="cover" />
+                        </View>
+                      ) : (
+                        <View style={[styles.miniPhoto, styles.miniPhotoPlaceholder, { borderColor: colors.border }]}>
+                          <MaterialCommunityIcons name="account" size={16} color={colors.mutedForeground} />
+                        </View>
+                      )}
+                      <Text
+                        style={[styles.rosterName, { color: sel ? colors.primary : colors.foreground }]}
+                        numberOfLines={1}
+                      >
+                        {w.name}
+                      </Text>
+                      <Text style={[styles.rosterOvr, { color: sel ? colors.primary : colors.mutedForeground }]}>
+                        OVR {w.ratings?.overall}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
             </View>
           )}
         </View>
@@ -236,62 +337,99 @@ export default function FreePlayScreen() {
               ? "Full roster unlocked."
               : `OVR ${ovrCap} cap. Earn more heat to face elite opponents.`}
           </Text>
-          {availableOpponents.map((w) => {
-            const photo = getWrestlerPhoto(w.id);
-            const sel = w.id === opponentId;
-            return (
-              <Pressable
-                key={w.id}
-                style={[
-                  styles.rosterRow,
-                  { borderColor: sel ? colors.primary : colors.border, backgroundColor: sel ? colors.primary + "22" : colors.card },
-                ]}
-                onPress={() => setOpponentId(w.id === opponentId ? null : w.id)}
-              >
-                {photo ? (
-                  <View style={[styles.miniPhoto, { borderColor: sel ? colors.primary : colors.border }]}>
-                    <Image source={photo} style={styles.miniPhotoImg} resizeMode="cover" />
-                  </View>
-                ) : (
-                  <View style={[styles.miniPhoto, styles.miniPhotoPlaceholder, { borderColor: colors.border }]}>
-                    <MaterialCommunityIcons name="account" size={16} color={colors.mutedForeground} />
-                  </View>
-                )}
-                <Text style={[styles.rosterName, { color: sel ? colors.primary : colors.foreground }]} numberOfLines={1}>{w.name}</Text>
-                {fp.opponentsBeaten.includes(w.id) && (
-                  <View style={[styles.beatenBadge, { backgroundColor: colors.primary + "22" }]}>
-                    <Text style={[styles.beatenText, { color: colors.primary }]}>BEATEN</Text>
-                  </View>
-                )}
-                <Text style={[styles.rosterOvr, { color: sel ? colors.primary : colors.mutedForeground }]}>
-                  OVR {w.ratings?.overall}
-                </Text>
-              </Pressable>
-            );
-          })}
+          {availableOpponents
+            .filter((w) => !(isMainEvent && bossWrestler && w.id === bossWrestler.id))
+            .map((w) => {
+              const photo = getWrestlerPhoto(w.id);
+              const sel = w.id === opponentId;
+              return (
+                <Pressable
+                  key={w.id}
+                  style={[
+                    styles.rosterRow,
+                    {
+                      borderColor: sel ? colors.primary : colors.border,
+                      backgroundColor: sel ? colors.primary + "22" : colors.card,
+                    },
+                  ]}
+                  onPress={() => setOpponentId(w.id === opponentId ? null : w.id)}
+                >
+                  {photo ? (
+                    <View style={[styles.miniPhoto, { borderColor: sel ? colors.primary : colors.border }]}>
+                      <Image source={photo} style={styles.miniPhotoImg} resizeMode="cover" />
+                    </View>
+                  ) : (
+                    <View style={[styles.miniPhoto, styles.miniPhotoPlaceholder, { borderColor: colors.border }]}>
+                      <MaterialCommunityIcons name="account" size={16} color={colors.mutedForeground} />
+                    </View>
+                  )}
+                  <Text
+                    style={[styles.rosterName, { color: sel ? colors.primary : colors.foreground }]}
+                    numberOfLines={1}
+                  >
+                    {w.name}
+                  </Text>
+                  {fp.opponentsBeaten.includes(w.id) && (
+                    <View style={[styles.beatenBadge, { backgroundColor: colors.primary + "22" }]}>
+                      <Text style={[styles.beatenText, { color: colors.primary }]}>BEATEN</Text>
+                    </View>
+                  )}
+                  <Text style={[styles.rosterOvr, { color: sel ? colors.primary : colors.mutedForeground }]}>
+                    OVR {w.ratings?.overall}
+                  </Text>
+                </Pressable>
+              );
+            })}
           {availableOpponents.length === 0 && (
-            <Text style={[styles.emptyNote, { color: colors.mutedForeground }]}>No opponents available. Earn heat to unlock them.</Text>
+            <Text style={[styles.emptyNote, { color: colors.mutedForeground }]}>
+              No opponents available. Earn heat to unlock them.
+            </Text>
           )}
         </View>
       </ScrollView>
 
       {selectedOpponent ? (
-        <View style={[styles.bottomBar, { backgroundColor: colors.background, borderTopColor: colors.border, paddingBottom: insets.bottom + 90 }]}>
+        <View
+          style={[
+            styles.bottomBar,
+            {
+              backgroundColor: colors.background,
+              borderTopColor: isBossSelected ? "#D4AF37" : colors.border,
+              paddingBottom: insets.bottom + 90,
+            },
+          ]}
+        >
           <View style={styles.matchupInfo}>
             <Text style={[styles.matchupName, { color: colors.foreground }]}>
               {RICH_STEVE.name}{selectedPartner ? ` & ${selectedPartner.name}` : ""} vs {selectedOpponent.name}
             </Text>
-            <Text style={[styles.matchupStip, { color: colors.mutedForeground }]}>{stipulation}</Text>
+            <Text style={[styles.matchupStip, { color: colors.mutedForeground }]}>
+              {stipulation}{isTitleMatch ? " · CHAMPIONSHIP" : ""}
+            </Text>
           </View>
-          <Pressable style={[styles.fightBtn, { backgroundColor: colors.primary }]} onPress={startMatch}>
-            <MaterialCommunityIcons name="sword-cross" size={20} color={colors.primaryForeground} />
+          <Pressable
+            style={[styles.fightBtn, { backgroundColor: isBossSelected ? "#D4AF37" : colors.primary }]}
+            onPress={startMatch}
+          >
+            <MaterialCommunityIcons
+              name="sword-cross"
+              size={20}
+              color={colors.primaryForeground}
+            />
             <Text style={[styles.fightBtnText, { color: colors.primaryForeground }]}>FIGHT</Text>
           </Pressable>
         </View>
       ) : (
-        <View style={[styles.bottomHint, { backgroundColor: colors.background, borderTopColor: colors.border, paddingBottom: insets.bottom + 90 }]}>
+        <View
+          style={[
+            styles.bottomHint,
+            { backgroundColor: colors.background, borderTopColor: colors.border, paddingBottom: insets.bottom + 90 },
+          ]}
+        >
           <MaterialCommunityIcons name="gesture-tap" size={16} color={colors.mutedForeground} />
-          <Text style={[styles.hintText, { color: colors.mutedForeground }]}>Select an opponent above to start booking</Text>
+          <Text style={[styles.hintText, { color: colors.mutedForeground }]}>
+            Select an opponent above to start booking
+          </Text>
         </View>
       )}
     </View>
@@ -323,6 +461,27 @@ const styles = StyleSheet.create({
   statsRow: { flexDirection: "row", justifyContent: "space-between" },
   statItem: { fontSize: 11, fontFamily: "Inter_400Regular" },
 
+  bossSection: {
+    marginHorizontal: 16,
+    marginBottom: 14,
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 16,
+    gap: 10,
+  },
+  bossTitleRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  bossSectionTitle: { fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 2 },
+  bossDesc: { fontSize: 12, fontFamily: "Inter_400Regular", lineHeight: 18 },
+  bossCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 2,
+    borderRadius: 8,
+    padding: 12,
+    gap: 12,
+  },
+  bossInfo: { flex: 1, gap: 4 },
+
   section: {
     marginHorizontal: 16,
     marginBottom: 14,
@@ -346,6 +505,11 @@ const styles = StyleSheet.create({
   },
   stipLabel: { flex: 1, fontSize: 13, fontFamily: "Inter_500Medium" },
   stipLock: { fontSize: 10, fontFamily: "Inter_500Medium" },
+
+  toggleRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+  toggleInfo: { flex: 1 },
+  toggleLabel: { fontSize: 13, fontFamily: "Inter_700Bold", letterSpacing: 0.5 },
+  toggleHint: { fontSize: 11, fontFamily: "Inter_400Regular", marginTop: 2 },
 
   selectedCard: {
     flexDirection: "row",

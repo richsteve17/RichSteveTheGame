@@ -72,6 +72,7 @@ interface GameContextValue {
     opponentId: string;
     opponentOvr: number;
     heelUsed: boolean;
+    isTitleMatch: boolean;
   }) => Promise<{ heatDelta: number }>;
   resetGame: () => Promise<void>;
   isChapterUnlocked: (chapterId: string) => boolean;
@@ -184,6 +185,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     opponentId: string;
     opponentOvr: number;
     heelUsed: boolean;
+    isTitleMatch: boolean;
   }): Promise<{ heatDelta: number }> => {
     const prev = gameState.freePlayStats;
     const RICH_STEVE_OVR = 91;
@@ -194,12 +196,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       else delta = 1;
       if (args.isStipulation) delta += 2;
       if (args.opponentOvr > RICH_STEVE_OVR) delta += 2;
+      if (args.isTitleMatch) delta += 4;
     }
     if (args.heelUsed) delta += 1;
-    if (!args.won && !args.heelUsed && prev.consecutiveNonWins >= 3) delta -= 1;
+    const hadProgress = args.won || args.heelUsed;
+    if (!hadProgress && prev.consecutiveNonWins >= 3) delta -= 1;
 
     const newHeat = Math.max(0, prev.heat + delta);
-    const newConsecutive = args.won ? 0 : prev.consecutiveNonWins + 1;
+    const newConsecutive = hadProgress ? 0 : prev.consecutiveNonWins + 1;
     const newOpponentsBeaten =
       args.won && !prev.opponentsBeaten.includes(args.opponentId)
         ? [...prev.opponentsBeaten, args.opponentId]
