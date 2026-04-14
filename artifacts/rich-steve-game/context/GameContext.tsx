@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CAREER_CHAPTERS } from "@/constants/gameData";
 
 const STORAGE_KEY = "@richsteve_game_state_v2";
 
@@ -136,15 +137,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       next.isChampion = true;
     }
 
-    const idx = CHAPTER_ORDER.indexOf(chapterId);
-    if (idx >= 0) {
-      const era =
-        idx < 3 ? 1 :
-        idx < 6 ? 2 :
-        idx < 9 ? 3 :
-        idx < 13 ? 4 :
-        idx < 19 ? 5 : 6;
-      next.currentEra = Math.max(next.currentEra, era);
+    const chapterData = CAREER_CHAPTERS.find((c) => c.id === chapterId);
+    if (chapterData) {
+      next.currentEra = Math.max(next.currentEra, chapterData.era);
     }
     await save(next);
   };

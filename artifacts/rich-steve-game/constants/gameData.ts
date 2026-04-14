@@ -12,8 +12,8 @@ export interface Wrestler {
   id: string;
   name: string;
   faction: string | null;
-  role: "Main Event" | "Midcard" | "Women's Division" | "Legend" | "Manager";
-  style: "Technical" | "Power" | "Brawler" | "High-Flyer" | "Cerebral";
+  role: "Main Event" | "Midcard" | "Women's Division" | "Legend" | "Manager" | "Authority Figure";
+  style: "Technical" | "Power" | "Brawler" | "High-Flyer" | "Cerebral" | "Manager";
   bio: string;
   stamina: number;
   moves: string[];
@@ -158,18 +158,6 @@ export const WRESTLERS: Wrestler[] = [
   // ─── ERA 3: OTCW/COALITION ────────────────────────────────────
   // Original Coalition (OTCW): Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve
   // Rampage Coalition: #BRUH, Conrad, Bronson, $teve — the rest were OTCW-only
-  {
-    id: "little-monster-binky",
-    name: "Little Monster Binky",
-    faction: "The Original Coalition",
-    role: "Midcard",
-    style: "Brawler",
-    bio: "Original Coalition member — OTCW era only. Part of the full OTCW stable that Rich $teve assembled: Little Monster Binky, Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve. When the Coalition moved to Rampage, the roster trimmed to #BRUH, Conrad, Bronson, and $teve. Binky was OTCW-only.",
-    stamina: 70,
-    moves: ["Brawl", "Clothesline", "Scoop Slam", "Running Shoulder"],
-    signatureMove: null,
-    ratings: { power: 68, speed: 66, technical: 63, toughness: 67, mic: 57, heat: 58, overall: 63 },
-  },
   {
     id: "tony-link",
     name: "Tony Link",
@@ -363,23 +351,11 @@ export const WRESTLERS: Wrestler[] = [
     faction: "Riot City's Most Wanted",
     role: "Main Event",
     style: "Brawler",
-    bio: "Leader of Riot City's Most Wanted. Red mohawk/bandana, studded vest. Defended Rampage against the Coalition invasion. The feud that forged Project Mayhem.",
+    bio: "Leader of Riot City's Most Wanted. Red mohawk/bandana, studded vest. Managed by Kory Cross alongside Matt Wylde and Vic Ramone before Kory's defection. Defended Rampage against the Coalition invasion — the Coalition lost the first meeting at Winter War 2016 before taking the W at Spring Brawl 2017. The RCMW feud is what forged the conditions for Project Mayhem. Siccend was the wall Rich $teve had to climb through to get there.",
     stamina: 87,
     moves: ["Spear", "Uranage", "Corner Clothesline", "Belly-to-Back Suplex", "Running Lariat"],
     signatureMove: "Spear",
     ratings: { power: 84, speed: 71, technical: 74, toughness: 82, mic: 76, heat: 75, overall: 79 },
-  },
-  {
-    id: "vic-ramone",
-    name: "Vic Ramone",
-    faction: "Riot City's Most Wanted",
-    role: "Midcard",
-    style: "Technical",
-    bio: "RCMW member. Part of the Riot City Rules match where Matt Wylde turned on them mid-match and became Mac Mayhem.",
-    stamina: 80,
-    moves: ["Dropkick", "Snap Suplex", "Rolling Elbow", "Kneebar"],
-    signatureMove: null,
-    ratings: { power: 74, speed: 76, technical: 79, toughness: 73, mic: 68, heat: 66, overall: 73 },
   },
   {
     id: "jason-drake",
@@ -451,9 +427,9 @@ export const WRESTLERS: Wrestler[] = [
     faction: null,
     role: "Midcard",
     style: "Technical",
-    bio: "6'0\", 200 lbs. Funkytown U.S.A. Debut: Spring Brawl 3/11/17. Rampage Open Challenge Champion (2x). RPW Wrestler of the Year 2017.",
+    bio: "6'0\", 200 lbs. Funkytown U.S.A. Debut: Spring Brawl 3/11/17. Rampage Open Challenge Champion (2x). RPW Wrestler of the Year 2017. Also pulled into Team Rampage as part of the 5-on-5 elimination match at Retribution — the match that put Big Mike's announcing career on the line. Played both sides of the Rampage/Mayhem line by the time the dust settled.",
     stamina: 80,
-    moves: ["Dropkick", "Suplex Combo", "Running Knee", "Armbar"],
+    moves: ["Dropkick", "Suplex Combo", "Running Knee", "Armbar", "Lariat"],
     signatureMove: null,
     height: "6'0\"",
     weight: "200 lbs",
@@ -521,14 +497,14 @@ export const WRESTLERS: Wrestler[] = [
     faction: "The Talent Agency",
     role: "Women's Division",
     style: "Technical",
-    bio: "4'11\", 120 lbs. Queens, NY. Debut: Capital Chaos 4/8/17. The Talent Agency. Made history as the participant in the first-ever women's match in Rampage Pro Wrestling.",
-    stamina: 68,
-    moves: ["Arm Drag", "Hurricanrana", "Headscissors", "Pin Combo"],
+    bio: "4'11\", 120 lbs. Queens, NY. Debut: Capital Chaos 4/8/17. Part of the Original Coalition in OTCW — one of the eight members Rich $teve assembled (alongside Tony Link, Jesse Skelton, Justin Tyme, Bronson, Conrad, #BRUH, $teve). When the Coalition moved to Rampage it trimmed down; Binky remained an OTCW-era name. Later signed with The Talent Agency at Rampage Pro Wrestling, where she made history as a participant in the first-ever women's match in RPW.",
+    stamina: 70,
+    moves: ["Arm Drag", "Hurricanrana", "Headscissors", "Pin Combo", "Clothesline"],
     signatureMove: null,
     height: "4'11\"",
     weight: "120 lbs",
     hometown: "Queens, NY",
-    ratings: { power: 60, speed: 82, technical: 78, toughness: 63, mic: 70, heat: 67, overall: 70 },
+    ratings: { power: 62, speed: 82, technical: 78, toughness: 65, mic: 70, heat: 68, overall: 71 },
   },
   // ─── LEGENDS & ATTRACTIONS ───────────────────────────────────
   {
@@ -581,28 +557,16 @@ export const WRESTLERS: Wrestler[] = [
     ratings: { power: 86, speed: 62, technical: 72, toughness: 84, mic: 66, heat: 67, overall: 73 },
   },
   {
-    id: "siccend",
-    name: "Siccend",
-    faction: "Riot City's Most Wanted",
-    role: "Midcard",
-    style: "Brawler",
-    bio: "Member of Riot City's Most Wanted alongside Matt Wylde and Vic Ramone. Managed by Kory Cross before the defection. The Coalition faced RCMW twice — losing the first meeting at Winter War 2016 before winning Spring Brawl 2017.",
-    stamina: 75,
-    moves: ["Headbutt", "DDT", "Running Knee", "Lariat", "Choke Slam"],
-    signatureMove: null,
-    ratings: { power: 82, speed: 69, technical: 73, toughness: 80, mic: 74, heat: 73, overall: 77 },
-  },
-  {
     id: "vic-ramon",
     name: "Vic Ramone",
     faction: "Riot City's Most Wanted",
     role: "Midcard",
     style: "Technical",
-    bio: "Riot City's Most Wanted. Technical wrestler who held the unit together alongside Siccend. When Matt Wylde turned on him with an exploder suplex through a table at Mayhem 2017, Vic was the man left standing in the wreckage as Project Mayhem was born.",
-    stamina: 74,
-    moves: ["Suplex", "Armbar", "Running Elbow", "Vertical Suplex", "Neckbreaker"],
+    bio: "Riot City's Most Wanted. Technical core of RCMW alongside Siccend. Part of the Riot City Rules match where Matt Wylde turned on his own team mid-match. When Wylde hit him with an exploder suplex through a table at Mayhem 2017, Vic was the man left standing in the wreckage — the moment Project Mayhem was born out of RCMW's ashes. Defended against the Coalition invasion before the realignment changed everything. Yams the Working Man later defended the Rampage Heavyweight Title against Vic Ramon at Cosplayers Unite.",
+    stamina: 80,
+    moves: ["Dropkick", "Snap Suplex", "Rolling Elbow", "Kneebar", "Vertical Suplex", "Neckbreaker"],
     signatureMove: null,
-    ratings: { power: 73, speed: 75, technical: 78, toughness: 72, mic: 67, heat: 65, overall: 72 },
+    ratings: { power: 74, speed: 76, technical: 79, toughness: 73, mic: 68, heat: 66, overall: 73 },
   },
   // ─── ERA 4 ADDITIONS ─────────────────────────────────────────
   {
@@ -616,18 +580,6 @@ export const WRESTLERS: Wrestler[] = [
     moves: ["Running Clothesline", "Headlock", "Body Slam", "Big Boot"],
     signatureMove: null,
     ratings: { power: 73, speed: 67, technical: 68, toughness: 72, mic: 61, heat: 63, overall: 67 },
-  },
-  {
-    id: "jt-funk",
-    name: "JT Funk",
-    faction: null,
-    role: "Midcard",
-    style: "Brawler",
-    bio: "Team Rampage member at Retribution. Part of the 5-on-5 elimination squad that put Big Mike's announcing career on the line.",
-    stamina: 70,
-    moves: ["Lariat", "Suplex", "DDT", "Corner Punch"],
-    signatureMove: null,
-    ratings: { power: 71, speed: 74, technical: 76, toughness: 70, mic: 72, heat: 66, overall: 72 },
   },
   // ─── ERA 5 ADDITIONS ─────────────────────────────────────────
   {

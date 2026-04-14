@@ -22,13 +22,10 @@ type LogEntry = { text: string; type: "player" | "opponent" | "special" | "syste
 
 const PLAYER_BASE_STAMINA = 100;
 
-const OPPONENT_MOVES = [
-  { name: "Brawling Combo", damage: 10 },
-  { name: "Running Shoulderblock", damage: 12 },
-  { name: "Scoop Slam", damage: 8 },
-  { name: "Headbutt", damage: 9 },
-  { name: "Elbow Drop", damage: 8 },
-];
+function buildOpponentMoves(wrestler: { stamina: number; moves: string[]; style: string }) {
+  const base = Math.round(8 + (wrestler.stamina - 70) * 0.1);
+  return wrestler.moves.map((name) => ({ name, damage: base + Math.round(Math.random() * 0) }));
+}
 
 function WrestlerPortrait({
   photo,
@@ -97,6 +94,10 @@ export default function MatchScreen() {
   const opponent = WRESTLERS.find((w) => w.id === params.opponentId) ?? WRESTLERS[0]!;
   const chapter = CAREER_CHAPTERS.find((c) => c.id === params.chapterId);
   const isExhibition = params.mode === "exhibition";
+  const stipulation = chapter?.stipulation ?? "";
+  const isNoDQ = /no.dq|no disqualification|hardcore|riot city rules/i.test(stipulation);
+  const isCage = /cage/i.test(stipulation);
+  const opponentMoves = buildOpponentMoves(opponent);
   const characterId = params.characterId ?? "rich-steve";
   const characterWrestler = WRESTLERS.find((w) => w.id === characterId);
   const playerName = characterId === "rich-steve" ? "Rich $teve" : (characterWrestler?.name ?? "Rich $teve");
@@ -188,7 +189,7 @@ export default function MatchScreen() {
         shake();
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       } else {
-        const move = OPPONENT_MOVES[Math.floor(Math.random() * OPPONENT_MOVES.length)]!;
+        const move = opponentMoves[Math.floor(Math.random() * opponentMoves.length)]!;
         moveName = move.name;
         dmg = move.damage + Math.floor(Math.random() * 5) - 2;
         dmg = Math.max(3, dmg);
@@ -236,6 +237,10 @@ export default function MatchScreen() {
     }
 
     if (type === "refmanip") {
+      if (isCage) {
+        addLog("No referee to manipulate — you're inside a steel cage.", "system");
+        return;
+      }
       setRefManipUsed(true);
       setRefManipActive(true);
       addLog("Referee Manipulation activated — opponent's next move is negated.", "special");
@@ -245,6 +250,10 @@ export default function MatchScreen() {
     }
 
     if (type === "guerrero") {
+      if (isNoDQ) {
+        addLog("There are no disqualifications in this match — the Guerrero Special doesn't work here.", "system");
+        return;
+      }
       setGuerreroUsed(true);
       addLog(`${playerName} tosses the Riot Rumble Lockbox to the opponent and drops!`, "special");
       addLog(`The referee sees the weapon — DISQUALIFICATION! ${playerName} wins by DQ!`, "special");
@@ -580,18 +589,18 @@ export default function MatchScreen() {
                 <Text style={[styles.heelBtnText, { color: colors.foreground }]}>DISTRACT</Text>
               </Pressable>
               <Pressable
-                style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.border, opacity: refManipUsed || isOpponentTurn ? 0.35 : 1 }]}
-                disabled={refManipUsed || isOpponentTurn}
+                style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.border, opacity: refManipUsed || isOpponentTurn || isCage ? 0.35 : 1 }]}
+                disabled={refManipUsed || isOpponentTurn || isCage}
                 onPress={() => playerMove("Ref Manipulation", 0, "refmanip")}
               >
-                <Text style={[styles.heelBtnText, { color: colors.foreground }]}>REF MANIP</Text>
+                <Text style={[styles.heelBtnText, { color: colors.foreground }]}>{isCage ? "NO REF" : "REF MANIP"}</Text>
               </Pressable>
               <Pressable
-                style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.border, opacity: guerreroUsed || isOpponentTurn ? 0.35 : 1 }]}
-                disabled={guerreroUsed || isOpponentTurn}
+                style={[styles.heelBtn, { backgroundColor: colors.card, borderColor: colors.border, opacity: guerreroUsed || isOpponentTurn || isNoDQ ? 0.35 : 1 }]}
+                disabled={guerreroUsed || isOpponentTurn || isNoDQ}
                 onPress={() => playerMove("Guerrero Special", 0, "guerrero")}
               >
-                <Text style={[styles.heelBtnText, { color: colors.foreground }]}>GUERRERO</Text>
+                <Text style={[styles.heelBtnText, { color: colors.foreground }]}>{isNoDQ ? "NO DQ" : "GUERRERO"}</Text>
               </Pressable>
             </View>
           </View>
