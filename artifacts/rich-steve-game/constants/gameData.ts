@@ -702,6 +702,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch1-managing-debut",
     era: 1,
+    playerPhotoKey: "rich-steve-debut",
     eraName: "Era 1: The Future",
     title: "The Managing Debut",
     date: "August 12, 2006",
@@ -828,6 +829,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch1-korpse-manager",
     era: 1,
+    playerPhotoKey: "rich-steve-debut",
     eraName: "Era 1: The Future",
     title: "The Casket Match",
     date: "October 21, 2006",
@@ -950,6 +952,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch1-nightmare-xmas",
     era: 1,
+    playerPhotoKey: "rich-steve-first-suit",
     eraName: "Era 1: The Future",
     title: "Nightmare Before Christmas",
     date: "December 23, 2006",
@@ -1045,6 +1048,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch1-six-man-debut",
     era: 2,
+    playerPhotoKey: "rich-steve-first-suit",
     eraName: "Era 2: Daddy's Money",
     title: "The In-Ring Debut",
     date: "April 7, 2007",
@@ -1102,6 +1106,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch2-ortiz",
     era: 2,
+    playerPhotoKey: "rich-steve-first-suit",
     eraName: "Era 2: Daddy's Money",
     title: "The Grand Championship",
     date: "August 18, 2007",
@@ -1157,6 +1162,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch2-spike",
     era: 2,
+    playerPhotoKey: "rich-steve-first-suit",
     eraName: "Era 2: Daddy's Money",
     title: "The Spike",
     date: "August 25, 2007",
@@ -1212,6 +1218,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch2-don-e-allen",
     era: 2,
+    playerPhotoKey: "rich-steve-first-suit",
     eraName: "Era 2: Daddy's Money",
     title: "The Last Match (Before The Gap)",
     date: "October 6, 2012",
@@ -1277,6 +1284,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-hostile-takeover",
     era: 3,
+    playerPhotoKey: "rich-steve-suit",
     eraName: "Era 3: OTCW & The Coalition",
     title: "Uncivil War",
     date: "July 30, 2016",
@@ -1398,6 +1406,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-proving-ground",
     era: 3,
+    playerPhotoKey: "rich-steve-suit",
     eraName: "Era 3: OTCW & The Coalition",
     title: "Proving Ground",
     date: "August 27, 2016",
@@ -1445,6 +1454,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-september-remember",
     era: 3,
+    playerPhotoKey: "rich-steve-suit",
     eraName: "Era 3: OTCW & The Coalition",
     title: "September to Remember",
     date: "September 24, 2016",
@@ -1500,6 +1510,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-winter-war",
     era: 3,
+    playerPhotoKey: "rich-steve-suit",
     eraName: "Era 3: OTCW & The Coalition",
     title: "Winter War",
     date: "December 9, 2016",
@@ -1593,6 +1604,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-spring-brawl",
     era: 3,
+    playerPhotoKey: "rich-steve-suit-promo",
     eraName: "Era 3: OTCW & The Coalition",
     title: "Spring Brawl",
     date: "March 11, 2017",
@@ -1686,6 +1698,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch3-riot-city-rules",
     era: 3,
+    playerPhotoKey: "rich-steve-suit-promo",
     eraName: "Era 3: OTCW & The Coalition",
     title: "The Invasion",
     date: "2017",
@@ -2083,6 +2096,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch4-big-mike",
     era: 4,
+    playerPhotoKey: "rich-steve-hijacked",
     eraName: "Era 4: Welcome to #Hijacked",
     title: "Retribution",
     date: "November 4, 2017",
@@ -2139,6 +2153,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch6-gm-loophole",
     era: 6,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 6: The Year of Mayhem",
     title: "The GM Loophole",
     date: "2018",
@@ -2265,6 +2280,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch4-bruh-turns",
     era: 4,
+    playerPhotoKey: "rich-steve-hijacked",
     eraName: "Era 4: Welcome to #Hijacked",
     title: "Big Mike's Curtain Call",
     date: "December 9, 2017",
@@ -2447,6 +2463,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-riot-rumble",
     era: 6,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 6: The Year of Mayhem",
     title: "The Riot Rumble",
     date: "March 10, 2018",
@@ -2516,6 +2533,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-guerrero",
     era: 6,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 6: The Year of Mayhem",
     title: "The Guerrero Special",
     date: "April 21, 2018",
@@ -2575,6 +2593,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-bookstore",
     era: 6,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 6: The Year of Mayhem",
     title: "Big Mike Day",
     date: "July 14, 2018",
@@ -2737,6 +2756,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-korpse",
     era: 5,
+    playerPhotoKey: "rich-steve-vs-korpse",
     eraName: "Era 5: Mirai no Sutā",
     title: "No Turning Back",
     date: "January 20, 2018",
@@ -2812,6 +2832,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-lethal-lottery",
     era: 6,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 6: The Year of Mayhem",
     title: "The Solo Tag Title Heist",
     date: "October 13, 2018",
@@ -2970,6 +2991,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch5-last-shot",
     era: 6,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 6: The Year of Mayhem",
     title: "The Final Shot",
     date: "April 27, 2019",
@@ -3039,6 +3061,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch6-wargames",
     era: 7,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 7: The Lost Ending",
     title: "War Games — The Match That Never Happened",
     date: "The Night That Was Supposed To Be",
@@ -3106,6 +3129,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch6-mac-mayhem",
     era: 7,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 7: The Lost Ending",
     title: "The Ascent — vs. Mac Mayhem",
     date: "The Show That Never Happened",
@@ -3184,6 +3208,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   {
     id: "ch6-johnny-xross",
     era: 7,
+    playerPhotoKey: "rich-steve-pm",
     eraName: "Era 7: The Lost Ending",
     title: "The Finale — vs. Johnny Xross",
     date: "The Night After It Never Happened",
