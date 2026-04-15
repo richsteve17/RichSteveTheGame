@@ -2105,6 +2105,124 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
   // ══ ERA 4: WELCOME TO #HIJACKED ═════════════════════════════
 
   {
+    id: "ch4-stairway-to-gold",
+    era: 4,
+    playerPhotoKey: "steve-tiffany-shirt",
+    eraName: "Era 4: Welcome to #Hijacked",
+    title: "The Catalyst",
+    date: "June 24, 2017",
+    venue: "Rampage Pro Wrestling 'Stairway to Gold' — Delaware Agricultural Museum",
+    city: "Dover, DE",
+    stipulation: "The Stairway to Gold Incident — Big Mike Crosses the Line",
+    historicalResult: "story",
+    historicalNote: "June 24, 2017. Rampage Pro Wrestling 'Stairway to Gold.' Delaware Agricultural Museum. Dover, DE. This is where the feud begins. Steve was in the ring beating Jay Cortez when Big Mike — the RING ANNOUNCER, not a wrestler, a man with a microphone — ran out with an Easton baseball bat and intervened to save Cortez. Steve had also attacked Jay Cortez's son ringside. Jay (in his red shirt) shielded his son as Steve wailed on them both. Big Mike came down to the ring holding the bat, physically keeping Steve back — the bat between them. The confrontation: Steve and Big Mike face to face in the ring, with Johnny Xross visible behind Steve, the crowd watching. Big Mike's Facebook post the next day: 'Guys wanna see what I look like when I'm pissed. Mike Lemon talked about tapping into emotions. I did that and I was about to tap that bat upside Rich Steve Coleman head.' Steve's response: 'Big Michael Scott — this was a mistake that you can't even comprehend right here. You're lucky we let you walk out of the building on Saturday. You better watch your back. From Rampage Pro Wrestling Stairway to Gold #SupportIndyWrestling #ProjectMayhem.' Also at or around this event: the Tiffany angle — Steve began appearing publicly with Big Mike's wife Tiffany, taking photographs, walking her out to the ring. The photoshopped pics (Project Mayhem logo edited onto Steve's chest in photos with Tiffany) were posted online. Steve entered the ring for shows wearing a 'Who Loves His Tiffany... This Guy' shirt with a thumbs-up graphic. The shirt promo was the most visible provocation: Big Mike is in the building, the ring announcer — and Steve walks out wearing a shirt about his wife. Context: after this show, Steve posted that he now represented 'one thing and one thing only: Project Mayhem.' Mike could not stay out of it — that was the mistake. He was the ring announcer. He should have stayed in his lane.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "June 24, 2017. Rampage Pro Wrestling. Stairway to Gold. Delaware Agricultural Museum, Dover, DE.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Project Mayhem has formed. Steve is in the ring — beating Jay Cortez. #BRUH, Johnny Xross and Ray Rumble, have just lost to Riot City.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Jay Cortez's son is at ringside. Steve turns his attention to him.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Jay — in his red shirt — throws himself between Steve and the kid. He's shielding his son. Steve doesn't stop.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Then Big Mike's music — no, not music. Just movement. The ring announcer is coming down the aisle. He has an Easton baseball bat in his hand.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Big Mike gets between Steve and the Cortezes. The bat is out. The two men face each other in the ring — Mike holding the bat across his chest, Steve staring at him.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Big Michael Scott — this was a mistake that you can't even comprehend right here. You're lucky we let you walk out of the building on Saturday. You better watch your back.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Mike's post the next day: 'I did that and I was about to tap that bat upside Rich Steve Coleman head.'",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "He couldn't stay away. He was the ring announcer. He had a microphone. He could have watched. He chose the bat.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "That choice started everything.",
+      },
+    ],
+    promoGame: [
+      {
+        situation: "You're entering the ring at a Rampage Pro Wrestling show. Big Mike is standing at the announcer's table with his microphone. You come down the aisle wearing a black shirt with white text: 'Who Loves His Tiffany... This Guy.' Thumbs pointing at yourself. Big Mike is right there.",
+        options: [
+          {
+            text: "Walk straight past the announcer's table. Don't look at him once. Let the shirt do all the talking.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You don't need to say a word. The shirt is the statement. The crowd reads it. Mike reads it. The silence makes it worse for him.",
+          },
+          {
+            text: "Point at the shirt. Point at Mike. Point at the shirt again. Smile.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Wordless. Pointed. The gesture makes the crowd understand exactly what you're doing — and they hate it. Perfect heel visual.",
+          },
+          {
+            text: "Stop at the table, lean in, and tell Mike you got his wife's number from his phone while he wasn't looking.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "You broke the bit by speaking. The shirt was already doing maximum damage. A line of dialogue makes it smaller, not bigger.",
+          },
+          {
+            text: "Grab the microphone from Mike's hand and announce yourself.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You made it a physical confrontation instead of a psychological one. The shirt was the weapon. Don't swap it for a brawl before the match even starts.",
+          },
+        ],
+      },
+      {
+        situation: "Stairway to Gold. You're wailing on Jay Cortez's son at ringside. Jay (red shirt) has thrown himself between you. Big Mike has come down from the announcer's table with a baseball bat. He's in the ring now. He's holding the bat across his chest and staring at you. The crowd is watching. What do you do?",
+        options: [
+          {
+            text: "Back up. Slow. Eyes locked on Mike the whole time. Never blink. Never speak. Let the distance between you grow on your terms, not his.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You retreat — but the retreat is controlled. You chose when to stop. That's not backing down; that's making him think he won something when he didn't.",
+          },
+          {
+            text: "Charge him. He's a ring announcer with a bat — he won't use it.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You don't know that. And the crowd would have popped — meaning they're rooting for you to get hit. Wrong read. You needed to be the dangerous one, not the reckless one.",
+          },
+          {
+            text: "Point at him. Slow. Then point at the ground — meaning: this is not over, this is just paused.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The delayed threat is more frightening than an immediate one. You're filing it away. He knows it's coming. The crowd knows it's coming. Nobody knows when.",
+          },
+          {
+            text: "Back up. Say 'I respect you, Mike. This was between me and Jay.'",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Rich $teve does not offer respect to Big Mike. Not on June 24th, not on December 9th, not ever. You don't respect him — you tolerate him as an obstacle you haven't destroyed yet.",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
     id: "ch4-big-mike",
     era: 4,
     playerPhotoKey: "rich-steve-hijacked",
@@ -3851,7 +3969,7 @@ export const ERAS = [
     subtitle: "Welcome to #Hijacked",
     years: "2017",
     description: "Mayhem at its peak. The #Hijacked era — blurring real and kayfabe, taking over social media, showing up uninvited. 'We are your wasted life.' 'Do we have your attention yet?' Retribution. Then December 9th — the night that started the clock.",
-    chapterIds: ["ch4-big-mike", "ch4-bruh-turns"],
+    chapterIds: ["ch4-stairway-to-gold", "ch4-big-mike", "ch4-bruh-turns"],
   },
   {
     id: 5,

@@ -43,6 +43,32 @@ const WRESTLER_PHOTOS: Record<string, any> = {
   // ─── ERA / FACTION SHOTS ──────────────────────────────────────
   "hijacked-faction":    require("@/assets/images/wrestlers/hijacked-faction.jpeg"),
   "rampage-wrestler":    require("@/assets/images/wrestlers/rampage-wrestler.jpeg"),
+
+  // ─── STAIRWAY TO GOLD / TIFFANY ARC (June 24, 2017) ──────────
+  // Steve photoshopped with Tiffany — event backdrop, Project Mayhem logo
+  "tiffany-steve-promo":    require("@/assets/images/wrestlers/tiffany-steve-promo.jpeg"),
+  // Steve walking Tiffany out by the ring — #HIJACKED shirt
+  "tiffany-steve-ringside": require("@/assets/images/wrestlers/steve-tiffany-ringside.jpeg"),
+  // Steve and Tiffany close up — #HIJACKED shirt, Paul Milliner photo
+  "tiffany-steve-hijacked": require("@/assets/images/wrestlers/tiffany-steve-hijacked.jpeg"),
+  // Steve and Tiffany photoshopped at Disney/castle
+  "tiffany-steve-disney":   require("@/assets/images/wrestlers/tiffany-steve-disney.jpeg"),
+  // Steve entering the ring in "Who Loves His Tiffany...This Guy" shirt
+  "steve-tiffany-shirt":    require("@/assets/images/wrestlers/steve-tiffany-shirt.jpeg"),
+  // Tiffany slapping Steve in the face — she finally had enough
+  "tiffany-slap":           require("@/assets/images/wrestlers/tiffany-slap.jpeg"),
+  // Steve facing off with Jay Cortez's son before the attack
+  "steve-faces-son":        require("@/assets/images/wrestlers/steve-faces-son.jpeg"),
+  // Steve attacking Jay Cortez's son — indoor shot (Frank Boris photo)
+  "steve-attacks-jay-son":  require("@/assets/images/wrestlers/steve-attacks-jay-son.jpeg"),
+  // Steve punching Jay's son — outdoor ring, sunset
+  "steve-punches-son":      require("@/assets/images/wrestlers/steve-punches-son.jpeg"),
+  // Jay Cortez (red shirt) shielding his son as Steve wails on them
+  "jay-protects-son":       require("@/assets/images/wrestlers/jay-protects-son.jpeg"),
+  // Big Mike returning in red shirt + suspenders with baseball bat, facing Steve in the ring
+  "big-mike-bat-staredown": require("@/assets/images/wrestlers/big-mike-bat-staredown.jpeg"),
+  // Big Mike with bat — Jay Cortez and son visible, Mike about to intervene
+  "big-mike-bat-return":    require("@/assets/images/wrestlers/big-mike-bat-return.jpeg"),
 };
 
 const PROMOTION_LOGOS: Record<string, any> = {
