@@ -2163,6 +2163,106 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     },
   },
 
+  // ── Rampage Awards (January 6, 2018) ──────────────────────────
+
+  {
+    id: "ch6-rampage-awards",
+    era: 6,
+    playerPhotoKey: "rich-steve-pm",
+    eraName: "Era 6: The Year of Mayhem",
+    title: "Feud of the Year",
+    date: "January 6, 2018",
+    venue: "Rampage Pro Wrestling Awards Ceremony",
+    city: "Dover, DE",
+    stipulation: "Rampage Awards — Feud of the Year: Rich $teve vs Big Mike",
+    historicalResult: "story",
+    historicalNote: "January 6, 2018. The Rampage Pro Wrestling Awards. No shows in January or February — this ceremony was the only Rampage event in January. Rich $teve won Feud of the Year for the Rich $teve vs Big Mike rivalry. Before the award was presented, Steve and Mike had a physical confrontation — Mike eventually walked away. Steve said: 'Bye, Mike.' Then accepted the award on stage. The speech: dismissed Bloody Waters vs Johnny Malloy as not qualifying as a feud ('Muddy, it has to be a few wins before you can call it a feud — that was just Johnny Malloy kicking your ass for months'); dismissed Project Mayhem vs Chance Young ('Chance Young didn't even get invited tonight — he didn't even get invited'); reminded Big Mike that Steve won 'the only match that mattered — the one that got you fired from this company.' The speech was cut off and has no recorded continuation: Frankie Pickard's girlfriend stood up from the audience and interrupted, claiming JT Funk and Frankie Pickard should have won Feud of the Year.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "January 6, 2018. The Rampage Pro Wrestling Awards. No shows in January. No shows in February. This is the only Rampage event in the building this month.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Rich $teve has won Feud of the Year for the Rich $teve vs Big Mike rivalry. Big Mike is in the building.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Before the award is presented: a confrontation. Physical. Mike eventually walks away.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Bye, Mike.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Steve takes the plaque. Takes the stage.",
+      },
+    ],
+    promoGame: [
+      {
+        situation: "You're holding the Feud of the Year plaque at the awards ceremony. Big Mike is still in the room — he just walked away from a confrontation with you. The crowd is watching. You have the mic.",
+        options: [
+          {
+            text: "Sit down now so I can make my speech, okay? Because everybody listened to you last month when you droned on and on about your dead dad. Sit down. Let me have my moment. Because yours is done.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You acknowledged his speech about his father and immediately turned it into a dismissal. 'Yours is done' — that's the whole arc compressed into three words.",
+          },
+          {
+            text: "Thank you all for this award. It means a lot to me and to Project Mayhem.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "That's a babyface acceptance speech. You're not here to be grateful. You're here to establish dominance in front of the man you forced out.",
+          },
+          {
+            text: "Not only because I have this plaque — but because I won the only match that mattered. The one that got you fired from this company.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The plaque is just proof. The real statement is: you engineered his exit. The award is just the ceremony for something that was already decided.",
+          },
+          {
+            text: "Big Mike, I don't even know why they let you in the door. I guess because you heard there was food, and they were looking to sell more tickets.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Perfect economical heel. Two reasons Mike got in: free food and the company needed ticket buyers. You've reduced a man's presence in the building to those two things.",
+          },
+        ],
+      },
+      {
+        situation: "You're working through the other feud nominations. You need to dismiss each one — Bloody Waters vs Johnny Malloy, and Project Mayhem vs Chance Young — before landing the main point.",
+        options: [
+          {
+            text: "You want to talk about Bloody Waters versus Johnny Malloy? Muddy, it has to be a few wins before you can call it a feud. That was just Johnny Malloy kicking your ass for months.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You've called him 'Muddy' and explained to him why his thing doesn't even qualify as a feud by definition. Clinical dismissal.",
+          },
+          {
+            text: "The other nominees were all very strong this year. Bloody Waters, Johnny Malloy — a hard-fought rivalry.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You're being sporting and generous. That's not the character. You don't acknowledge competition. You erase it.",
+          },
+          {
+            text: "You want to talk about Project Mayhem versus Chance Young? Chance Young didn't even get invited tonight. He didn't even get invited tonight.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The repetition is deliberate — 'didn't even get invited tonight' twice. That's a real speech technique. And it's devastating: the man wasn't invited to the room where his feud was being nominated.",
+          },
+          {
+            text: "I have to be honest — I think JT Funk and Frankie Pickard deserved this award.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Rich $teve would never hand credit to anyone. Especially not at his own acceptance speech for his own award.",
+          },
+        ],
+      },
+    ],
+  },
+
   {
     id: "ch6-gm-loophole",
     era: 6,
@@ -2174,7 +2274,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     city: "Devil's Playpen",
     stipulation: "Lars Madison — General Manager, Rampage Pro Wrestling",
     historicalResult: "story",
-    historicalNote: "Lars Madison was the General Manager of Rampage Pro Wrestling throughout the Year of Mayhem. He wasn't appointed by Jay Cortez — Jay explicitly says in the run-up to Awakening Chaos: 'I didn't hire him!' Someone above Jay in the company structure installed Lars, and Lars had the authority to override decisions that Cortez and Rich $teve tried to make. This was the persistent check on Project Mayhem's control: Jay ran the angles and the money, but Lars held the booking authority. Lars could sanction or de-sanction matches, change stipulations, and intervene when Cortez overstepped. The beard shave, the home invasion, the cosplay — all of this Steve did AROUND Lars's authority, not through it. Lars was not a wrestler. He was the bureaucratic wall between Project Mayhem's ambitions and the title. Note: Big Mike was NOT involved with Rampage during this period. Big Mike had been gone since December 9, 2017 (Big Mike's Curtain Call). He was doing a book signing in Lancaster, PA to zero fans. He didn't return to Rampage until September 15, 2018 — Awakening Chaos — and he came back with an army, not a GM title.",
+    historicalNote: "Lars Madison was the General Manager of Rampage Pro Wrestling throughout the Year of Mayhem. Big Mike's last action as authority at Rampage — his final act before departing — was to appoint Lars. 'Big Mike's last action at Rampage Pro Wrestling was to make me the new General Manager.' Lars immediately opened with his opinion of Project Mayhem: Jay Cortez = 'a scub-slipping nosebleed.' Ryan Vox = 'a talentless Nikki Sixx.' Mac Mayhem = 'as impressive as a snail drenched in salt.' Rich Steve = 'a Rubik's Cube with no colors, which renders you pointless.' Lars operated with a documented split-personality gimmick: 'Lars Madison' (chaotic, unhinged, erratic) and 'Michaels Amaydo' (his grounded, sensible alter-ego who managed him). Visually he presented split down the middle — half wild hair/beard in wrestling gear, half clean-shaven in a suit. They existed as two voices within one body. For the Rampage Riot (March 10, 2018 — 'Vengeance'), Lars set up his 'office' at a folding table in a parking lot at night with a folding chair and a headlight illuminating the scene. Steve stormed in demanding to enter the Riot as #1. Lars agreed. Then immediately clarified: 'You're number one out!' — meaning first eliminated. Steve stormed away furious. A car drove through the shot. Lars abandoned the parking lot as an office due to traffic. Jay Cortez explicitly states he did not hire Lars: 'I didn't hire him.' Lars was installed by a Rampage authority above Jay. Note: Big Mike was NOT involved with Rampage during 2018 until September 15th. He'd been doing a book signing in Lancaster, PA to zero fans.",
     matchless: true,
     introCutscene: [
       {
@@ -2186,12 +2286,23 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
         text: "Except for one problem.",
       },
       {
-        speaker: "NARRATOR",
-        text: "Lars Madison is the General Manager of Rampage Pro Wrestling. Jay Cortez did not hire him. Someone above Jay installed Lars — and Lars has the authority to override any booking decision Cortez tries to make.",
+        speaker: "Lars Madison",
+        text: "Lars Madison here. Big Mike's last action at Rampage Pro Wrestling was to make me the new General Manager.",
+        isPromo: true,
+      },
+      {
+        speaker: "Lars Madison",
+        text: "Those swirly-chugging Tater Tots — starting off with Jay Cortez, is a scub-slipping nosebleed. Ryan Fox: a talentless Nikki Sixx. Mac Mayhem: as impressive as a snail drenched in salt. And that leaves me with Rich Steve — a Rubik's Cube with no colors, which renders you pointless.",
+        isPromo: true,
+      },
+      {
+        speaker: "Lars Madison",
+        text: "I am the new General Manager of Rampage Pro, and it's going to be a whole new world with me in charge. Lars Madison here, signing off.",
+        isPromo: true,
       },
       {
         speaker: "NARRATOR",
-        text: "Lars can change stipulations. Lars can sanction or de-sanction matches. Lars is the line between what Project Mayhem wants and what actually gets booked.",
+        text: "Lars operates with a split personality. 'Lars Madison' — chaotic, unhinged, manic. 'Michaels Amaydo' — clean-shaven, suited, the sensible half trying to manage the chaos. One body. Two voices. Jay Cortez did not hire either of them.",
       },
       {
         speaker: "Jay Cortez",
@@ -2294,7 +2405,31 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Mike took the GM job afterward. Steve spent the rest of 2017 taking everything Mike had left — his wife's support, his job, his best friend.",
+        text: "Big Mike was the authority at Rampage throughout 2017. Steve spent that year taking everything Mike had left — his wife's support, his job, his best friend.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Days before the show, Steve sat down with a crochet blanket and a hand-written sign. The sign read: 'Oh The Places Mike Will Go! By: Rich $teve.'",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Hi, everyone. I've seen a lot of tributes to Big Mike in the last couple of days. A lot of people saying some really, really great things. So I thought — seeing as how this is your last show, Mike — I'd give you a gift.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Congratulations! Today is your day. You got no brains in your head, and you wrestled in shoes. Rich $teve took it all, so you've got nothing to lose. And NO ONE will remember you after this show.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Is your wife, Tiffany. Well... she was yours. Now... she's mine.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "All that's left is your legacy, and I am not playing. When I say that I'll take it — believe me, it's true. There won't be a soul in this business who remembers you. Just. Go.",
+        isPromo: true,
       },
       {
         speaker: "NARRATOR",
@@ -2332,6 +2467,35 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
     ],
     promoGame: [
+      {
+        situation: "You're sitting in a chair with a crochet blanket and a handwritten sign that reads 'Oh The Places Mike Will Go! By: Rich $teve.' This is a pre-show promo to be posted online. You're delivering a Dr. Seuss parody directly to Big Mike on his last night in wrestling.",
+        options: [
+          {
+            text: "Hi, everyone. I've seen a lot of tributes to Big Mike. A lot of people saying some really great things. So I thought — seeing as how this is your last show, Mike — I'd give you a gift.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The calm, conversational opening is deceptively civil. You're about to bury him with children's literature. The setup is the whole move.",
+          },
+          {
+            text: "Big Mike. Tonight is your last night in wrestling and I hope you enjoyed it because I'm the reason it's happening.",
+            isCorrect: false,
+            crowdReaction: "heat",
+            feedback: "Too blunt. The Seuss structure was the genius. You don't start a poetry reading by telling everyone what the poem is about.",
+          },
+          {
+            text: "Is your wife, Tiffany. Well... she was yours. Now... she's mine.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The line that doesn't need anything around it. He hears this. His wife hears this. The crowd hears it. It lands. That's the character.",
+          },
+          {
+            text: "All that's left is your legacy, and I am not playing. When I say that I'll take it — believe me, it's true. There won't be a soul in this business who remembers you. Just. Go.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The closing of the book. The pause before 'Just. Go.' is everything. It's not even anger — it's dismissal. The most devastating register Rich $teve can use.",
+          },
+        ],
+      },
       {
         situation: "Johnny Xross and Ray Rumble stand in the middle of the ring. They announce they're done with Project Mayhem. The crowd cheers. The locker room watches.",
         options: [
@@ -2465,7 +2629,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     opponentId: "eb-cohen",
     stipulation: "Riot Rumble Battle Royal — Last man standing earns a guaranteed title contract: any time, any place of their choosing",
     historicalResult: "win",
-    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Rich $teve entered the Riot Rumble as entrant #1 — and immediately slid out the BOTTOM rope (not over the top — the only way to avoid elimination). Like Vince McMahon at the 1999 Royal Rumble, he sat at ringside doing commentary, refusing to set foot back in the ring, letting every other entrant wear themselves out. He waited until the very end, got back in, and last eliminated E.B. Cohen to win the briefcase — a guaranteed contract redeemable for any Rampage title, any time, any place of his choosing. Cohen PROTESTED. The contract was held up pending a formal ruling: if Steve entered first and slid out the bottom, was the win legitimate? The lockbox was frozen until a proper protest match could settle the dispute. On the same night: The Bully Club defeated BRUH (w/ George Burkett) to become the NEW Rampage Tag Team Champions — beginning a Bully Club reign that #BRUH would chase for three months.",
+    historicalNote: "March 10, 2018. Rampage Pro Wrestling 'Vengeance.' Delaware Agricultural Museum. Dover, DE. Context: Lars Madison (GM) had set up his 'office' at a folding table in a parking lot, where Steve stormed in demanding to be entered as #1 in the Riot. Lars agreed with a smirk — 'You're number one out!' meaning first eliminated. Steve entered knowing Lars wanted him gone first. The plan: immediately slide out the BOTTOM rope (not over the top — the only way to avoid elimination). Like Vince McMahon at the 1999 Royal Rumble, Steve sat at ringside doing commentary, refusing to set foot back in the ring, letting every other entrant wear themselves out while Lars's plan backfired in real time. Steve waited until the very end, got back in, and last eliminated E.B. Cohen to win the briefcase. Lars intended Steve to be first out. Steve survived and won. Cohen PROTESTED. The contract was held up pending a formal ruling: if Steve entered first and slid out the bottom, was the win legitimate? The lockbox was frozen until a proper protest match could settle the dispute. On the same night: Lars inserted his Michaels Amaydo alter-ego into the Valhalla Visions Championship match (turning a singles match between Mac Mayhem and Tim Hughes into a Triple Threat) trying to strip Mac of the title. Mac retained over both Hughes and Michaels Amaydo. Lars's interference failed twice in one night. Also on the card: The Bully Club defeated BRUH (w/ George Burkett) to become the NEW Rampage Tag Team Champions.",
     riotRumbleChapter: true,
     introCutscene: [
       {
@@ -2478,7 +2642,16 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "$teve entered this match as entrant number one. There's a plan here. It requires patience.",
+        text: "Earlier this week: Lars Madison set up his 'office' at a folding table in a parking lot with a headlight on him. Steve stormed in and demanded to be entered as #1.",
+      },
+      {
+        speaker: "Lars Madison",
+        text: "Sure! You're number one in the Riot! You're number one OUT! [Laughs]",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Lars wanted Steve first in, first out. Steve heard the words 'number one' and made Lars's own ruling the foundation of his plan.",
       },
       {
         speaker: "Rich $teve",
@@ -2487,7 +2660,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
       },
       {
         speaker: "NARRATOR",
-        text: "Like Vince McMahon in 1999. The genius of it is that it's technically legal.",
+        text: "Like Vince McMahon in 1999. The genius of it is that it's technically legal. Lars set the trap. Steve lived in it.",
       },
     ],
     outroCutscene: {
@@ -2978,7 +3151,7 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     stipulation: "Non-Title Singles Match — Rich $teve vs Yams The Working Man",
     historicalResult: "lose",
     ratingOverrides: { "yams": { toughness: 93 } },
-    historicalNote: "September 15, 2018. Awakening Chaos. Delaware Agricultural Museum. Dover, Delaware. Permit #396. The original plan: Yams' psychological collapse after the cosplay and the beard shave led him to challenge Steve himself and hand him a free title shot. Then the GM — a GM that Jay Cortez claims he did not hire — converted the match to a non-title bout. Internal chaos: Vox and Kory Cross had already defected to Team Rampage. Mac Mayhem wasn't answering calls (his shoes and bag were found in the locker room; he was nowhere). Lars, the authority who could override Jay's plans, was being held by doctors and would not be at the show. Show results: Match #6 — Louis G. Rich debuted, submitting Vic Ramon (the hired outside gun Jay brought in to deal with Vic). Match #7 — Valhalla Visions Champion GreyWolf successfully defended in the 'Cortez Gauntlet' against Dragonfly#2, Jeremy Grimes, Tyson Creed, The Solution, and Mac Mayhem. Match #8 — Tag Champions BRUH w/ George Burkett retained against The Bully Club. Match #9 (main event) — Heavyweight Champion Yams The Working Man won via DISQUALIFICATION over Rich $teve after Jay Cortez, Killian McMurphy, and Mac Mayhem attacked the champion. POST-SHOW: Mac Mayhem's attack on Yams continued — then Big Michael Scott returned, leading JT Funk, Ryan Vox, and Kory Cross to make the save. Big Mike got on the mic. He promised he'd always been three steps ahead. Mac Mayhem announced: November 17th — WAR GAMES. Elimination style. No rules. During the chaos, Johnny Malloy slipped into the ring, grabbed the championship belt from the mat, and retreated through the crowd.",
+    historicalNote: "September 15, 2018. Awakening Chaos. Delaware Agricultural Museum. Dover, Delaware. Permit #396. The original plan: Yams' psychological collapse after the cosplay and the beard shave led him to challenge Steve himself and hand him a free title shot. Then Lars Madison — in one of his most unhinged promos yet, referencing Mussolini, Franz Ferdinand, and the Hindenburg — converted the match to non-title AND added a devastating stipulation: if Steve gets PINNED or SUBMITS, he loses the Riot Rumble contract entirely. Lars's sensible alter-ego Michaels Amaydo (off-camera) begged him to calm down: 'Lars, you're losing it. You need to calm down. Just have Yams vs. Rich Steve. Let him take vengeance in his own hands.' Lars ignored him. This is why the DQ outcome mattered: Steve never got pinned. He never submitted. The contract stayed in the lockbox. Lars's stipulation was a trap that the DQ result technically avoided. Internal chaos: Vox and Kory Cross had already defected to Team Rampage. Mac Mayhem wasn't answering calls (his shoes and bag were found in the locker room; he was nowhere). Lars, the authority who could override Jay's plans, was being held by doctors and would not be at the show. Show results: Match #6 — Louis G. Rich debuted, submitting Vic Ramon (the hired outside gun Jay brought in to deal with Vic). Match #7 — Valhalla Visions Champion GreyWolf successfully defended in the 'Cortez Gauntlet' against Dragonfly#2, Jeremy Grimes, Tyson Creed, The Solution, and Mac Mayhem. Match #8 — Tag Champions BRUH w/ George Burkett retained against The Bully Club. Match #9 (main event) — Heavyweight Champion Yams The Working Man won via DISQUALIFICATION over Rich $teve after Jay Cortez, Killian McMurphy, and Mac Mayhem attacked the champion. POST-SHOW: Mac Mayhem's attack on Yams continued — then Big Michael Scott returned, leading JT Funk, Ryan Vox, and Kory Cross to make the save. Big Mike got on the mic. He promised he'd always been three steps ahead. Mac Mayhem announced: November 17th — WAR GAMES. Elimination style. No rules. During the chaos, Johnny Malloy slipped into the ring, grabbed the championship belt from the mat, and retreated through the crowd.",
     introCutscene: [
       {
         speaker: "NARRATOR",
@@ -3694,7 +3867,7 @@ export const ERAS = [
     subtitle: "The Year of Mayhem",
     years: "2018–2019",
     description: "The Riot Rumble briefcase. Lars Madison as GM — the authority Jay never wanted. Feuding with Yams. The home invasion. The hot tub promo. The cosplay. The beard. Vox and Kory turn. Big Mike returns with an army. War Games announced. Everyone watching the wrong hand. And then — October 13th. The long game collected.",
-    chapterIds: ["ch6-gm-loophole", "ch5-riot-rumble", "ch5-guerrero", "ch5-bookstore", "ch5-cosplayers", "ch5-awakening-chaos", "ch5-lethal-lottery", "ch5-last-shot"],
+    chapterIds: ["ch6-rampage-awards", "ch6-gm-loophole", "ch5-riot-rumble", "ch5-guerrero", "ch5-bookstore", "ch5-cosplayers", "ch5-awakening-chaos", "ch5-lethal-lottery", "ch5-last-shot"],
   },
   {
     id: 7,
