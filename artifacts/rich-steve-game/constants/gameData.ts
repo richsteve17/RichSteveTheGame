@@ -2842,6 +2842,356 @@ export const CAREER_CHAPTERS: CareerChapter[] = [
     },
   },
 
+  // ── Infinity Cosplayers Unite (August 18, 2018) ───────────────
+
+  {
+    id: "ch5-cosplayers",
+    era: 6,
+    playerPhotoKey: "rich-steve-pm",
+    eraName: "Era 6: The Year of Mayhem",
+    title: "Scams the Working Man",
+    date: "August 18, 2018",
+    venue: "Rampage Pro Wrestling 'Infinity Cosplayers Unite' — Delaware Agricultural Museum",
+    city: "Dover, DE",
+    stipulation: "The #Hijacked Cosplay — Vox & Kory Cross Turn",
+    historicalResult: "story",
+    historicalNote: "August 18, 2018. Infinity Cosplayers Unite. Delaware Agricultural Museum. Dover, Delaware. The build-up was a two-promo sequence: Doc 3, Rich $teve and Ryan Vox broke into Yams' house — found his ring gear (shirt, gloves), replaced his CDs with a CMASS disc, and announced the cosplay angle. Doc 4, the night before the show, Steve filmed himself relaxing in Yams' hot tub wearing the stolen 'Working Man' towel, announcing a 'brand new Heavyweight Champion' at the cosplay show. At the show: Steve appeared as 'Scams the Working Man' — dressed in Yams' ring gear, wearing a miniature traffic cone as his prop, carrying a toilet paper box as his fake title belt. The crowd knew exactly what it was. It was humiliation dressed up as satire. At the same show: Kory Cross and Ryan Vox — two key Project Mayhem members — made their turn official. They defected to Team Rampage. Steve had been watching it come. He didn't scramble. After the show: Steve's cronies mugged Yams in the locker room and shaved his beard. Yams had retained the title in his match. Steve hadn't touched the lockbox. He didn't need to. Yams was so psychologically broken from the home invasion, the bathtub promo, the cosplay, and the beard shave that he challenged Steve himself — and handed him a free title shot for September.",
+    matchless: true,
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "Infinity Cosplayers Unite. August 18, 2018.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Three nights ago — the home invasion.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Ladies and gentlemen, welcome to Hijacked. It's your boy Rich $teve and the Livewire Ryan Vox. We are at Yams 'The Working Man's' palatial... palatial estate.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Yams, at Outbreak, you took something very dear to me. You ruined my band's performance. So I figured — you took what I love, so I'm going to take what you love tonight.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "They found Yams' ring gear. The shirt. The gloves. A cabinet full of belts. A CD binder full of Springsteen and Nickelback. Steve replaced it all with a CMASS disc.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "I do already have the Riot Rumble contract. I can take the title at any time I choose. Any time. So why not August 18th? Why not at the cosplay show? Yams 'The Working Man' takes the title from Yams 'The Working Man.' This is just too perfect.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "The night before the show. Steve filmed himself in Yams' hot tub wearing the stolen 'Working Man' towel.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "Oh, hey folks. No, it's not the Workday Chronicles. It's Rich $teve, relaxing after a long, long hard week at my hot tub.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "As you can hear, I'm listening to a little bit of CMASS. I am enjoying being me. See, Yams literally has to work how many jobs now? Three? Just to feed his kids. But me — all I have to do is sit back and enjoy.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "I have this bad boy right here. The Rampage Pro Wrestling Riot Rumble contract. Any time, any place of my choosing. At Infinity Cosplayers Unite — you will see a brand new Heavyweight Champion.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Show night. Steve appeared as 'Scams the Working Man.' Yams' ring gear. A miniature traffic cone. A toilet paper box as a title belt.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "In the building: Kory Cross and Ryan Vox turned. They defected to Team Rampage. Steve had watched it coming.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "After the show: Steve's cronies followed Yams into the locker room. Held him down. Shaved his beard.",
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Yams retained his title that night. Steve never used the contract. He didn't need to. Yams was so broken he challenged Steve himself — and handed him a free title shot for September.",
+      },
+    ],
+    promoGame: [
+      {
+        situation: "You're filming from Yams' hot tub. Stolen 'Working Man' towel around your neck. CMASS playing. This is the night before Infinity Cosplayers Unite.",
+        options: [
+          {
+            text: "Oh, hey folks. No, it's not the Workday Chronicles. It's Rich $teve, relaxing after a long, long hard week at my hot tub.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The calm superiority. You're not in your house — you're in HIS house — and you're completely at ease. That's the character.",
+          },
+          {
+            text: "Yams — I'm coming for your title and I'm coming for your house and your family!",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Desperation. Anger. That's not Rich $teve — that's someone who lost. You already took the towel, the CD, the hot tub. You don't need to scream.",
+          },
+          {
+            text: "Garçon! Bring me my drink!",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "Perfect. You have a subordinate — probably Vox in stolen yellow gloves — serving you drinks from Yams' kitchen. In Yams' house. Heel luxury.",
+          },
+          {
+            text: "I respect what Yams has built. But the Year of Mayhem demands I take what's mine.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You don't respect Yams. You said he works three jobs just to feed his kids — that's not respect, that's contempt dressed as pity.",
+          },
+        ],
+      },
+      {
+        situation: "August 18th. Cosplay show. You walk out wearing Yams' shirt and gloves, carrying a miniature traffic cone and a toilet paper box 'title belt.' The crowd recognizes immediately. Yams is backstage.",
+        options: [
+          {
+            text: "Scams. The Working Man. I work twelve jobs. I have very callused hands. Here is my championship: this box of Charmin.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You're not just mocking Yams — you're BEING Yams. The crowd knows the difference and they hate it. Perfect character assassination.",
+          },
+          {
+            text: "Look at me! I'm the Working Man! I like Nickelback and Bruce Springsteen!",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You read his CD collection on camera. Now you're weaponizing it live. He has no safe space.",
+          },
+          {
+            text: "Okay, the bit is done. Rich $teve here. I'm cashing in tonight.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You didn't cash in tonight. That was the whole point. The psychological damage of NOT cashing in — of just humiliating him and walking away — is more valuable than the title.",
+          },
+          {
+            text: "I apologize to Yams. This has gone too far. I'll give his stuff back.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "NEVER. Rich $teve does not apologize. Not once in 13 years.",
+          },
+        ],
+      },
+    ],
+  },
+
+  // ── Awakening Chaos (September 15, 2018) ──────────────────────
+
+  {
+    id: "ch5-awakening-chaos",
+    era: 6,
+    playerPhotoKey: "rich-steve-pm",
+    eraName: "Era 6: The Year of Mayhem",
+    title: "Awakening Chaos",
+    date: "September 15, 2018",
+    venue: "Rampage Pro Wrestling 'Awakening Chaos' — Delaware Agricultural Museum",
+    city: "Dover, DE",
+    opponentId: "yams",
+    stipulation: "Non-Title Singles Match — Rich $teve vs Yams The Working Man",
+    historicalResult: "lose",
+    ratingOverrides: { "yams": { toughness: 93 } },
+    historicalNote: "September 15, 2018. Awakening Chaos. Delaware Agricultural Museum. Dover, Delaware. Permit #396. The original plan: Yams' psychological collapse after the cosplay and the beard shave led him to challenge Steve himself and hand him a free title shot. Then the GM — a GM that Jay Cortez claims he did not hire — converted the match to a non-title bout. Internal chaos: Vox and Kory Cross had already defected to Team Rampage. Mac Mayhem wasn't answering calls (his shoes and bag were found in the locker room; he was nowhere). Lars, the authority who could override Jay's plans, was being held by doctors and would not be at the show. Show results: Match #6 — Louis G. Rich debuted, submitting Vic Ramon (the hired outside gun Jay brought in to deal with Vic). Match #7 — Valhalla Visions Champion GreyWolf successfully defended in the 'Cortez Gauntlet' against Dragonfly#2, Jeremy Grimes, Tyson Creed, The Solution, and Mac Mayhem. Match #8 — Tag Champions BRUH w/ George Burkett retained against The Bully Club. Match #9 (main event) — Heavyweight Champion Yams The Working Man won via DISQUALIFICATION over Rich $teve after Jay Cortez, Killian McMurphy, and Mac Mayhem attacked the champion. POST-SHOW: Mac Mayhem's attack on Yams continued — then Big Michael Scott returned, leading JT Funk, Ryan Vox, and Kory Cross to make the save. Big Mike got on the mic. He promised he'd always been three steps ahead. Mac Mayhem announced: November 17th — WAR GAMES. Elimination style. No rules. During the chaos, Johnny Malloy slipped into the ring, grabbed the championship belt from the mat, and retreated through the crowd.",
+    introCutscene: [
+      {
+        speaker: "NARRATOR",
+        text: "Between Cosplayers Unite and Awakening Chaos. August turned to September. Steve and Jay Cortez met privately.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "This is ridiculous, Jay. This is absolutely ridiculous. You did not tell me that it was gonna go down like this.",
+        isPromo: true,
+      },
+      {
+        speaker: "Jay Cortez",
+        text: "I didn't know.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "You didn't know? This is supposed to be your company — this is supposed to be OUR company. It was ours. And now what? Vox just bails? Corey just bails? The entire time — the entire time — we said the plan was for me to shave his beard so he would give me a title match, so I would have two shots. And guess what? Guess what your GM does? He makes it a non-title match. NON-TITLE.",
+        isPromo: true,
+      },
+      {
+        speaker: "Jay Cortez",
+        text: "I didn't hire him.",
+        isPromo: true,
+      },
+      {
+        speaker: "Rich $teve",
+        text: "I can't afford to lose to Yams.",
+        isPromo: true,
+      },
+      {
+        speaker: "Jay Cortez",
+        text: "No worries. This isn't going anywhere.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Yams cut his own response from his back deck with his championship belt on the table.",
+      },
+      {
+        speaker: "Yams",
+        text: "August 18th — Rich Steve did something unthinkable. I win. I retained my championship. And what does this guy do? His cronies mug me and shave off my beard.",
+        isPromo: true,
+      },
+      {
+        speaker: "Yams",
+        text: "I want you to cash in your little contract and your little lockbox. Because when I whoop your ass, Rich Steve, all over Dover — I don't want anybody to say I didn't give you a fair one.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "Steve's public response: a song. He picked up a guitar and rewrote John Lennon.",
+      },
+      {
+        speaker: "Rich $teve",
+        text: "I figured instead, I'd write a song. A special song for the working class heroes out there. That is you, Yamz. That is you, Vox. That is you, Cory Cross.",
+        isPromo: true,
+      },
+      {
+        speaker: "NARRATOR",
+        text: "September 15th. Delaware Agricultural Museum. Permit #396. The GM made the match non-title. Lars — the one authority who could override Jay's plans — is being held by doctors. He will not be in the building tonight.",
+      },
+    ],
+    outroCutscene: {
+      win: [
+        {
+          speaker: "NARRATOR",
+          text: "Tonight you beat Yams. The GM's non-title ruling saves the championship from changing hands — but it doesn't change what you proved in that ring.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "History says the match went differently. Cortez, McMurphy, and Mac Mayhem hit the ring. Yams won by DQ. But the story that came next — that part is real no matter what.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Big Michael Scott returns. He leads JT Funk, Ryan Vox, and Kory Cross to the ring. Mac Mayhem gets on the mic.",
+        },
+        {
+          speaker: "Mac Mayhem",
+          text: "Dover — do you want to see this match happen? In true Mac Mayhem form... which means: Elimination Style! NO RULES! WAR GAMES!",
+          isPromo: true,
+        },
+        {
+          speaker: "Big Mike",
+          text: "November the 17th! In this very building! In this very damn ring! My boys against your boys!",
+          isPromo: true,
+        },
+        {
+          speaker: "NARRATOR",
+          text: "And Johnny Malloy — in the chaos — slides into the ring, grabs the championship belt from the mat, and disappears through the crowd.",
+        },
+      ],
+      lose: [
+        {
+          speaker: "NARRATOR",
+          text: "Yams wins by disqualification. Jay Cortez, Killian McMurphy, and Mac Mayhem stormed the ring — their interference caused the call.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Project Mayhem swarms the champion. Mac holds the title belt. The crowd waits for Mac to turn — Rich $teve stares at him and says: 'Hit me. End it right now. Hit me.' Mac chooses. He levels Yams with a belt-shot to the head.",
+        },
+        {
+          speaker: "NARRATOR",
+          text: "Then — Big Michael Scott's music hits.",
+        },
+        {
+          speaker: "Big Mike",
+          text: "Turn the lights on! How the hell is Dover, Delaware doing tonight? Surprise, surprise, surprise. You kept saying you were three steps ahead. You kept saying 'I got it in the bag.' It's time for me to hold your hand, little boy.",
+          isPromo: true,
+        },
+        {
+          speaker: "Big Mike",
+          text: "November the 17th! In this very building! In this very damn ring! My boys against your boys! That's what I want!",
+          isPromo: true,
+        },
+        {
+          speaker: "Mac Mayhem",
+          text: "Dover, do you want to see this match happen? In true Mac Mayhem form... which means: Elimination Style! NO RULES! WAR GAMES!",
+          isPromo: true,
+        },
+        {
+          speaker: "Jay Cortez",
+          text: "November 17th... we'll still be three steps ahead.",
+          isPromo: true,
+        },
+        {
+          speaker: "NARRATOR",
+          text: "And then — Johnny Malloy steps through the ropes, picks up the championship belt from the mat, and walks through the crowd. Nobody stops him. The belt is gone.",
+        },
+      ],
+    },
+    promoGame: [
+      {
+        situation: "Private meeting with Jay Cortez after Cosplayers Unite. Vox and Kory turned. Mac's not answering. The GM converted your title shot to a non-title match. September 15th is twelve days away. What do you say to Jay?",
+        options: [
+          {
+            text: "This is ridiculous, Jay. This is absolutely ridiculous. You did not tell me it was gonna go down like this.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "You're not screaming — you're controlled. The measured frustration of a man who had a perfect plan watching someone else make a mess of it. This is exactly how it happened.",
+          },
+          {
+            text: "It's fine. Non-title match. I'll still beat him. Then I'll cash in the contract right after.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "This is babyface problem-solving. Rich $teve doesn't pivot cheerfully. He confronts. He assigns blame. He regrouped — but not quietly.",
+          },
+          {
+            text: "We need to regroup. I can't afford to lose to Yams.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "This is the line. Not because losing to Yams is catastrophic on paper — but because the psychological image of Rich $teve being beaten by Yams is something he cannot allow to exist.",
+          },
+          {
+            text: "I'll use the contract tonight. Cash it in. This is the moment.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "The whole operation was: he never needed to cash in on Yams. Yams gave him a match for free. The briefcase stays in the box. The real plan is somewhere else entirely.",
+          },
+        ],
+      },
+      {
+        situation: "September 15th. Awakening Chaos. Public promo. You've written a song — a parody of Working Class Hero by John Lennon. A guitarist is with you. The lockbox is on the table. The lyric sheet is in your hand.",
+        options: [
+          {
+            text: "I figured instead, I'd write a song. A special song for the working class heroes out there. That is you, Yamz. That is you, Vox. That is you, Cory Cross.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The calm delivery before the blade drops. This is Rich $teve: calculated, creative, premeditated. The guitar makes it weirder. That's the point.",
+          },
+          {
+            text: "September 15th, I'm coming for your title, Yamz. And there's nothing any of you can do about it.",
+            isCorrect: true,
+            crowdReaction: "heat",
+            feedback: "The button at the end of the song. Simple. Certain. This is the lockbox's promise made verbal.",
+          },
+          {
+            text: "I apologize to Ryan Vox and Kory Cross for how things turned out. We were brothers.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "Rich $teve named them nothing in his song: 'Voxy and Yamz you're nothing at all / and Cory you know you ain't got the balls.' Apologies are not in the catalog.",
+          },
+          {
+            text: "Big Mike being GM is an outrage. I will take this to the courts.",
+            isCorrect: false,
+            crowdReaction: "pop",
+            feedback: "You already played the lawyers card at the GM reveal. The song was calculated coolness. Not renewed panic about the GM.",
+          },
+        ],
+      },
+    ],
+  },
+
   {
     id: "ch5-lethal-lottery",
     era: 6,
@@ -3364,7 +3714,7 @@ export const ERAS = [
     subtitle: "The Year of Mayhem",
     years: "2018–2019",
     description: "The Riot Rumble briefcase. Big Mike as GM — the loophole. Feuding with Yams. The bathtub promo. The cosplay. The beard. Vox and Kory turn. Everyone watching the wrong hand. And then — October 13th. The long game collected.",
-    chapterIds: ["ch6-gm-loophole", "ch5-riot-rumble", "ch5-guerrero", "ch5-bookstore", "ch5-lethal-lottery", "ch5-last-shot"],
+    chapterIds: ["ch6-gm-loophole", "ch5-riot-rumble", "ch5-guerrero", "ch5-bookstore", "ch5-cosplayers", "ch5-awakening-chaos", "ch5-lethal-lottery", "ch5-last-shot"],
   },
   {
     id: 7,
